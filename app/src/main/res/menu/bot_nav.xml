@@ -3,23 +3,23 @@
 
     <item
         android:id="@+id/pos"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:icon="@drawable/nav_scan"
         android:title="" />
     <item
         android:id="@+id/mnge"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:icon="@drawable/nav_inv"
         android:title="" />
     <item
         android:id="@+id/hist"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:icon="@drawable/nav_history"
         android:title="" />
     <item
         android:id="@+id/debt"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:icon="@drawable/nav_debt"
         android:title="" />
     <item
         android:id="@+id/othr"
-        android:icon="@drawable/ic_android_black_24dp"
+        android:icon="@drawable/nav_setting"
         android:title="" />
 
 
