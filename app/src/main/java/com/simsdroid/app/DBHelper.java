@@ -28,8 +28,6 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE orders (" +
                 "order_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "order_number INTEGER, " +
-                "date TEXT, " +
-                "time TEXT, " +
                 "product_name TEXT, " +
                 "product_id INTEGER, " +
                 "retail_price TEXT, " +
@@ -51,6 +49,8 @@ public class DBHelper extends SQLiteOpenHelper {
         );
         sqLiteDatabase.execSQL("CREATE TABLE order_numbers (" +
                 "order_number INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "date TEXT, " +
+                "time TEXT, " +
                 "total TEXT)");
     }
     @Override
@@ -119,17 +119,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 "WHERE prod_id = " + id + ";", null);
         db.close();
     }
+    //products list, list search by name
     //inv value and retail value, profit
 
-    public void createOrder(ArrayList<ModelOrders> orders){ //subtract from amount in stock, create records in orders table
+    public void createOrder(ArrayList<ModelOrders> orders, String xdate, String xtime){ //subtract from amount in stock, create records in orders table
         SQLiteDatabase db = this.getWritableDatabase();
         double total = 0;
         for (ModelOrders order : orders) {
             ContentValues cv = new ContentValues();
 
             cv.put("order_number", order.orderNumber);
-            cv.put("date", order.date);
-            cv.put("time", order.time);
             cv.put("product_name", order.productName);
             cv.put("product_id", order.productId);
             cv.put("retail_price", order.retailPrice);
@@ -153,7 +152,7 @@ public class DBHelper extends SQLiteOpenHelper {
             total += order.amountXprice;
         }
         //total
-        db.execSQL("UPDATE order_numbers SET total = " + total + " WHERE order_number = " + orders.get(0).orderNumber + ";");
+        db.execSQL("UPDATE order_numbers SET total = '" + total + "', date = '" + xdate + "', time = '" + xtime + "' WHERE order_number = " + orders.get(0).orderNumber + ";");
         db.close();
     }
 
@@ -161,6 +160,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("total", "");
+        cv.put("date", "");
+        cv.put("time", "");
 
         long i = db.insert("order_numbers", null, cv);
 
@@ -182,18 +183,14 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do{
                 int orderNum = cursor.getInt(1);
-                String date = cursor.getString(2);
-                String time = cursor.getString(3);
-                String productName = cursor.getString(4);
-                int productId = cursor.getInt(5);
-                String retailPrice = cursor.getString(6);
-                int amount = cursor.getInt(7);
-                String amountXprice = cursor.getString(8);
+                String productName = cursor.getString(2);
+                int productId = cursor.getInt(3);
+                String retailPrice = cursor.getString(4);
+                int amount = cursor.getInt(5);
+                String amountXprice = cursor.getString(6);
 
                 ModelOrders order = new ModelOrders(
                         orderNum,
-                        date,
-                        time,
                         productName,
                         productId,
                         Double.parseDouble(retailPrice),
@@ -209,18 +206,60 @@ public class DBHelper extends SQLiteOpenHelper {
         return ordersList;
     }
 
-    public double getOrderTotal(long orderNum){
+    public ModelOrderView getSimpleOrderInfo(long orderNum){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-        Cursor cursor = db.rawQuery("SELECT total FROM order_numbers WHERE order_number = " + orderNum + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE order_number = " + orderNum + ";", null);
         cursor.moveToFirst();
 
-        double returnDoub = Double.parseDouble(cursor.getString(0));
+        String date = cursor.getString(1);
+        String time = cursor.getString(2);
+        double returnDoub = Double.parseDouble(cursor.getString(3));
 
+        ModelOrderView orderView = new ModelOrderView(orderNum, date, time, returnDoub);
         cursor.close();
         db.close();
 
-        return returnDoub;
+        return orderView;
+    }
+    public ArrayList<ModelOrderView> getOrderHistory(){
+        ArrayList<ModelOrderView> orderViews = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers;", null);
+        if (cursor.moveToFirst()){
+            do{
+                int num = cursor.getInt(0);
+                String date = cursor.getString(1);
+                String time = cursor.getString(2);
+                Double tot = Double.parseDouble(cursor.getString(3));
+
+                ModelOrderView order = new ModelOrderView(num, date, time, tot);
+                orderViews.add(order);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orderViews;
+
+    }
+    public ArrayList<ModelOrderView> searchOrderNumByDate(String datestr){
+        ArrayList<ModelOrderView> orderViews = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE date = '" + datestr + "';", null);
+        if (cursor.moveToFirst()){
+            do{
+                int num = cursor.getInt(0);
+                String date = cursor.getString(1);
+                String time = cursor.getString(2);
+                Double tot = Double.parseDouble(cursor.getString(3));
+
+                ModelOrderView order = new ModelOrderView(num, date, time, tot);
+                orderViews.add(order);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orderViews;
     }
 
 }
