@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddProductInventory"
+    android:background="@color/lightBl">
+
+    <Button
+        android:id="@+id/btnAddBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="120dp"
+        android:text="Add Barcode"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:theme="@style/btn2theme"
+        android:background="@drawable/btn_small_round_white"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/etProductName"
+        android:inputType="textPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:padding="15dp"
+        android:ems="15"
+        android:hint="Product Name"
+        android:text=""
+        android:textColorHighlight="@color/lightGr"
+        android:background="@drawable/btn_small_round_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddBarcode" />
+
+    <EditText
+        android:id="@+id/etCost"
+        android:inputType="numberDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:padding="15dp"
+        android:ems="7"
+        android:hint="Cost"
+        android:text=""
+        android:textColorHighlight="@color/lightGr"
+        android:background="@drawable/btn_small_round_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etProductName" />
+
+    <EditText
+        android:id="@+id/etRetPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/btn_small_round_white"
+        android:ems="7"
+        android:hint="Retail Price"
+        android:inputType="numberDecimal"
+        android:padding="15dp"
+        android:text=""
+        android:textColorHighlight="@color/lightGr"
+        app:layout_constraintStart_toEndOf="@+id/etCost"
+        app:layout_constraintTop_toBottomOf="@+id/etProductName" />
+
+    <EditText
+        android:id="@+id/etAmtStock"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:padding="15dp"
+        android:ems="9"
+        android:hint="Amount in Stock"
+        android:text=""
+        android:textColorHighlight="@color/lightGr"
+        android:background="@drawable/btn_small_round_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etRetPrice" />
+
+    <Button
+        android:id="@+id/btnAddProductToInv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/btn_small_round_white"
+        android:text="Add this Product "
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:theme="@style/btn3theme"
+        app:layout_constraintTop_toBottomOf="@+id/tvWarningForBarcode"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/tvWarningForBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="50dp"
+        android:drawableLeft="@drawable/ic_baseline_info_24"
+        android:drawableTint="@color/navy"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="The item you are about to add has no Barcode"
+        android:textColor="@color/navy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAmtStock" />
+</androidx.constraintlayout.widget.ConstraintLayout>

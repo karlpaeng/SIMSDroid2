@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     TextView actionBar;
+    ArrayList<ModelProducts> productListOfInventory = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
