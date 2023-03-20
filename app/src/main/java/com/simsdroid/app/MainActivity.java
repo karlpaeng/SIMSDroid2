@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     TextView actionBar;
+
     ArrayList<ModelProducts> productListOfInventory = new ArrayList<>();
     double invVal, retval, potProf;
     DBHelper dbHalp = new DBHelper(MainActivity.this);
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         actionBar = findViewById(R.id.actionBar);
         String extraStr="";
@@ -113,4 +119,12 @@ public class MainActivity extends AppCompatActivity {
     public void updateProductListOfInventory(){
         productListOfInventory = dbHalp.allProductsInventory();
     }
+    public void searchProdsByName(String name){
+        productListOfInventory = dbHalp.searchProductByName(name);
+    }
+    public void hideKB(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
 }

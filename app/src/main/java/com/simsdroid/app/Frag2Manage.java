@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,10 +27,15 @@ import android.widget.TextView;
  */
 public class Frag2Manage extends Fragment {
     View v;
+    ArrayList<ModelProducts> prodList = new ArrayList<>();
+
+    RecyclerView frag2RecyclerView;
 
     Button addProduct, search, clear;
     TextView invVal, retVal, potProf;
     EditText searchField;
+
+    String searchTerm;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,6 +44,7 @@ public class Frag2Manage extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public Frag2Manage() {
         // Required empty public constructor
@@ -69,9 +83,13 @@ public class Frag2Manage extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.frag2_manage, container, false);
 
+        frag2RecyclerView = v.findViewById(R.id.rec_view);
+
         addProduct = v.findViewById(R.id.btnAddAProduct);
         search = v.findViewById(R.id.btnSearchOnInventoryPage);
         clear = v.findViewById(R.id.btnClearOnInventoryPage);
+
+        searchField = v.findViewById(R.id.etSearchInventoryPage);
 
         invVal = v.findViewById(R.id.tvTotalInvVal);
         retVal = v.findViewById(R.id.tvTotalRetailVal);
@@ -83,6 +101,11 @@ public class Frag2Manage extends Fragment {
         retVal.setText(((MainActivity) getActivity()).retval + "");
         potProf.setText(((MainActivity) getActivity()).potProf + "");
 
+        ((MainActivity) getActivity()).updateProductListOfInventory();;
+        prodList = ((MainActivity) getActivity()).productListOfInventory;
+
+        updateRecView();
+
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,9 +113,51 @@ public class Frag2Manage extends Fragment {
                 startActivity(intent);
             }
         });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).hideKB();
+                //
+                searchTerm = searchField.getText().toString();
+                if (checkIfStrValid(searchTerm)){
+                    //
+                    ((MainActivity) getActivity()).searchProdsByName(searchTerm);;
+                    prodList = ((MainActivity) getActivity()).productListOfInventory;
+                    updateRecView();
+                }else{
+                    //toast
+                    Toast.makeText(getContext(), "Pls enter a valid product name", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchField.setText("");
+                ((MainActivity) getActivity()).hideKB();
+                ((MainActivity) getActivity()).updateProductListOfInventory();
+                prodList = ((MainActivity) getActivity()).productListOfInventory;
+                updateRecView();
+            }
+        });
 
 
 
         return v;
+    }
+    private void updateRecView(){
+        //
+        RecAdaptInventory adapter = new RecAdaptInventory(prodList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        frag2RecyclerView.setLayoutManager(layoutManager);
+        frag2RecyclerView.setItemAnimator(new DefaultItemAnimator());
+        frag2RecyclerView.setAdapter(adapter);
+    }
+    private boolean checkIfStrValid(String str){
+        if(str.equals("")) return false;
+        Pattern ps = Pattern.compile("[a-zA-Z0-9\\s]+");
+        Matcher ms = ps.matcher(str);
+        boolean out = ms.matches();
+        return out;
     }
 }
