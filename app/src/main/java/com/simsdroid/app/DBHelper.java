@@ -89,6 +89,28 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE user_info SET pin = " + pin + " WHERE id = 1;", null);
         db.close();
     }
+    public int getPIN(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT pin FROM user_info WHERE id = 1;", null);
+        int ret=0;
+        if(cursor.moveToFirst()) {
+            ret = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return ret;
+    }
+    public String getStoreName(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT store_name FROM user_info WHERE id = 1;", null);
+        String ret = "";
+        if (cursor.moveToFirst()) {
+            ret = cursor.getString(0);
+        }
+        cursor.close();
+        db.close();
+        return ret;
+    }
     //--------------------------------     PRODUCTS TABLE
 
     public void addProduct(ModelProducts product){
