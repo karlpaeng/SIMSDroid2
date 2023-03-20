@@ -365,5 +365,54 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return orderViews;
     }
+    //debts
+    public void addDebt(ModelDebts debt){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("order_number", debt.orderNumber);
+        cv.put("cust_name", debt.customerName);
+        cv.put("cust_contact", debt.customerContact);
+        cv.put("date_checkout", debt.dateCheckout);
+        cv.put("date_paid", debt.datePaid);
+
+        long i = db.insert("products", null, cv);
+
+        db.close();
+    }
+
+    public ArrayList<ModelDebts> getDebtList(String tag){
+        ArrayList<ModelDebts> debtList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String whereClause = "";
+        if (tag.equals("paid")){
+            whereClause = "WHERE NOT date_paid = '-';";
+        }else if (tag.equals("unpaid")){
+            whereClause = "WHERE date_paid = '-';";
+        }else if (tag.equals("all")){
+            whereClause = ";";
+        }
+        Cursor cursor = db.rawQuery("SELECT * FROM debts" + whereClause, null);
+        if (cursor.moveToFirst()){
+            do {
+                long ordNum = cursor.getInt(1);
+                String name = cursor.getString(2);
+                String cont = cursor.getString(3);
+                String check = cursor.getString(4);
+                String paid = cursor.getString(5);
+
+                ModelDebts debt = new ModelDebts(ordNum, name, cont, check, paid);
+                debtList.add(debt);
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return debtList;
+    }
+    public void updateDebt(long orderNumber, String paidDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE debts SET date_paid = '" + paidDate + "' WHERE order_number = " + orderNumber + ";", null);
+        db.close();
+    }
 
 }
