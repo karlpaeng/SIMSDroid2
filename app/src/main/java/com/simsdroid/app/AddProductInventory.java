@@ -2,6 +2,7 @@ package com.simsdroid.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,7 @@ public class AddProductInventory extends AppCompatActivity {
     Calendar calendar;
     SimpleDateFormat simpleDate;
 
-    DBHelper dbHalp = new DBHelper(AddProductInventory.this);
+    DBHelper dbHalp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class AddProductInventory extends AppCompatActivity {
         warningBarcode = findViewById(R.id.tvWarningForBarcode);
 
         barcodeStr = "";
+        dbHalp = new DBHelper(AddProductInventory.this);
         addThisProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,13 +60,19 @@ public class AddProductInventory extends AppCompatActivity {
                     priceDoub = Double.parseDouble(priceStr);
                     amtInt = Integer.parseInt(amtStr);
                     ModelProducts product = new ModelProducts(1, nameStr, barcodeStr, costDoub, priceDoub, amtInt, dateStr);
-                    dbHalp.addProduct(product);
-                    Toast.makeText(AddProductInventory.this, "Producted added: " + product.toString(), Toast.LENGTH_LONG).show();
+                    long i = dbHalp.addProduct(product);
+                    //Toast.makeText(AddProductInventory.this, i+" "+product.cost, Toast.LENGTH_LONG).show();
+                    //AddProductInventory.this.onBackPressed();
+                    Intent intent = new Intent(AddProductInventory.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("frag", "mnge");
+                    startActivity(intent);
 
                 }else{
                     //toast
                     Toast.makeText(AddProductInventory.this, "Pls enter valid data", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 

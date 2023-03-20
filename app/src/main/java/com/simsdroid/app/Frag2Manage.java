@@ -73,6 +73,16 @@ public class Frag2Manage extends Fragment {
         search = v.findViewById(R.id.btnSearchOnInventoryPage);
         clear = v.findViewById(R.id.btnClearOnInventoryPage);
 
+        invVal = v.findViewById(R.id.tvTotalInvVal);
+        retVal = v.findViewById(R.id.tvTotalRetailVal);
+        potProf = v.findViewById(R.id.tvTotalPotVal);
+
+        ((MainActivity) getActivity()).updateMngeData();
+
+        invVal.setText(((MainActivity) getActivity()).invVal + "");
+        retVal.setText(((MainActivity) getActivity()).retval + "");
+        potProf.setText(((MainActivity) getActivity()).potProf + "");
+
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

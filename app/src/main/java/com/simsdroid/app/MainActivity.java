@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     TextView actionBar;
     ArrayList<ModelProducts> productListOfInventory = new ArrayList<>();
+    double invVal, retval, potProf;
+    DBHelper dbHalp = new DBHelper(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         actionBar = findViewById(R.id.actionBar);
-        replaceFragment(new Frag1POS());
-        binding.bottomNavigationView.setSelectedItemId(R.id.pos);
-        actionBar.setText("POS");
+        String extraStr="";
+        if (getIntent().getStringExtra("frag") == null) {
+            replaceFragment(new Frag1POS());
+            binding.bottomNavigationView.setSelectedItemId(R.id.pos);
+            actionBar.setText("POS");
+            Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
+        }else {
+            extraStr = getIntent().getStringExtra("frag");
+            updateMngeData();
+            //Toast.makeText(MainActivity.this, extraStr, Toast.LENGTH_LONG).show();
+            if (extraStr == "pos"){
+                //
+            }else if (extraStr.equals("mnge")){
+                //
+                replaceFragment(new Frag2Manage());
+                binding.bottomNavigationView.setSelectedItemId(R.id.mnge);
+                actionBar.setText("Manage Inventory");
+            }else if (extraStr.equals("hist")){
+                //
+            }else if (extraStr.equals("debt")){
+                //
+            }else if (extraStr.equals("othr")){
+                //
+            }
+        }
+
+
+
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.pos:
@@ -74,5 +104,13 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentLayout, fragment);
         fragmentTransaction.commit();
 
+    }
+    public void updateMngeData(){
+        invVal = dbHalp.computeInventoryValue();
+        retval = dbHalp.computeRetailValue();
+        potProf = retval - invVal;
+    }
+    public void updateProductListOfInventory(){
+        productListOfInventory = dbHalp.allProductsInventory();
     }
 }

@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //--------------------------------     PRODUCTS TABLE
 
-    public void addProduct(ModelProducts product){
+    public long addProduct(ModelProducts product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -121,12 +121,13 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("barcode", product.barcode);
         cv.put("cost", product.cost);
         cv.put("retail_price", product.retailPrice);
-        cv.put("amount", product.amountStock);
+        cv.put("amount_stock", product.amountStock);
         cv.put("last_update", product.lastUpdate);
 
         long i = db.insert("products", null, cv);
 
         db.close();
+        return i;
     }
     public void updateProduct(long id, ModelProducts product){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -224,10 +225,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public Double computeInventoryValue(){
         Double total = 0.0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT cost FROM products;", null);
+        Cursor cursor = db.rawQuery("SELECT cost, amount_stock FROM products;", null);
         if (cursor.moveToFirst()){
             do {
-                total = total + Double.parseDouble(cursor.getString(0));
+                total = total + (Double.parseDouble(cursor.getString(0)) * cursor.getInt(1));
             }while (cursor.moveToNext());
         }
         db.close();
@@ -237,10 +238,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public Double computeRetailValue(){
         Double total = 0.0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT retail_price FROM products;", null);
+        Cursor cursor = db.rawQuery("SELECT retail_price, amount_stock FROM products;", null);
         if (cursor.moveToFirst()){
             do {
-                total = total + Double.parseDouble(cursor.getString(0));
+                total = total + (Double.parseDouble(cursor.getString(0)) * cursor.getInt(1));
             }while (cursor.moveToNext());
         }
         db.close();
