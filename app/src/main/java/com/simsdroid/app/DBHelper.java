@@ -118,10 +118,114 @@ public class DBHelper extends SQLiteOpenHelper {
                 "last_update = '" + product.lastUpdate + "' " +
                 "WHERE prod_id = " + id + ";", null);
         db.close();
-    }
-    //products list, list search by name
-    //inv value and retail value, profit
 
+    }
+    //products list, list search by name, by barcode, barcode exists
+    public ArrayList<ModelProducts> allProductsInventory(){
+        ArrayList<ModelProducts> products = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM products;", null);
+        if (cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String barcode = cursor.getString(2);
+                Double cost = Double.parseDouble(cursor.getString(3));
+                Double retail = Double.parseDouble(cursor.getString(4));
+                int amt = cursor.getInt(5);
+                String update = cursor.getString(6);
+
+                ModelProducts product = new ModelProducts(id, name, barcode, cost, retail, amt, update);
+
+                products.add(product);
+            }while (cursor.moveToNext());
+        }
+
+        db.close();
+        cursor.close();
+        return products;
+    }
+
+    public ArrayList<ModelProducts> searchProductByName(String prod_name){
+        ArrayList<ModelProducts> products = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM products WHERE prod_name LIKE '%" + prod_name + "%';", null);
+        if (cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String barcode = cursor.getString(2);
+                Double cost = Double.parseDouble(cursor.getString(3));
+                Double retail = Double.parseDouble(cursor.getString(4));
+                int amt = cursor.getInt(5);
+                String update = cursor.getString(6);
+
+                ModelProducts product = new ModelProducts(id, name, barcode, cost, retail, amt, update);
+
+                products.add(product);
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return products;
+    }
+    public ModelProducts searchProductByBarcode(String barcodestr){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM products WHERE barcode = '" + barcodestr + "';", null);
+        cursor.moveToFirst();
+
+        int id = cursor.getInt(0);
+        String name = cursor.getString(1);
+        String barcode = cursor.getString(2);
+        Double cost = Double.parseDouble(cursor.getString(3));
+        Double retail = Double.parseDouble(cursor.getString(4));
+        int amt = cursor.getInt(5);
+        String update = cursor.getString(6);
+
+        ModelProducts product = new ModelProducts(id, name, barcode, cost, retail, amt, update);
+
+        db.close();
+        cursor.close();
+
+        return product;
+    }
+    public boolean barcodeExists(String bc){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT prod_id FROM products WHERE barcode = '" + bc + "';", null);
+        boolean ret = cursor.moveToFirst();
+        cursor.close();
+        db.close();
+        return ret;
+    }
+    //inv value and retail value, profit
+    public Double computeInventoryValue(){
+        Double total = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT cost FROM products;", null);
+        if (cursor.moveToFirst()){
+            do {
+                total = total + Double.parseDouble(cursor.getString(0));
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return total;
+    }
+    public Double computeRetailValue(){
+        Double total = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT retail_price FROM products;", null);
+        if (cursor.moveToFirst()){
+            do {
+                total = total + Double.parseDouble(cursor.getString(0));
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return total;
+    }
+//------------ ?
     public void createOrder(ArrayList<ModelOrders> orders, String xdate, String xtime){ //subtract from amount in stock, create records in orders table
         SQLiteDatabase db = this.getWritableDatabase();
         double total = 0;
