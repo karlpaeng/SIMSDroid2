@@ -14,6 +14,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class Frag3History extends Fragment {
+    View v;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +60,12 @@ public class Frag3History extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag3_history, container, false);
+        v = inflater.inflate(R.layout.frag3_history, container, false);
+
+
+
+
+
+        return v;
     }
 }
