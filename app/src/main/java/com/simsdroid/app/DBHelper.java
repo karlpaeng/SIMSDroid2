@@ -136,9 +136,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "prod_name = '" + product.name + "', " +
                 "cost = '" + product.cost + "', " +
                 "retail_price = '" + product.retailPrice + "', "+
-                "amount = " + product.amountStock + ", " +
+                "amount_stock = " + product.amountStock + ", " +
                 "last_update = '" + product.lastUpdate + "' " +
-                "WHERE prod_id = " + id + ";", null);
+                "WHERE prod_id = " + id + ";");
         db.close();
 
     }

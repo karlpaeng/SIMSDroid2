@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * Use the {@link Frag2Manage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag2Manage extends Fragment {
+public class Frag2Manage extends Fragment implements RecViewInterface{
     View v;
     ArrayList<ModelProducts> prodList = new ArrayList<>();
 
@@ -149,7 +149,7 @@ public class Frag2Manage extends Fragment {
     }
     private void updateRecView(){
         //
-        RecAdaptInventory adapter = new RecAdaptInventory(prodList);
+        RecAdaptInventory adapter = new RecAdaptInventory(prodList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         frag2RecyclerView.setLayoutManager(layoutManager);
         frag2RecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -161,5 +161,17 @@ public class Frag2Manage extends Fragment {
         Matcher ms = ps.matcher(str);
         boolean out = ms.matches();
         return out;
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        Intent intent = new Intent(getContext(), UpdateProductInvenory.class);
+        intent.putExtra("id_val", ""+prodList.get(position).id);
+        intent.putExtra("name_val", ""+prodList.get(position).name);
+        intent.putExtra("cost_val", ""+prodList.get(position).cost);
+        intent.putExtra("price_val", ""+prodList.get(position).retailPrice);
+        intent.putExtra("amt_val", ""+prodList.get(position).amountStock);
+
+        startActivity(intent);
     }
 }
