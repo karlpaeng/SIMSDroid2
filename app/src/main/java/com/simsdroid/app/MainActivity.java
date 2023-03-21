@@ -123,8 +123,13 @@ public class MainActivity extends AppCompatActivity {
         productListOfInventory = dbHalp.searchProductByName(name);
     }
     public void hideKB(){
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
     }
 
 }

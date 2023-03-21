@@ -134,7 +134,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE products " +
                 "SET " +
                 "prod_name = '" + product.name + "', " +
-                "barcode = '" + product.barcode + "', " +
                 "cost = '" + product.cost + "', " +
                 "retail_price = '" + product.retailPrice + "', "+
                 "amount = " + product.amountStock + ", " +

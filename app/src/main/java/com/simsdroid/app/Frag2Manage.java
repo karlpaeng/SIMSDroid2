@@ -119,6 +119,7 @@ public class Frag2Manage extends Fragment {
                 ((MainActivity) getActivity()).hideKB();
                 //
                 searchTerm = searchField.getText().toString();
+
                 if (checkIfStrValid(searchTerm)){
                     //
                     ((MainActivity) getActivity()).searchProdsByName(searchTerm);;
@@ -126,13 +127,14 @@ public class Frag2Manage extends Fragment {
                     updateRecView();
                 }else{
                     //toast
-                    Toast.makeText(getContext(), "Pls enter a valid product name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Pls enter a valid product name", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), "Cleared search term", Toast.LENGTH_SHORT).show();
                 searchField.setText("");
                 ((MainActivity) getActivity()).hideKB();
                 ((MainActivity) getActivity()).updateProductListOfInventory();
