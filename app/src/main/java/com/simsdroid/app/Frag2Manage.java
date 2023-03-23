@@ -171,6 +171,7 @@ public class Frag2Manage extends Fragment implements RecViewInterface{
         intent.putExtra("cost_val", ""+prodList.get(position).cost);
         intent.putExtra("price_val", ""+prodList.get(position).retailPrice);
         intent.putExtra("amt_val", ""+prodList.get(position).amountStock);
+        intent.putExtra("last_up_val", ""+prodList.get(position).lastUpdate);
 
         startActivity(intent);
     }

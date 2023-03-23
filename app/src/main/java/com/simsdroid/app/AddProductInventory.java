@@ -3,7 +3,9 @@ package com.simsdroid.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,6 +48,18 @@ public class AddProductInventory extends AppCompatActivity {
 
         barcodeStr = "";
         dbHalp = new DBHelper(AddProductInventory.this);
+        addBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBarcode.setText("Rescan Barcode");
+                warningBarcode.setText("The item will have a Barcode");
+//                Button newBtn = new Button(new ContextThemeWrapper(getApplicationContext(), R.style.btn3theme));
+//                newBtn = findViewById(R.id.btnAddBarcode);
+                //setTheme(R.style.btn3theme);
+
+                //addBarcode.setTextAppearance(R.style.btn3theme);
+            }
+        });
         addThisProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

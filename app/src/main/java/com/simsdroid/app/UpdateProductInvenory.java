@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import java.util.regex.Pattern;
 public class UpdateProductInvenory extends AppCompatActivity {
     EditText name, cost, price, amt;
     Button cancel, update;
+    TextView lastUp;
     long id;
 
     DBHelper dbhalp = new DBHelper(UpdateProductInvenory.this);
@@ -39,11 +41,14 @@ public class UpdateProductInvenory extends AppCompatActivity {
         cancel = findViewById(R.id.btnCancelUpdate);
         update = findViewById(R.id.btnUpdate);
 
+        lastUp = findViewById(R.id.tvLastUpdateInfo);
+
         id = Long.parseLong(getIntent().getStringExtra("id_val"));
         name.setText(getIntent().getStringExtra("name_val"));
         cost.setText(getIntent().getStringExtra("cost_val"));
         price.setText(getIntent().getStringExtra("price_val"));
         amt.setText(getIntent().getStringExtra("amt_val"));;
+        lastUp.setText("Last update: " + getIntent().getStringExtra("last_up_val"));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
