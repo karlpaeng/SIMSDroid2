@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("frag") == null) {
             replaceFragment(new Frag1POS());
             binding.bottomNavigationView.setSelectedItemId(R.id.pos);
-            actionBar.setText("POS");
-            Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
+            actionBar.setText("POS (Point of Sale)");
+            //Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
         }else {
             extraStr = getIntent().getStringExtra("frag");
             updateMngeData();
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
                     replaceFragment(new Frag1POS());
                     //set text
-                    actionBar.setText("POS");
+                    actionBar.setText("POS (Point of Sale)");
                     break;
                 case R.id.mnge:
 

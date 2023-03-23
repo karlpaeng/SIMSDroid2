@@ -10,13 +10,15 @@
     <TextView
         android:id="@+id/actionBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:background="@color/navy"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center|center_vertical"
-        android:text="POS"
+        android:fontFamily="@font/monsterrat"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="POS (Point of Sale)"
         android:textColor="@color/white"
-        android:textSize="20dp"
+
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
