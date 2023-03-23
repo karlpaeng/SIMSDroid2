@@ -1,7 +1,10 @@
 package com.simsdroid.app;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -52,12 +58,14 @@ public class AddProductInventory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addBarcode.setText("Rescan Barcode");
-                warningBarcode.setText("The item will have a Barcode");
+
 //                Button newBtn = new Button(new ContextThemeWrapper(getApplicationContext(), R.style.btn3theme));
 //                newBtn = findViewById(R.id.btnAddBarcode);
                 //setTheme(R.style.btn3theme);
 
                 //addBarcode.setTextAppearance(R.style.btn3theme);
+
+                scanCode();
             }
         });
         addThisProduct.setOnClickListener(new View.OnClickListener() {
@@ -124,5 +132,36 @@ public class AddProductInventory extends AppCompatActivity {
         Matcher ms = ps.matcher(str);
         boolean out = ms.matches();
         return out;
+    }
+
+    private void scanCode(){
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Press volume up button to turn on flash");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->{
+        if(result.getContents() != null){
+            //result.getContents();
+            Toast.makeText(AddProductInventory.this, "" + result.getContents(), Toast.LENGTH_SHORT).show();
+            barcodeStr = result.getContents();
+            warningBarcode.setText("The item will have a Barcode");
+
+        }else{
+            alertDia("Error", "Scan failed. Try again.");
+        }
+    });
+    private void alertDia(String buildTitle, String buildMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddProductInventory.this);
+        builder.setTitle(buildTitle);
+        builder.setMessage(buildMessage);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).show();
     }
 }
