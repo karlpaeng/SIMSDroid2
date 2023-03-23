@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -21,7 +22,7 @@ public class AddProductInventory extends AppCompatActivity {
     EditText name, cost, price, amount;
     TextView warningBarcode;
     String nameStr, barcodeStr, costStr, priceStr, amtStr, dateStr;
-    Double costDoub, priceDoub;
+    BigDecimal costDoub, priceDoub;
     int amtInt;
 
     Calendar calendar;
@@ -65,8 +66,8 @@ public class AddProductInventory extends AppCompatActivity {
                 dateStr = simpleDate.format(calendar.getTime());
 
                 if(checkIfStrValid(nameStr) && checkIfDoubleValid(costStr) && checkIfDoubleValid(priceStr) && checkIfIntValid(amtStr)){
-                    costDoub = Double.parseDouble(costStr);
-                    priceDoub = Double.parseDouble(priceStr);
+                    costDoub = new BigDecimal(costStr);
+                    priceDoub = new BigDecimal(priceStr);
                     amtInt = Integer.parseInt(amtStr);
                     ModelProducts product = new ModelProducts(1, nameStr, barcodeStr, costDoub, priceDoub, amtInt, dateStr);
                     long i = dbHalp.addProduct(product);

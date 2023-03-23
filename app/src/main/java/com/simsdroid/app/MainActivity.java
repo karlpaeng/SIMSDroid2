@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     TextView actionBar;
 
     ArrayList<ModelProducts> productListOfInventory = new ArrayList<>();
-    double invVal, retval, potProf;
+    BigDecimal invVal, retval, potProf;
+
     DBHelper dbHalp = new DBHelper(MainActivity.this);
 
     @Override
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateMngeData(){
         invVal = dbHalp.computeInventoryValue();
         retval = dbHalp.computeRetailValue();
-        potProf = retval - invVal;
+        potProf = retval.subtract(invVal);
     }
     public void updateProductListOfInventory(){
         productListOfInventory = dbHalp.allProductsInventory();

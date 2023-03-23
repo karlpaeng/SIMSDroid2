@@ -1,12 +1,14 @@
 package com.simsdroid.app;
 
+import java.math.BigDecimal;
+
 public class ModelOrderView {
     public long orderNumber;
     public String date;
     public String time;
-    public double total;
+    public BigDecimal total;
 
-    public ModelOrderView(long orderNumber, String date, String time, double total) {
+    public ModelOrderView(long orderNumber, String date, String time, BigDecimal total) {
         this.orderNumber = orderNumber;
         this.date = date;
         this.time = time;

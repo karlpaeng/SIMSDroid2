@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -119,8 +120,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         cv.put("prod_name", product.name);
         cv.put("barcode", product.barcode);
-        cv.put("cost", product.cost);
-        cv.put("retail_price", product.retailPrice);
+        cv.put("cost", String.valueOf(product.cost));
+        cv.put("retail_price", String.valueOf(product.retailPrice));
         cv.put("amount_stock", product.amountStock);
         cv.put("last_update", product.lastUpdate);
 
@@ -152,8 +153,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
                 String barcode = cursor.getString(2);
-                Double cost = Double.parseDouble(cursor.getString(3));
-                Double retail = Double.parseDouble(cursor.getString(4));
+                BigDecimal cost = new BigDecimal(cursor.getString(3));
+                BigDecimal retail = new BigDecimal(cursor.getString(4));
                 int amt = cursor.getInt(5);
                 String update = cursor.getString(6);
 
@@ -177,8 +178,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
                 String barcode = cursor.getString(2);
-                Double cost = Double.parseDouble(cursor.getString(3));
-                Double retail = Double.parseDouble(cursor.getString(4));
+                BigDecimal cost = new BigDecimal(cursor.getString(3));
+                BigDecimal retail = new BigDecimal(cursor.getString(4));
                 int amt = cursor.getInt(5);
                 String update = cursor.getString(6);
 
@@ -200,8 +201,8 @@ public class DBHelper extends SQLiteOpenHelper {
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
         String barcode = cursor.getString(2);
-        Double cost = Double.parseDouble(cursor.getString(3));
-        Double retail = Double.parseDouble(cursor.getString(4));
+        BigDecimal cost = new BigDecimal(cursor.getString(3));
+        BigDecimal retail = new BigDecimal(cursor.getString(4));
         int amt = cursor.getInt(5);
         String update = cursor.getString(6);
 
@@ -221,26 +222,32 @@ public class DBHelper extends SQLiteOpenHelper {
         return ret;
     }
     //inv value and retail value, profit
-    public Double computeInventoryValue(){
-        Double total = 0.0;
+    public BigDecimal computeInventoryValue(){
+        BigDecimal total = new BigDecimal("0.0");
+        BigDecimal temp, temp2;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT cost, amount_stock FROM products;", null);
         if (cursor.moveToFirst()){
             do {
-                total = total + (Double.parseDouble(cursor.getString(0)) * cursor.getInt(1));
+                temp = new BigDecimal(cursor.getString(0));
+                temp2 = new BigDecimal(cursor.getInt(1));
+                total = total.add(temp.multiply(temp2));
             }while (cursor.moveToNext());
         }
         db.close();
         cursor.close();
         return total;
     }
-    public Double computeRetailValue(){
-        Double total = 0.0;
+    public BigDecimal computeRetailValue(){
+        BigDecimal total = new BigDecimal("0.0");
+        BigDecimal temp, temp2;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT retail_price, amount_stock FROM products;", null);
         if (cursor.moveToFirst()){
             do {
-                total = total + (Double.parseDouble(cursor.getString(0)) * cursor.getInt(1));
+                temp = new BigDecimal(cursor.getString(0));
+                temp2 = new BigDecimal(cursor.getInt(1));
+                total = total.add(temp.multiply(temp2));
             }while (cursor.moveToNext());
         }
         db.close();
@@ -250,16 +257,16 @@ public class DBHelper extends SQLiteOpenHelper {
 //------------ ?
     public void createOrder(ArrayList<ModelOrders> orders, String xdate, String xtime){ //subtract from amount in stock, create records in orders table
         SQLiteDatabase db = this.getWritableDatabase();
-        double total = 0;
+        BigDecimal total = new BigDecimal("0.0");
         for (ModelOrders order : orders) {
             ContentValues cv = new ContentValues();
 
             cv.put("order_number", order.orderNumber);
             cv.put("product_name", order.productName);
             cv.put("product_id", order.productId);
-            cv.put("retail_price", order.retailPrice);
+            cv.put("retail_price", String.valueOf(order.retailPrice));
             cv.put("amount", order.amount);
-            cv.put("amountxprice", order.amountXprice);
+            cv.put("amountxprice", String.valueOf(order.amountXprice));
 
             long i = db.insert("orders", null, cv);
 
@@ -275,7 +282,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             db.execSQL("UPDATE products SET amount_stock = " + tempAmt + " WHERE prod_id = " + order.productId + ";");
 
-            total += order.amountXprice;
+            total = total.add(order.amountXprice);
         }
         //total
         db.execSQL("UPDATE order_numbers SET total = '" + total + "', date = '" + xdate + "', time = '" + xtime + "' WHERE order_number = " + orders.get(0).orderNumber + ";");
@@ -311,17 +318,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 int orderNum = cursor.getInt(1);
                 String productName = cursor.getString(2);
                 int productId = cursor.getInt(3);
-                String retailPrice = cursor.getString(4);
+                BigDecimal retailPrice = new BigDecimal(cursor.getString(4));
                 int amount = cursor.getInt(5);
-                String amountXprice = cursor.getString(6);
+                BigDecimal amountXprice = new BigDecimal(cursor.getString(6));
 
                 ModelOrders order = new ModelOrders(
                         orderNum,
                         productName,
                         productId,
-                        Double.parseDouble(retailPrice),
+                        retailPrice,
                         amount,
-                        Double.parseDouble(amountXprice)
+                        amountXprice
                 );
 
                 ordersList.add(order);
@@ -340,9 +347,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String date = cursor.getString(1);
         String time = cursor.getString(2);
-        double returnDoub = Double.parseDouble(cursor.getString(3));
+        BigDecimal returnBD = new BigDecimal(cursor.getString(3));
 
-        ModelOrderView orderView = new ModelOrderView(orderNum, date, time, returnDoub);
+        ModelOrderView orderView = new ModelOrderView(orderNum, date, time, returnBD);
         cursor.close();
         db.close();
 
@@ -357,7 +364,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 int num = cursor.getInt(0);
                 String date = cursor.getString(1);
                 String time = cursor.getString(2);
-                Double tot = Double.parseDouble(cursor.getString(3));
+                BigDecimal tot = new BigDecimal(cursor.getString(3));
 
                 ModelOrderView order = new ModelOrderView(num, date, time, tot);
                 orderViews.add(order);
@@ -377,7 +384,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 int num = cursor.getInt(0);
                 String date = cursor.getString(1);
                 String time = cursor.getString(2);
-                Double tot = Double.parseDouble(cursor.getString(3));
+                BigDecimal tot = new BigDecimal(cursor.getString(3));
 
                 ModelOrderView order = new ModelOrderView(num, date, time, tot);
                 orderViews.add(order);

@@ -1,14 +1,16 @@
 package com.simsdroid.app;
 
+import java.math.BigDecimal;
+
 public class ModelOrders {
     public long orderNumber;
     public String productName;
     public long productId;
-    public double retailPrice;
+    public BigDecimal retailPrice;
     public int amount;
-    public double amountXprice;
+    public BigDecimal amountXprice;
 
-    public ModelOrders(long orderNumber, String productName, long productId, double retailPrice, int amount, double amountXprice) {
+    public ModelOrders(long orderNumber, String productName, long productId, BigDecimal retailPrice, int amount, BigDecimal amountXprice) {
         this.orderNumber = orderNumber;
         this.productName = productName;
         this.productId = productId;

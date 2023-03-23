@@ -10,8 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UpdateProductInvenory extends AppCompatActivity {
     EditText name, cost, price, amt;
@@ -59,27 +63,61 @@ public class UpdateProductInvenory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //
-                calendar = Calendar.getInstance();
-                simpleDate = new SimpleDateFormat("yyyy-MMM-dd");
-                String dateStr = simpleDate.format(calendar.getTime());
-                ModelProducts product = new ModelProducts(1,
-                        name.getText().toString(),
-                        "",
-                        Double.parseDouble(cost.getText().toString()),
-                        Double.parseDouble(price.getText().toString()),
-                        Integer.parseInt(amt.getText().toString()),
-                        dateStr);
-                dbhalp.updateProduct(id, product);
+                String nameStr, costStr, priceStr, amtStr;
+                nameStr = name.getText().toString();
+                costStr = cost.getText().toString();
+                priceStr = price.getText().toString();
+                amtStr = amt.getText().toString();
+                if(checkIfStrValid(nameStr) && checkIfDoubleValid(costStr) && checkIfDoubleValid(priceStr) && checkIfIntValid(amtStr)){
+                    calendar = Calendar.getInstance();
+                    simpleDate = new SimpleDateFormat("yyyy-MMM-dd");
+                    String dateStr = simpleDate.format(calendar.getTime());
+                    ModelProducts product = new ModelProducts(1,
+                            nameStr,
+                            "",
+                            new BigDecimal(costStr),
+                            new BigDecimal(priceStr),
+                            Integer.parseInt(amtStr),
+                            dateStr);
+                    dbhalp.updateProduct(id, product);
 
-                Toast.makeText(UpdateProductInvenory.this, "Product has been updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateProductInvenory.this, "Product has been updated", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(UpdateProductInvenory.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("frag", "mnge");
-                startActivity(intent);
+                    Intent intent = new Intent(UpdateProductInvenory.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("frag", "mnge");
+                    startActivity(intent);
+                }else{
+                    //toast
+                    Toast.makeText(UpdateProductInvenory.this, "Pls enter valid data", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
 
+    }
+    public boolean checkIfStrValid(String str){
+        if(str.equals("")) return false;
+        Pattern ps = Pattern.compile("[a-zA-Z0-9\\s]+");
+        Matcher ms = ps.matcher(str);
+        boolean out = ms.matches();
+        return out;
+    }
+    public boolean checkIfDoubleValid(String str){
+        if(str.equals("")) return false;
+        Pattern ps = Pattern.compile("^\\d{1,5}$|(?=^.{1,5}$)^\\d+\\.\\d{0,2}$");
+        Matcher ms = ps.matcher(str);
+        boolean out = ms.matches();
+        return out;
+        //^\d{1,5}$|(?=^.{1,5}$)^\d+\.\d{0,2}$
+    }
+    public boolean checkIfIntValid(String str){
+        //[0-9]+
+        if(str.equals("")) return false;
+        Pattern ps = Pattern.compile("[0-9]+");
+        Matcher ms = ps.matcher(str);
+        boolean out = ms.matches();
+        return out;
     }
 }
