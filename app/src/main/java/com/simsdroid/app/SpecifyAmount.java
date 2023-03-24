@@ -25,7 +25,8 @@ public class SpecifyAmount extends AppCompatActivity {
         prodName = findViewById(R.id.tvSpecAmtProdName);
         amount = findViewById(R.id.etSpecAmtNumber);
 
-        product = dbHalp.searchProductByBarcode(getIntent().getStringExtra("bcstr"));
+        //conditional
+        product = dbHalp.searchProductsById(Long.parseLong(getIntent().getStringExtra("prod_id")));
 
         prodName.setText(product.name);
 
@@ -34,7 +35,7 @@ public class SpecifyAmount extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SpecifyAmount.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("barcode_from_spec_amt", product.barcode);
+                intent.putExtra("id_from_spec_amt", ""+product.id);
                 intent.putExtra("amount_from_spec_amount", amount.getText().toString());
                 intent.putExtra("frag", "pos");
                 //Toast.makeText(SpecifyAmount.this, "null", Toast.LENGTH_LONG).show();

@@ -64,12 +64,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
+            android:layout_marginBottom="8dp"
             android:buttonTint="@color/lightBl"
             android:text=""
             android:textSize="15sp"
             android:theme="@style/btn2theme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTotalPOS" />
+            app:layout_constraintBottom_toTopOf="@+id/btnCheckOut"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView2"

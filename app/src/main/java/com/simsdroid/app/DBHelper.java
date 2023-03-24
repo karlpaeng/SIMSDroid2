@@ -222,6 +222,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return product;
     }
+    public ModelProducts searchProductsById(long prodid){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM products WHERE prod_id = " + prodid + ";", null);
+        cursor.moveToFirst();
+
+        int id = cursor.getInt(0);
+        String name = cursor.getString(1);
+        String barcode = cursor.getString(2);
+        BigDecimal cost = new BigDecimal(cursor.getString(3));
+        BigDecimal retail = new BigDecimal(cursor.getString(4));
+        int amt = cursor.getInt(5);
+        String update = cursor.getString(6);
+
+        ModelProducts product = new ModelProducts(id, name, barcode, cost, retail, amt, update);
+
+        db.close();
+        cursor.close();
+
+        return product;
+    }
     public boolean barcodeExists(String bc){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT prod_id FROM products WHERE barcode = '" + bc + "';", null);
@@ -510,5 +530,21 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return ordersList;
+    }
+    public BigDecimal getTotalTempOrder(){
+        //
+        BigDecimal total = new BigDecimal("0.0");
+        BigDecimal temp;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT amountxprice FROM temp_orders;", null);
+        if (cursor.moveToFirst()){
+            do {
+                temp = new BigDecimal(cursor.getString(0));
+                total = total.add(temp);
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return total;
     }
 }

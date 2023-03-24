@@ -1,8 +1,11 @@
 package com.simsdroid.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorStateListDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -49,6 +52,7 @@ public class UpdateProductInvenory extends AppCompatActivity {
         price.setText(getIntent().getStringExtra("price_val"));
         amt.setText(getIntent().getStringExtra("amt_val"));;
         lastUp.setText("Last update: " + getIntent().getStringExtra("last_up_val"));
+        //lastUp.setTextColor(ContextCompat.getColor(UpdateProductInvenory.this, R.color.orange));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

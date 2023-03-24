@@ -1,5 +1,6 @@
 package com.simsdroid.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -27,8 +30,7 @@ public class Frag1POS extends Fragment implements RecViewInterface{
     RecyclerView frag1RecyclerView;
     Button bcScan, noBCscan, checkOut;
     Switch debtSW;
-
-
+    TextView total;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,12 +86,24 @@ public class Frag1POS extends Fragment implements RecViewInterface{
 
         debtSW = v.findViewById(R.id.swDebtIsTrue);
 
+        total = v.findViewById(R.id.tvTotalPOS);
+
         updateRecView();
+        total.setText(String.valueOf(((MainActivity) getActivity()).totalForPOS));
+
         bcScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //
                 ((MainActivity) getActivity()).scanCode();
+            }
+        });
+        noBCscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                Intent intent = new Intent(getContext(), SearchProductForPOS.class);
+                startActivity(intent);
             }
         });
 
@@ -111,6 +125,7 @@ public class Frag1POS extends Fragment implements RecViewInterface{
         ((MainActivity) getActivity()).removeFromPosList(position);
 
         updateRecView();
+        total.setText(String.valueOf(((MainActivity) getActivity()).totalForPOS));
 
 
     }

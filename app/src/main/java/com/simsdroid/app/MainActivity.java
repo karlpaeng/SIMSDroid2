@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     String barcodeStr;
     BigDecimal totalForPOS = new BigDecimal("0.0");
 
+    ModelProducts prodForSpecAmt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);// no dark mode
@@ -49,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         actionBar = findViewById(R.id.actionBar);
+        orderListForPOS = dbHalp.getAllTempOrder();
+        totalForPOS = dbHalp.getTotalTempOrder();
         String extraStr="";
         if (getIntent().getStringExtra("frag") == null) {
-            try {
-                orderListForPOS = dbHalp.getAllTempOrder();
-            }catch (RuntimeException e){
-                e.printStackTrace();
-            }
+
+
+
             replaceFragment(new Frag1POS());
             binding.bottomNavigationView.setSelectedItemId(R.id.pos);
             actionBar.setText("POS (Point of Sale)");
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
             if (extraStr.equals("pos")){
                 //
                 //Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
-                ModelProducts productForPOS = dbHalp.searchProductByBarcode(getIntent().getStringExtra("barcode_from_spec_amt"));
+                totalForPOS = dbHalp.getTotalTempOrder();
+                ModelProducts productForPOS = dbHalp.searchProductsById(Long.parseLong(getIntent().getStringExtra("id_from_spec_amt")));
                 int amtForPOS = Integer.parseInt(getIntent().getStringExtra("amount_from_spec_amount"));
                 BigDecimal amtXprice = productForPOS.retailPrice.multiply(BigDecimal.valueOf(amtForPOS));
                 totalForPOS = totalForPOS.add(amtXprice);
@@ -187,7 +190,8 @@ public class MainActivity extends AppCompatActivity {
             if(dbHalp.barcodeExists(barcodeStr)){
                 //
                 Intent intent = new Intent(MainActivity.this, SpecifyAmount.class);
-                intent.putExtra("bcstr", barcodeStr);
+                prodForSpecAmt = dbHalp.searchProductByBarcode(barcodeStr);
+                intent.putExtra("prod_id", ""+prodForSpecAmt.id);
                 startActivity(intent);
 
             }else{
@@ -213,7 +217,9 @@ public class MainActivity extends AppCompatActivity {
     public void removeFromPosList(int position){
         Toast.makeText(MainActivity.this, "Removed: " + orderListForPOS.get(position).productName , Toast.LENGTH_SHORT).show();
         dbHalp.removeFromTempOrder(orderListForPOS.get(position).orderNumber);
+        totalForPOS = totalForPOS.subtract(orderListForPOS.get(position).amountXprice);
         orderListForPOS = dbHalp.getAllTempOrder();
+
     }
 
 }
