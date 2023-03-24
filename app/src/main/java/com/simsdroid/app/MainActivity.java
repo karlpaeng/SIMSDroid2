@@ -51,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
         actionBar = findViewById(R.id.actionBar);
         String extraStr="";
         if (getIntent().getStringExtra("frag") == null) {
-            orderListForPOS = dbHalp.getAllTempOrder();
+            try {
+                orderListForPOS = dbHalp.getAllTempOrder();
+            }catch (RuntimeException e){
+                e.printStackTrace();
+            }
             replaceFragment(new Frag1POS());
             binding.bottomNavigationView.setSelectedItemId(R.id.pos);
             actionBar.setText("POS (Point of Sale)");
@@ -208,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void removeFromPosList(int position){
         Toast.makeText(MainActivity.this, "Removed: " + orderListForPOS.get(position).productName , Toast.LENGTH_SHORT).show();
-        dbHalp.removeFromTempOrder(position);
+        dbHalp.removeFromTempOrder(orderListForPOS.get(position).orderNumber);
         orderListForPOS = dbHalp.getAllTempOrder();
     }
 

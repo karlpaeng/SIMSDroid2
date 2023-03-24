@@ -53,8 +53,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "date TEXT, " +
                 "time TEXT, " +
                 "total TEXT)");
-        sqLiteDatabase.execSQL("CREATE TABLE temp_order (" +
-                "order_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        sqLiteDatabase.execSQL("CREATE TABLE temp_orders (" +
+                "temp_order_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "order_number INTEGER, " +
                 "product_name TEXT, " +
                 "product_id INTEGER, " +
@@ -464,31 +464,31 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("amount", order.amount);
         cv.put("amountxprice", String.valueOf(order.amountXprice));
 
-        long i = db.insert("temp_order", null, cv);
+        long i = db.insert("temp_orders", null, cv);
 
         db.close();
     }
 
-    public void removeFromTempOrder(int position){
+    public void removeFromTempOrder(long position){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM temp_order WHERE order_id = " + position + ";");
+        db.execSQL("DELETE FROM temp_orders WHERE temp_order_id = " + (position) + ";");
         db.close();
     }
 
     public void clearTempOrder(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM temp_order;");
-        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='temp_order';");//reset primary key to 1
+        db.execSQL("DELETE FROM temp_orders;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='temp_orders';");//reset primary key to 1
         db.close();
     }
 
     public ArrayList<ModelOrders> getAllTempOrder(){
         ArrayList<ModelOrders> ordersList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM temp_order;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM temp_orders;", null);
         if (cursor.moveToFirst()){
             do{
-                int orderNum = cursor.getInt(1);
+                int orderNum = cursor.getInt(0);
                 String productName = cursor.getString(2);
                 int productId = cursor.getInt(3);
                 BigDecimal retailPrice = new BigDecimal(cursor.getString(4));
