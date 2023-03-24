@@ -3,18 +3,32 @@ package com.simsdroid.app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Switch;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Frag1POS#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag1POS extends Fragment {
+public class Frag1POS extends Fragment implements RecViewInterface{
     View v;
+
+    ArrayList<ModelOrders> orderList = new ArrayList<>();
+    RecyclerView frag1RecyclerView;
+    Button bcScan, noBCscan, checkOut;
+    Switch debtSW;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,8 +76,42 @@ public class Frag1POS extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.frag1_pos, container, false);
 
+        frag1RecyclerView = v.findViewById(R.id.rec_view_pos);
+
+        bcScan = v.findViewById(R.id.btnScanOnPOS);
+        noBCscan = v.findViewById(R.id.btnSearchOnPOS);
+        checkOut = v.findViewById(R.id.btnCheckOut);
+
+        debtSW = v.findViewById(R.id.swDebtIsTrue);
+
+        updateRecView();
+        bcScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                ((MainActivity) getActivity()).scanCode();
+            }
+        });
 
 
         return v;
+    }
+    private void updateRecView(){
+        orderList = ((MainActivity) getActivity()).orderListForPOS;
+
+        RecAdaptPOS adapter = new RecAdaptPOS(orderList, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        frag1RecyclerView.setLayoutManager(layoutManager);
+        frag1RecyclerView.setItemAnimator(new DefaultItemAnimator());
+        frag1RecyclerView.setAdapter(adapter);
+    }
+    @Override
+    public void onClickItem(int position) {
+        ////remove from array list, reacquire array list, updaterecview
+        ((MainActivity) getActivity()).removeFromPosList(position);
+
+        updateRecView();
+
+
     }
 }

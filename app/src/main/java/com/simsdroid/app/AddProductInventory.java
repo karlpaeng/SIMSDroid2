@@ -57,7 +57,7 @@ public class AddProductInventory extends AppCompatActivity {
         addBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBarcode.setText("Rescan Barcode");
+
 
 //                Button newBtn = new Button(new ContextThemeWrapper(getApplicationContext(), R.style.btn3theme));
 //                newBtn = findViewById(R.id.btnAddBarcode);
@@ -148,6 +148,7 @@ public class AddProductInventory extends AppCompatActivity {
             Toast.makeText(AddProductInventory.this, "" + result.getContents(), Toast.LENGTH_SHORT).show();
             barcodeStr = result.getContents();
             warningBarcode.setText("The item will have a Barcode");
+            addBarcode.setText("Rescan Barcode");
 
         }else{
             alertDia("Error", "Scan failed. Try again.");

@@ -1,5 +1,7 @@
 package com.simsdroid.app;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -16,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
 import java.math.BigDecimal;
@@ -30,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     DBHelper dbHalp = new DBHelper(MainActivity.this);
 
+    ArrayList<ModelOrders> orderListForPOS = new ArrayList<>();
+    String barcodeStr;
+    BigDecimal totalForPOS = new BigDecimal("0.0");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);// no dark mode
@@ -42,18 +51,41 @@ public class MainActivity extends AppCompatActivity {
         actionBar = findViewById(R.id.actionBar);
         String extraStr="";
         if (getIntent().getStringExtra("frag") == null) {
+            orderListForPOS = dbHalp.getAllTempOrder();
             replaceFragment(new Frag1POS());
             binding.bottomNavigationView.setSelectedItemId(R.id.pos);
             actionBar.setText("POS (Point of Sale)");
             //Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
         }else {
             extraStr = getIntent().getStringExtra("frag");
-            updateMngeData();
+
             //Toast.makeText(MainActivity.this, extraStr, Toast.LENGTH_LONG).show();
-            if (extraStr == "pos"){
+            if (extraStr.equals("pos")){
                 //
+                //Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
+                ModelProducts productForPOS = dbHalp.searchProductByBarcode(getIntent().getStringExtra("barcode_from_spec_amt"));
+                int amtForPOS = Integer.parseInt(getIntent().getStringExtra("amount_from_spec_amount"));
+                BigDecimal amtXprice = productForPOS.retailPrice.multiply(BigDecimal.valueOf(amtForPOS));
+                totalForPOS = totalForPOS.add(amtXprice);
+
+                ModelOrders oneOrder = new ModelOrders(
+                        1L,
+                        productForPOS.name,
+                        productForPOS.id,
+                        productForPOS.retailPrice,
+                        amtForPOS,
+                        amtXprice
+                );
+                dbHalp.addToTempOrder(oneOrder);
+                orderListForPOS = dbHalp.getAllTempOrder();
+
+                replaceFragment(new Frag1POS());
+                binding.bottomNavigationView.setSelectedItemId(R.id.pos);
+                actionBar.setText("POS (Point of Sale)");
+
             }else if (extraStr.equals("mnge")){
                 //
+                updateMngeData();
                 replaceFragment(new Frag2Manage());
                 binding.bottomNavigationView.setSelectedItemId(R.id.mnge);
                 actionBar.setText("Manage Inventory");
@@ -132,6 +164,52 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void scanCode(){
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Press volume up button to turn on flash");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->{
+        if(result.getContents() != null){
+            //result.getContents();
+            Toast.makeText(MainActivity.this, "" + result.getContents(), Toast.LENGTH_SHORT).show();
+            barcodeStr = result.getContents();
+            //
+            if(dbHalp.barcodeExists(barcodeStr)){
+                //
+                Intent intent = new Intent(MainActivity.this, SpecifyAmount.class);
+                intent.putExtra("bcstr", barcodeStr);
+                startActivity(intent);
+
+            }else{
+                alertDia("UNKNOWN PRODUCT", "Scanned Barcode is not recognized");
+            }
+
+
+        }else{
+            alertDia("Error", "Scan failed. Try again.");
+        }
+    });
+    private void alertDia(String buildTitle, String buildMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(buildTitle);
+        builder.setMessage(buildMessage);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).show();
+    }
+    public void removeFromPosList(int position){
+        Toast.makeText(MainActivity.this, "Removed: " + orderListForPOS.get(position).productName , Toast.LENGTH_SHORT).show();
+        dbHalp.removeFromTempOrder(position);
+        orderListForPOS = dbHalp.getAllTempOrder();
     }
 
 }

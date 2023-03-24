@@ -53,6 +53,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "date TEXT, " +
                 "time TEXT, " +
                 "total TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE temp_order (" +
+                "order_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "order_number INTEGER, " +
+                "product_name TEXT, " +
+                "product_id INTEGER, " +
+                "retail_price TEXT, " +
+                "amount INTEGER, " +
+                "amountxprice TEXT)"
+        );
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -255,13 +264,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return total;
     }
 //------------ ?
-    public void createOrder(ArrayList<ModelOrders> orders, String xdate, String xtime){ //subtract from amount in stock, create records in orders table
+
+    public void createOrder(ArrayList<ModelOrders> orders, String xdate, String xtime, long orderNumnum){ //subtract from amount in stock, create records in orders table
         SQLiteDatabase db = this.getWritableDatabase();
         BigDecimal total = new BigDecimal("0.0");
         for (ModelOrders order : orders) {
             ContentValues cv = new ContentValues();
 
-            cv.put("order_number", order.orderNumber);
+            cv.put("order_number", orderNumnum);
             cv.put("product_name", order.productName);
             cv.put("product_id", order.productId);
             cv.put("retail_price", String.valueOf(order.retailPrice));
@@ -444,4 +454,61 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addToTempOrder(ModelOrders order){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("product_name", order.productName);
+        cv.put("product_id", order.productId);
+        cv.put("retail_price", String.valueOf(order.retailPrice));
+        cv.put("amount", order.amount);
+        cv.put("amountxprice", String.valueOf(order.amountXprice));
+
+        long i = db.insert("temp_order", null, cv);
+
+        db.close();
+    }
+
+    public void removeFromTempOrder(int position){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM temp_order WHERE order_id = " + position + ";");
+        db.close();
+    }
+
+    public void clearTempOrder(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM temp_order;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='temp_order';");//reset primary key to 1
+        db.close();
+    }
+
+    public ArrayList<ModelOrders> getAllTempOrder(){
+        ArrayList<ModelOrders> ordersList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM temp_order;", null);
+        if (cursor.moveToFirst()){
+            do{
+                int orderNum = cursor.getInt(1);
+                String productName = cursor.getString(2);
+                int productId = cursor.getInt(3);
+                BigDecimal retailPrice = new BigDecimal(cursor.getString(4));
+                int amount = cursor.getInt(5);
+                BigDecimal amountXprice = new BigDecimal(cursor.getString(6));
+
+                ModelOrders order = new ModelOrders(
+                        orderNum,
+                        productName,
+                        productId,
+                        retailPrice,
+                        amount,
+                        amountXprice
+                );
+
+                ordersList.add(order);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return ordersList;
+    }
 }
