@@ -512,6 +512,21 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         return debtList;
     }
+    public ModelDebts getDebtInfo(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM debts WHERE order_number = " + id + ";", null);
+        ModelDebts modelDebts = new ModelDebts();
+        if (cursor.moveToFirst()) {
+            long ordNum = cursor.getInt(1);
+            String name = cursor.getString(2);
+            String cont = cursor.getString(3);
+            String check = cursor.getString(4);
+            String paid = cursor.getString(5);
+            modelDebts = new ModelDebts(ordNum, name, cont, check, paid);
+        }
+
+        return modelDebts;
+    }
     public void updateDebt(long orderNumber, String paidDate, String name, String contact){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE debts SET date_paid = '" + paidDate + "'," +

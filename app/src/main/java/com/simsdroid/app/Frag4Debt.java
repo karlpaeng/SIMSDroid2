@@ -1,5 +1,6 @@
 package com.simsdroid.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -112,10 +113,6 @@ public class Frag4Debt extends Fragment implements RecViewInterface{
 
         return v;
     }
-    public void checkButton(View v) {
-
-
-    }
     private void updateRecView(){
         RecAdaptDebt adapter = new RecAdaptDebt(debts, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -127,5 +124,8 @@ public class Frag4Debt extends Fragment implements RecViewInterface{
     @Override
     public void onClickItem(int position) {
         //
+        Intent intent = new Intent(getContext(), DebtInfo.class);
+        intent.putExtra("debt_id", debts.get(position).orderNumber);
+        startActivity(intent);
     }
 }
