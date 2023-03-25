@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     BigDecimal totalForPOS = new BigDecimal("0.0");
 
     long l;
+    String date, time;
 
     ModelProducts prodForSpecAmt;
 
@@ -228,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void checkOutOrder(){
-        String date, time;
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MMM-dd");
         date = simpleDate.format(calendar.getTime());

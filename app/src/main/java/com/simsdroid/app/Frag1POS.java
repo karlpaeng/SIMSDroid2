@@ -114,19 +114,26 @@ public class Frag1POS extends Fragment implements RecViewInterface{
                 if(orderList.isEmpty()){
                     Toast.makeText(getContext(), "Try adding a product first", Toast.LENGTH_LONG).show();
                 }else{
+                    Intent intent = new Intent(getContext(), OrderReceipt.class);
+
+                    ((MainActivity) getActivity()).checkOutOrder();
+                    intent.putExtra("order_num", ((MainActivity) getActivity()).l);
+                    updateRecView();
+                    total.setText(String.valueOf(((MainActivity) getActivity()).totalForPOS));
+
                     if(debtSW.isChecked()){
                         //add to debts
-                    }else{
-                        Intent intent = new Intent(getContext(), OrderReceipt.class);
-
-                        ((MainActivity) getActivity()).checkOutOrder();
-                        intent.putExtra("order_num", ((MainActivity) getActivity()).l);
-                        updateRecView();
-                        total.setText(String.valueOf(((MainActivity) getActivity()).totalForPOS));
-
-
-                        startActivity(intent);
+                        ModelDebts modelDebts = new ModelDebts(
+                                ((MainActivity) getActivity()).l,
+                                "-",
+                                "-",
+                                ((MainActivity) getActivity()).date,
+                                "-"
+                        );
+                        ((MainActivity) getActivity()).dbHalp.addDebt(modelDebts);
                     }
+                    startActivity(intent);
+
                 }
             }
         });

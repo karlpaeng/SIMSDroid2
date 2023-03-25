@@ -174,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<ModelProducts> allProductsInventory(){
         ArrayList<ModelProducts> products = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM products;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM products ORDER BY prod_name ASC LIMIT 40;", null);
         if (cursor.moveToFirst()){
             do{
                 int id = cursor.getInt(0);
@@ -407,7 +407,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<ModelOrderView> getOrderHistory(){
         ArrayList<ModelOrderView> orderViews = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE NOT total = '' ORDER BY order_number DESC;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE NOT total = '' ORDER BY order_number DESC LIMIT 30;", null);
         if (cursor.moveToFirst()){
             do{
                 int num = cursor.getInt(0);
@@ -489,13 +489,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String whereClause = "";
         if (tag.equals("paid")){
-            whereClause = "WHERE NOT date_paid = '-';";
+            whereClause = "WHERE NOT date_paid = '-'";
         }else if (tag.equals("unpaid")){
-            whereClause = "WHERE date_paid = '-';";
+            whereClause = "WHERE date_paid = '-'";
         }else if (tag.equals("all")){
-            whereClause = ";";
+            whereClause = "";
         }
-        Cursor cursor = db.rawQuery("SELECT * FROM debts" + whereClause, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM debts " + whereClause + " ORDER BY debt_id DESC;", null);
         if (cursor.moveToFirst()){
             do {
                 long ordNum = cursor.getInt(1);
@@ -512,9 +512,12 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         return debtList;
     }
-    public void updateDebt(long orderNumber, String paidDate){
+    public void updateDebt(long orderNumber, String paidDate, String name, String contact){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE debts SET date_paid = '" + paidDate + "' WHERE order_number = " + orderNumber + ";", null);
+        db.execSQL("UPDATE debts SET date_paid = '" + paidDate + "'," +
+                " cust_name = '" + name + "', " +
+                "cust_contact = '" + contact + "' " +
+                "WHERE order_number = " + orderNumber + ";", null);
         db.close();
     }
 

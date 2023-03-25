@@ -3,18 +3,34 @@ package com.simsdroid.app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Frag4Debt#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag4Debt extends Fragment {
+public class Frag4Debt extends Fragment implements RecViewInterface{
     View v;
+
+    RecyclerView recyclerView;
+
+    RadioGroup radioGroup;
+    RadioButton unpaid, paid, all;
+
+    ArrayList<ModelDebts> debts = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,11 +78,54 @@ public class Frag4Debt extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.frag4_debt, container, false);
 
+        recyclerView = v.findViewById(R.id.rec_view_debts);
+        radioGroup = v.findViewById(R.id.rbGroupDebt);
+        unpaid = v.findViewById(R.id.rbUnpaid);
+        paid = v.findViewById(R.id.rbPaid);
+        all = v.findViewById(R.id.rbAllDebt);
 
+        radioGroup.check(R.id.rbUnpaid);
 
+        debts = ((MainActivity) getActivity()).dbHalp.getDebtList("unpaid");
+        updateRecView();
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int radioId = radioGroup.getCheckedRadioButtonId();
+
+                if(radioId == R.id.rbUnpaid){
+                    //
+                    debts = ((MainActivity) getActivity()).dbHalp.getDebtList("unpaid");
+                }else if(radioId == R.id.rbPaid){
+                    //
+                    debts = ((MainActivity) getActivity()).dbHalp.getDebtList("paid");
+                }else if(radioId == R.id.rbAllDebt){
+                    //
+                    debts = ((MainActivity) getActivity()).dbHalp.getDebtList("all");
+                }
+                updateRecView();
+            }
+        });
 
 
 
         return v;
+    }
+    public void checkButton(View v) {
+
+
+    }
+    private void updateRecView(){
+        RecAdaptDebt adapter = new RecAdaptDebt(debts, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        //
     }
 }
