@@ -35,14 +35,14 @@ public class DebtInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_info);
 
-        orderId.findViewById(R.id.btnViewOrderDebtInfo);
-        update.findViewById(R.id.btnUpdateDebtInfo);
-        date.findViewById(R.id.tvDateCheckedDebtInfo);
-        total.findViewById(R.id.tvTotalDebtInfo);
-        paidDate.findViewById(R.id.tvPaidDateDebtInfo);
-        name.findViewById(R.id.etNameDebtInfo);
-        contact.findViewById(R.id.etContactDebtInfo);
-        paid.findViewById(R.id.swMarkPaidDebtInfo);
+        orderId = findViewById(R.id.btnViewOrderDebtInfo);
+        update = findViewById(R.id.btnUpdateDebtInfo);
+        date = findViewById(R.id.tvDateCheckedDebtInfo);
+        total = findViewById(R.id.tvTotalDebtInfo);
+        paidDate = findViewById(R.id.tvPaidDateDebtInfo);
+        name = findViewById(R.id.etNameDebtInfo);
+        contact = findViewById(R.id.etContactDebtInfo);
+        paid = findViewById(R.id.swMarkPaidDebtInfo);
 
         debtId = getIntent().getLongExtra("debt_id", 0);
 
@@ -56,9 +56,13 @@ public class DebtInfo extends AppCompatActivity {
 
         if(modelDebts.customerName.equals("-")){
             name.setText("");
+        }else{
+            name.setText(modelDebts.customerName);
         }
         if(modelDebts.customerContact.equals("-")){
             contact.setText("");
+        }else{
+            contact.setText(modelDebts.customerContact);
         }
 
         if (modelDebts.datePaid.equals("-")){
@@ -85,25 +89,28 @@ public class DebtInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //
-                if(contact.getText().toString().equals("") || checkIfStrValid(name.getText().toString())){
-                    Toast.makeText(DebtInfo.this, "Don't leave anything blank!", Toast.LENGTH_LONG).show();
-                }else{
+                if(!contact.getText().toString().equals("") || checkIfStrValid(name.getText().toString())){
                     dateStr = modelDebts.datePaid;
                     if(paid.isClickable() && paid.isChecked()){
                         Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MMM-dd");
                         dateStr = simpleDate.format(calendar.getTime());
                     }
+                    dbHalp.updateDebt(
+                            debtId,
+                            dateStr,
+                            name.getText().toString(),
+                            contact.getText().toString()
+                    );
+                    Intent intent = new Intent(DebtInfo.this, MainActivity.class);
+                    intent.putExtra("frag", "debt");
+                    startActivity(intent);
+
+                }else{
+                    Toast.makeText(DebtInfo.this, "Don't leave anything blank or invalid!", Toast.LENGTH_LONG).show();
                 }
-                dbHalp.updateDebt(
-                        debtId,
-                        dateStr,
-                        name.getText().toString(),
-                        contact.getText().toString()
-                        );
-                Intent intent = new Intent(DebtInfo.this, MainActivity.class);
-                intent.putExtra("frag", "debt");
-                startActivity(intent);
+
+
 
             }
         });
@@ -115,5 +122,15 @@ public class DebtInfo extends AppCompatActivity {
         Matcher ms = ps.matcher(str);
         boolean out = ms.matches();
         return out;
+    }
+    @Override
+    public void onBackPressed() {
+        if(!contact.getText().toString().equals("") || checkIfStrValid(name.getText().toString())){
+            super.onBackPressed();
+        }else{
+            Toast.makeText(DebtInfo.this, "Don't leave anything blank or invalid!", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }

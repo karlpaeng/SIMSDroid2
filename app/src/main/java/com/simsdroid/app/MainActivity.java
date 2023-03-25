@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 //
             }else if (extraStr.equals("debt")){
                 //
+                replaceFragment(new Frag4Debt());
+                binding.bottomNavigationView.setSelectedItemId(R.id.debt);
+                actionBar.setText("Customer Debt");
             }else if (extraStr.equals("othr")){
                 //
             }

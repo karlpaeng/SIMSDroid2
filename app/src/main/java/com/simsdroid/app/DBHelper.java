@@ -532,7 +532,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE debts SET date_paid = '" + paidDate + "'," +
                 " cust_name = '" + name + "', " +
                 "cust_contact = '" + contact + "' " +
-                "WHERE order_number = " + orderNumber + ";", null);
+                "WHERE order_number = " + orderNumber + ";");
         db.close();
     }
 
