@@ -407,7 +407,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<ModelOrderView> getOrderHistory(){
         ArrayList<ModelOrderView> orderViews = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE NOT total = '' ORDER BY order_number DESC;", null);
         if (cursor.moveToFirst()){
             do{
                 int num = cursor.getInt(0);
@@ -427,13 +427,38 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<ModelOrderView> searchOrderNumByDate(String datestr){
         ArrayList<ModelOrderView> orderViews = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE date = '" + datestr + "';", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE date = '" + datestr + "' ORDER BY order_number DESC;", null);
         if (cursor.moveToFirst()){
             do{
                 int num = cursor.getInt(0);
                 String date = cursor.getString(1);
                 String time = cursor.getString(2);
                 BigDecimal tot = new BigDecimal(cursor.getString(3));
+
+                ModelOrderView order = new ModelOrderView(num, date, time, tot);
+                orderViews.add(order);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orderViews;
+    }
+    public ArrayList<ModelOrderView> searchOrderNumById(long idVal){
+        ArrayList<ModelOrderView> orderViews = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE order_number = " + idVal + " AND NOT total = '' ORDER BY order_number DESC;", null);
+        if (cursor.moveToFirst()){
+            do{
+                int num = cursor.getInt(0);
+                String date = cursor.getString(1);
+                String time = cursor.getString(2);
+                String bdStr = "";
+                if(cursor.getString(3).equals("")){
+                    bdStr = "0.0";
+                }else {
+                    bdStr = cursor.getString(3);
+                }
+                BigDecimal tot = new BigDecimal(bdStr);
 
                 ModelOrderView order = new ModelOrderView(num, date, time, tot);
                 orderViews.add(order);

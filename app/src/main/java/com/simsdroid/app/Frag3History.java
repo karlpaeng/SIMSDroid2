@@ -1,20 +1,40 @@
 package com.simsdroid.app;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Frag3History#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag3History extends Fragment {
+public class Frag3History extends Fragment implements RecViewInterface, DatePickerDialog.OnDateSetListener {
     View v;
+
+    EditText searchBar;
+    Button search, clear, openDatePicker;
+    RecyclerView recyclerView;
+
+    ArrayList<ModelOrderView> orderViews = new ArrayList<>();
+
+    String[] monthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,10 +82,90 @@ public class Frag3History extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.frag3_history, container, false);
 
+        recyclerView = v.findViewById(R.id.rec_view_hist);
+        searchBar = v.findViewById(R.id.etIdSearchHist);
+        search = v.findViewById(R.id.btnSearchOnHist);
+        clear = v.findViewById(R.id.btnClearOnHist);
+        openDatePicker = v.findViewById(R.id.btnSearchDateHist);
+
+        orderViews = ((MainActivity) getActivity()).dbHalp.getOrderHistory();
+        updateRecView();
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                ((MainActivity) getActivity()).hideKB();
+                if(searchBar.getText().toString().equals("")){
+                    Toast.makeText(getContext(), "Enter a valid Order ID", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    orderViews = ((MainActivity) getActivity()).dbHalp.searchOrderNumById(
+                            Long.parseLong(searchBar.getText().toString())
+                    );
+                    updateRecView();
+                }
+
+            }
+        });
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).hideKB();
+                searchBar.setText("");
+                orderViews = ((MainActivity) getActivity()).dbHalp.getOrderHistory();
+                updateRecView();
+                Toast.makeText(getContext(), "Cleared search", Toast.LENGTH_SHORT).show();
+            }
+        });
+        openDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open date picker
+                showDatePickerDialog();
+            }
+        });
+
 
 
 
 
         return v;
+    }
+    private void updateRecView(){
+        //
+        RecAdaptHistory adapter = new RecAdaptHistory(orderViews, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClickItem(int position) {
+        Intent intent = new Intent(getContext(), OrderReceipt.class);
+        intent.putExtra("order_num", orderViews.get(position).orderNumber);
+        startActivity(intent);
+
+    }
+    private void showDatePickerDialog(){
+        DatePickerDialog datePickDia = new DatePickerDialog(
+                getContext(),
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickDia.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        String zerostr = "";
+        if(i2 < 10) zerostr = "0";
+        String dateSelected = i + "-" + monthNames[i1] + "-" + zerostr + i2;
+        orderViews = ((MainActivity) getActivity()).dbHalp.searchOrderNumByDate(dateSelected);
+        updateRecView();
+
     }
 }
