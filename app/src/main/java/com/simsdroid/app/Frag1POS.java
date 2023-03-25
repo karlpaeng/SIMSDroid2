@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -94,19 +95,41 @@ public class Frag1POS extends Fragment implements RecViewInterface{
         bcScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+
                 ((MainActivity) getActivity()).scanCode();
             }
         });
         noBCscan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+
                 Intent intent = new Intent(getContext(), SearchProductForPOS.class);
                 startActivity(intent);
             }
         });
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create order, check for debt entry, check if list is empty
+                if(orderList.isEmpty()){
+                    Toast.makeText(getContext(), "Try adding a product first", Toast.LENGTH_LONG).show();
+                }else{
+                    if(debtSW.isChecked()){
+                        //add to debts
+                    }else{
+                        Intent intent = new Intent(getContext(), OrderReceipt.class);
 
+                        ((MainActivity) getActivity()).checkOutOrder();
+                        intent.putExtra("order_num", ((MainActivity) getActivity()).l);
+                        updateRecView();
+                        total.setText(String.valueOf(((MainActivity) getActivity()).totalForPOS));
+
+
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
 
         return v;
     }

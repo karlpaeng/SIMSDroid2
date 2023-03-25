@@ -24,7 +24,9 @@ import com.journeyapps.barcodescanner.ScanOptions;
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ModelOrders> orderListForPOS = new ArrayList<>();
     String barcodeStr;
     BigDecimal totalForPOS = new BigDecimal("0.0");
+
+    long l;
 
     ModelProducts prodForSpecAmt;
 
@@ -219,6 +223,22 @@ public class MainActivity extends AppCompatActivity {
         dbHalp.removeFromTempOrder(orderListForPOS.get(position).orderNumber);
         totalForPOS = totalForPOS.subtract(orderListForPOS.get(position).amountXprice);
         orderListForPOS = dbHalp.getAllTempOrder();
+
+    }
+    public void checkOutOrder(){
+        String date, time;
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MMM-dd");
+        date = simpleDate.format(calendar.getTime());
+        simpleDate = new SimpleDateFormat("hh:mm:ss a");
+        time = simpleDate.format(calendar.getTime());
+        l = dbHalp.getOrderNumber();
+        dbHalp.createOrder(orderListForPOS, date, time, l);
+        orderListForPOS.clear();
+        dbHalp.clearTempOrder();
+        totalForPOS = new BigDecimal("0.0");
+        //goto receipt
+        Toast.makeText(MainActivity.this, "Checked out " , Toast.LENGTH_SHORT).show();
 
     }
 

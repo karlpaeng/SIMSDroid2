@@ -46,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE user_info (" +
                 "id INTEGER PRIMARY KEY, " +
                 "store_name TEXT, " +
+                "store_addr TEXT, " +
                 "pin INTEGER)"
         );
         sqLiteDatabase.execSQL("CREATE TABLE order_numbers (" +
@@ -68,11 +69,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 //-------------------------------     USER INFO TABLE
-    public void createUserInfo(String storeName, int PIN){
+    public void createUserInfo(String storeName, String storeAddr, int PIN){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("id", 1);
         cv.put("store_name", storeName);
+        cv.put("store_addr", storeAddr);
         cv.put("pin", PIN);
 
         long i = db.insert("user_info", null, cv);
@@ -94,6 +96,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE user_info SET store_name = '" + name + "' WHERE id = 1;", null);
         db.close();
     }
+    public void updateStoreAddress(String addr){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE user_info SET store_addr = '" + addr + "' WHERE id = 1;", null);
+        db.close();
+    }
     public void updatePIN(int pin){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE user_info SET pin = " + pin + " WHERE id = 1;", null);
@@ -113,6 +120,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public String getStoreName(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT store_name FROM user_info WHERE id = 1;", null);
+        String ret = "";
+        if (cursor.moveToFirst()) {
+            ret = cursor.getString(0);
+        }
+        cursor.close();
+        db.close();
+        return ret;
+    }
+    public String getStoreAddress(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT store_addr FROM user_info WHERE id = 1;", null);
         String ret = "";
         if (cursor.moveToFirst()) {
             ret = cursor.getString(0);
@@ -315,7 +333,7 @@ public class DBHelper extends SQLiteOpenHelper {
             total = total.add(order.amountXprice);
         }
         //total
-        db.execSQL("UPDATE order_numbers SET total = '" + total + "', date = '" + xdate + "', time = '" + xtime + "' WHERE order_number = " + orders.get(0).orderNumber + ";");
+        db.execSQL("UPDATE order_numbers SET total = '" + total + "', date = '" + xdate + "', time = '" + xtime + "' WHERE order_number = " + orderNumnum + ";");
         db.close();
     }
 
@@ -377,7 +395,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String date = cursor.getString(1);
         String time = cursor.getString(2);
-        BigDecimal returnBD = new BigDecimal(cursor.getString(3));
+
+        BigDecimal returnBD = new BigDecimal(String.valueOf(cursor.getString(3)));
 
         ModelOrderView orderView = new ModelOrderView(orderNum, date, time, returnBD);
         cursor.close();
@@ -435,7 +454,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("date_checkout", debt.dateCheckout);
         cv.put("date_paid", debt.datePaid);
 
-        long i = db.insert("products", null, cv);
+        long i = db.insert("debts", null, cv);
 
         db.close();
     }

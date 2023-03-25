@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@drawable/ripple_orange">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/tvPosProdName"
+        android:id="@+id/tvReceiptProdName"
         android:layout_width="270dp"
-        android:layout_height="25dp"
+        android:layout_height="21dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-condensed-medium"
@@ -23,47 +18,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvPosItemAmt"
+        android:id="@+id/tvReceiptItemAmt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:fontFamily="sans-serif-condensed-medium"
+        android:fontFamily="monospace"
         android:text="TextView"
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPosProdName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvReceiptProdName" />
 
     <TextView
-        android:id="@+id/tvPosAmtXPrice"
+        android:id="@+id/tvReceiptAmtXPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-condensed-medium"
+        android:fontFamily="monospace"
         android:text="TextView"
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPosProdName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvReceiptProdName" />
 
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/navy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPosItemAmt" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/textViewrec17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:fontFamily="sans-serif-condensed-medium"
+        android:fontFamily="sans-serif"
         android:text="x"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@id/tvPosItemAmt"
-        app:layout_constraintTop_toBottomOf="@+id/tvPosProdName" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvReceiptItemAmt"
+        app:layout_constraintEnd_toStartOf="@id/tvReceiptItemAmt" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
