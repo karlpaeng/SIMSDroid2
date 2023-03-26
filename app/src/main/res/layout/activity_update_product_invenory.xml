@@ -1,127 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBl"
-    tools:context=".UpdateProductInvenory">
-
-
-    <EditText
-        android:id="@+id/etUpdateProdName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/btn_small_round_white"
-        android:ems="15"
-        android:hint="Product Name"
-        android:inputType="textPersonName"
-        android:padding="15dp"
-        android:text=""
-        android:textColorHighlight="@color/lightGr"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <EditText
-        android:id="@+id/etUpdateCost"
-        android:inputType="numberDecimal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
-        android:padding="15dp"
-        android:ems="7"
-        android:hint="Cost"
-        android:text=""
-        android:textColorHighlight="@color/lightGr"
-        android:background="@drawable/btn_small_round_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUpdateProdName" />
-
-    <EditText
-        android:id="@+id/etUpdatePrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/btn_small_round_white"
-        android:ems="7"
-        android:hint="Retail Price"
-        android:inputType="numberDecimal"
-        android:padding="15dp"
-        android:text=""
-        android:textColorHighlight="@color/lightGr"
-        app:layout_constraintStart_toEndOf="@+id/etUpdateCost"
-        app:layout_constraintTop_toBottomOf="@id/etUpdateProdName" />
-
-    <EditText
-        android:id="@+id/etUpdateAmtStock"
-        android:inputType="number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
-        android:padding="15dp"
-        android:ems="9"
-        android:hint="Amount in Stock"
-        android:text=""
-        android:textColorHighlight="@color/lightGr"
-        android:background="@drawable/btn_small_round_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUpdateCost" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="147dp"
-        android:text="Update Product information in the Inventory"
-        android:textColor="@color/navy"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnCancelUpdate"
+    android:background="@color/lightBl">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/btn_small_round_white"
-        android:text="Cancel"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:theme="@style/btn2theme"
-        app:layout_constraintTop_toBottomOf="@+id/tvLastUpdateInfo"
-        tools:layout_editor_absoluteX="16dp" />
+        android:layout_gravity="center"
+        android:background="@color/lightBl"
+        tools:context=".UpdateProductInvenory">
 
-    <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Update"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:theme="@style/btn3theme"
-        android:background="@drawable/btn_small_round_white"
-        app:layout_constraintTop_toBottomOf="@+id/btnCancelUpdate"
-        tools:layout_editor_absoluteX="16dp" />
 
-    <TextView
-        android:id="@+id/tvLastUpdateInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="TextView"
-        android:textColor="@color/navy"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUpdateAmtStock" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/etUpdateProdName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_small_round_white"
+            android:ems="15"
+            android:hint="Product Name"
+            android:inputType="textPersonName"
+            android:padding="15dp"
+            android:text=""
+            android:textColorHighlight="@color/lightGr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <EditText
+            android:id="@+id/etUpdateCost"
+            android:inputType="numberDecimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:padding="15dp"
+            android:ems="7"
+            android:hint="Cost"
+            android:text=""
+            android:textColorHighlight="@color/lightGr"
+            android:background="@drawable/btn_small_round_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etUpdateProdName" />
+
+        <EditText
+            android:id="@+id/etUpdatePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/btn_small_round_white"
+            android:ems="7"
+            android:hint="Retail Price"
+            android:inputType="numberDecimal"
+            android:padding="15dp"
+            android:text=""
+            android:textColorHighlight="@color/lightGr"
+            app:layout_constraintStart_toEndOf="@+id/etUpdateCost"
+            app:layout_constraintTop_toBottomOf="@id/etUpdateProdName" />
+
+        <EditText
+            android:id="@+id/etUpdateAmtStock"
+            android:inputType="number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:padding="15dp"
+            android:ems="9"
+            android:hint="Amount in Stock"
+            android:text=""
+            android:textColorHighlight="@color/lightGr"
+            android:background="@drawable/btn_small_round_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etUpdateCost" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Update Product information in the Inventory"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnCancelUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_small_round_white"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:theme="@style/btn2theme"
+            app:layout_constraintTop_toBottomOf="@+id/tvLastUpdateInfo"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/btn_small_round_white"
+            android:text="Update"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:theme="@style/btn3theme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCancelUpdate"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/tvLastUpdateInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="TextView"
+            android:textColor="@color/navy"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUpdateAmtStock" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
