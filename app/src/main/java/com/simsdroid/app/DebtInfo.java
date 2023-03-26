@@ -89,7 +89,7 @@ public class DebtInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //
-                if(!contact.getText().toString().equals("") || checkIfStrValid(name.getText().toString())){
+                if(!contact.getText().toString().equals("") && checkIfStrValid(name.getText().toString())){
                     dateStr = modelDebts.datePaid;
                     if(paid.isClickable() && paid.isChecked()){
                         Calendar calendar = Calendar.getInstance();
@@ -110,8 +110,6 @@ public class DebtInfo extends AppCompatActivity {
                     Toast.makeText(DebtInfo.this, "Don't leave anything blank or invalid!", Toast.LENGTH_LONG).show();
                 }
 
-
-
             }
         });
 
@@ -125,7 +123,7 @@ public class DebtInfo extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        if(!contact.getText().toString().equals("") || checkIfStrValid(name.getText().toString())){
+        if(!contact.getText().toString().equals("") && checkIfStrValid(name.getText().toString())){
             super.onBackPressed();
         }else{
             Toast.makeText(DebtInfo.this, "Don't leave anything blank or invalid!", Toast.LENGTH_LONG).show();
