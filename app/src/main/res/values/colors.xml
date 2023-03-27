@@ -12,4 +12,8 @@
     <color name="orange">#ef6c33</color>
     <color name="lightBl">#abdff1</color>
     <color name="lightGr">#e1dddb</color>
+
+    <color name="green">#079a80</color>
+    <color name="darkblue">#153462</color>
+    <color name="mintish">#bad0c1</color>
 </resources>
