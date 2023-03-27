@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBl">
+    android:background="@color/mintish">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".SearchProductForPOS"
-        android:background="@color/lightBl">
+        android:background="@color/mintish">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_small_round_white"
                     android:ems="10"
+                    android:fontFamily="@font/monsterrat_semibold"
                     android:hint="Enter Product Name"
                     android:inputType="textPersonName"
                     android:paddingVertical="10dp"
@@ -51,7 +52,7 @@
                     android:background="@drawable/btn_small_round_white"
                     android:drawableLeft="@drawable/ic_baseline_search_24"
                     android:text=""
-                    android:theme="@style/btn3theme"
+                    android:theme="@style/btn2theme"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/etSearchProdPOS"
@@ -75,16 +76,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="8dp"
-                    android:text="Product Name / Cost / Retail Price / Amount in stock"
-                    android:textColor="@color/navy"
+                    android:text="Name   /   Cost   /   Price   /   Stock"
+                    android:textColor="@color/darkblue"
+                    android:fontFamily="@font/monsterrat_semibold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/dividerOnSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/navy"
+                    android:layout_height="3dp"
+                    android:background="@color/mintish"
                     app:layout_constraintTop_toBottomOf="@+id/tvOnSearch"
                     tools:layout_editor_absoluteX="1dp" />
 
@@ -94,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Try searching for a product"
+                    android:fontFamily="@font/monsterrat_semibold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerOnSearch" />
@@ -118,8 +121,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/btn_small_round_white"
                 android:padding="15dp"
-                android:text="Name of selected Product will appear here "
+                android:text="Name of selected item will appear here "
                 android:textColor="@color/lightGr"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutGroupOnsearch2"
                 tools:layout_editor_absoluteX="33dp" />
@@ -132,9 +136,10 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/btn_small_round_white"
-                android:text="Confirm Selected Product"
+                android:text="Confirm Selected Item"
                 android:textAllCaps="false"
                 android:textSize="20sp"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:theme="@style/btn3theme"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

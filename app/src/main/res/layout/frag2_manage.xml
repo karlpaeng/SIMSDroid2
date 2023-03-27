@@ -17,27 +17,40 @@
             android:background="@color/lightGr"
             android:theme="@style/btn3theme">
 
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/monsterrat_bold"
+                android:text="Manage Inventory"
+                android:textColor="@color/darkblue"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/btn_big_round_blue"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/btn_big_round_white"
+                android:backgroundTint="@color/mintish"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/textView23">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/monsterrat_bold"
                     android:text="Total Inventory Value"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/darkblue"
                     android:textSize="16sp"
-                    android:textStyle="bold|italic"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,9 +61,9 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="-5dp"
                     android:text="12,564.98"
-                    android:textColor="@color/navy"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/monsterrat_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView" />
 
@@ -60,11 +73,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif"
                     android:text="Total Retail Value"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/darkblue"
                     android:textSize="16sp"
-                    android:textStyle="bold|italic"
+                    android:fontFamily="@font/monsterrat_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTotalInvVal" />
 
@@ -75,9 +87,9 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="-5dp"
                     android:text="12,564.98"
-                    android:textColor="@color/navy"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/monsterrat_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView3" />
 
@@ -87,11 +99,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/monsterrat_bold"
                     android:text="Total Potential Profit"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/darkblue"
                     android:textSize="16sp"
-                    android:textStyle="bold|italic"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTotalRetailVal" />
 
@@ -103,12 +114,13 @@
                     android:layout_marginTop="-5dp"
                     android:layout_marginBottom="15dp"
                     android:text="12,564.98"
-                    android:textColor="@color/navy"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/monsterrat_bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView5" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -133,6 +145,7 @@
                     android:paddingVertical="10dp"
                     android:paddingLeft="15dp"
                     android:textColorHint="@color/lightGr"
+                    android:fontFamily="@font/monsterrat_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -171,7 +184,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="270dp"
                 android:layout_marginHorizontal="15dp"
                 android:background="@drawable/btn_small_round_white"
                 android:paddingBottom="10dp"
@@ -185,16 +198,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="8dp"
-                    android:text="Product Name / Cost / Retail Price / Amount in stock"
-                    android:textColor="@color/navy"
+                    android:fontFamily="@font/monsterrat_bold"
+                    android:text="Name   /   Cost   /   Price   /   Stock"
+                    android:textColor="@color/darkblue"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/navy"
+                    android:layout_height="3dp"
+                    android:background="@color/lightGr"
                     app:layout_constraintTop_toBottomOf="@+id/textView7"
                     tools:layout_editor_absoluteX="1dp" />
 
@@ -203,6 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/monsterrat_regular"
                     android:text="No products. Try adding one."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -210,8 +226,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="220dp"
                     app:layout_constraintTop_toBottomOf="@id/divider2">
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rec_view"
                         android:layout_width="match_parent"
@@ -225,16 +242,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="120dp"
                 android:background="@drawable/btn_small_round_white"
                 android:padding="10dp"
                 android:text="Add Product to Inventory"
                 android:textAllCaps="false"
                 android:textSize="18sp"
+                android:fontFamily="@font/monsterrat_semibold"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="77dp"
                 />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

@@ -104,6 +104,6 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
     public void onClickItem(int position) {
         prodId = prodList.get(position).id;
         tvProdName.setText(prodList.get(position).name);
-        tvProdName.setTextColor(ContextCompat.getColor(SearchProductForPOS.this, R.color.black));
+        tvProdName.setTextColor(ContextCompat.getColor(SearchProductForPOS.this, R.color.darkblue));
     }
 }

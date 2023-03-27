@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBl">
+    android:background="@color/mintish">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/lightBl"
+        android:background="@color/mintish"
         tools:context=".AddProductInventory">
 
         <Button
@@ -21,6 +21,7 @@
             android:layout_marginTop="32dp"
             android:background="@drawable/btn_small_round_white"
             android:text="Add Barcode"
+            android:fontFamily="@font/monsterrat_semibold"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:theme="@style/btn2theme"
@@ -39,6 +40,7 @@
             android:inputType="textPersonName"
             android:padding="15dp"
             android:text=""
+            android:fontFamily="@font/monsterrat_semibold"
             android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAddBarcode" />
@@ -55,6 +57,7 @@
             android:inputType="numberDecimal"
             android:padding="15dp"
             android:text=""
+            android:fontFamily="@font/monsterrat_semibold"
             android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etProductName" />
@@ -71,6 +74,7 @@
             android:inputType="numberDecimal"
             android:padding="15dp"
             android:text=""
+            android:fontFamily="@font/monsterrat_semibold"
             android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toEndOf="@+id/etCost"
             app:layout_constraintTop_toBottomOf="@+id/etProductName" />
@@ -87,6 +91,7 @@
             android:inputType="number"
             android:padding="15dp"
             android:text=""
+            android:fontFamily="@font/monsterrat_semibold"
             android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etRetPrice" />
@@ -100,6 +105,7 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/btn_small_round_white"
             android:text="Add this Product "
+            android:fontFamily="@font/monsterrat_semibold"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:theme="@style/btn3theme"
@@ -114,9 +120,10 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="50dp"
             android:drawableLeft="@drawable/ic_baseline_info_24"
-            android:drawableTint="@color/navy"
+            android:drawableTint="@color/darkblue"
             android:gravity="center_horizontal|center_vertical"
             android:text="The item you are about to add has no Barcode"
+            android:fontFamily="@font/monsterrat_semibold"
             android:textColor="@color/navy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etAmtStock" />

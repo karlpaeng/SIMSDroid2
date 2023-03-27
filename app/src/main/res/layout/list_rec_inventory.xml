@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/ripple_orange">
+    android:background="@drawable/ripple_navy">
 
     <TextView
         android:id="@+id/rec_inven_prod_name"
@@ -14,10 +14,10 @@
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/monsterrat_semibold"
         android:text="Name of Product Choco 25g"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textColor="@color/darkblue"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,8 +28,9 @@
         android:layout_marginTop="-2dp"
         android:layout_marginEnd="250dp"
         android:text="Cost"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:textColor="@color/green"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/rec_inven_prod_name"
         app:layout_constraintEnd_toEndOf="parent"
          />
@@ -41,8 +42,9 @@
         android:layout_marginTop="-2dp"
         android:layout_marginEnd="150dp"
         android:text="Price"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:textColor="@color/green"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/rec_inven_prod_name"
         app:layout_constraintEnd_toEndOf="parent"
          />
@@ -54,16 +56,17 @@
         android:layout_marginTop="-2dp"
         android:layout_marginEnd="50dp"
         android:text="Stock"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:textColor="@color/green"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/rec_inven_prod_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/navy"
+        android:layout_height="3dp"
+        android:background="@color/lightGr"
         app:layout_constraintTop_toBottomOf="@+id/rec_inven_cost"
         tools:layout_editor_absoluteX="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
