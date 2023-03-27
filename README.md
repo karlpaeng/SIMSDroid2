@@ -1,2 +1,2 @@
-# SIMSDroid2
- POS and IMS for small businesses
+# SariSari POS
+ POS (Point of Sale) and Inventory Management System for small businesses and sari-sari stores
