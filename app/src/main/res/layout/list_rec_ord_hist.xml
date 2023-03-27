@@ -50,12 +50,12 @@
         android:id="@+id/tvTotalHist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/monsterrat_semibold"
         android:text="TextView"
         android:textColor="@color/darkblue"
         android:textSize="16sp"
-        android:fontFamily="@font/monsterrat_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
