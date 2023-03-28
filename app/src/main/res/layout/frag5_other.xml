@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="27dp"
+                android:paddingHorizontal="27dp"
                 android:background="@drawable/btn_big_round_white"
                 app:layout_constraintTop_toBottomOf="@+id/textView35"
                 tools:layout_editor_absoluteX="1dp">
@@ -47,7 +47,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/monsterrat_bold"
                     android:text="General Settings"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="27dp"
+                android:paddingHorizontal="27dp"
                 android:background="@drawable/btn_big_round_white"
                 android:backgroundTint="@color/mintish"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
@@ -79,7 +79,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/monsterrat_bold"
                     android:text="Inventory Settings"
@@ -96,22 +96,21 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="110dp"
-                android:paddingBottom="27dp"
                 android:background="@drawable/btn_big_round_white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingHorizontal="27dp"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
-                tools:layout_editor_absoluteX="137dp">
+                tools:layout_editor_absoluteX="16dp">
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/monsterrat_bold"
                     android:text="Orders and Debt"
@@ -125,6 +124,39 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView9"
                     tools:layout_editor_absoluteX="140dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="110dp"
+                android:background="@drawable/btn_big_round_white"
+                android:backgroundTint="@color/mintish"
+                android:paddingHorizontal="27dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout9"
+                tools:layout_editor_absoluteX="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/otherRecView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView36"/>
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/monsterrat_bold"
+                    android:text="Others"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,13 +19,14 @@ import java.util.ArrayList;
  * Use the {@link Frag5Other#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag5Other extends Fragment implements RecViewInterface, RecViewInterface2, RecViewInterface3{
+public class Frag5Other extends Fragment implements RecViewInterface, RecViewInterface2, RecViewInterface3, RecViewInterface4{
     View v;
 
-    RecyclerView recyclerView1, recyclerView2, recyclerView3;
+    RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
     ArrayList<ModelItemSettings> genSett = new ArrayList<>();
     ArrayList<ModelItemSettings> invSett = new ArrayList<>();
     ArrayList<ModelItemSettings> ordDebt = new ArrayList<>();
+    ArrayList<ModelItemSettings> others = new ArrayList<>();
 
     String[][] texts = {
             {
@@ -35,13 +36,19 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 "Change PIN"
             },
             {
-                "Export Inventory Information",
-                "Import Inventory Information"
+                "Export Inventory List",
+                "Import Inventory List"
             },
             {
-                "Export Order History",
+                "Export Orders",
+                "Export Orders by date",
                 "Export Debt Records"
+            },
+            {
+                    "Help",
+                    "About"
             }
+
     };
 
     // TODO: Rename parameter arguments, choose names that match
@@ -93,6 +100,8 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         recyclerView1 = v.findViewById(R.id.genSettRecView);
         recyclerView2 = v.findViewById(R.id.invSettRecView);
         recyclerView3 = v.findViewById(R.id.orderDebtRecView);
+        recyclerView4 = v.findViewById(R.id.otherRecView);
+
         int i = 0;
         for (String s: texts[0]){
 
@@ -105,6 +114,10 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         }
         for (String s: texts[2]){
             ordDebt.add(new ModelItemSettings(s,i));
+            i++;
+        }
+        for (String s: texts[3]){
+            others.add(new ModelItemSettings(s,i));
             i++;
         }
         //
@@ -125,7 +138,12 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         recyclerView3.setLayoutManager(layoutManager3);
         recyclerView3.setItemAnimator(new DefaultItemAnimator());
         recyclerView3.setAdapter(adapter3);
-
+        //
+        RecAdaptSetting4 adapter4 = new RecAdaptSetting4(others, this);
+        RecyclerView.LayoutManager layoutManager4 = new LinearLayoutManager(getContext());
+        recyclerView4.setLayoutManager(layoutManager4);
+        recyclerView4.setItemAnimator(new DefaultItemAnimator());
+        recyclerView4.setAdapter(adapter4);
 
 
 
@@ -146,5 +164,10 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     @Override
     public void onClickItem3(int position) {
         Toast.makeText(getContext(), "position3:" + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClickItem4(int position) {
+        Toast.makeText(getContext(), "position4:" + position, Toast.LENGTH_SHORT).show();
     }
 }
