@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.simsdroid.app"
+        applicationId "com.sarisari.pos"
         minSdk 25
         targetSdk 32
         versionCode 1
