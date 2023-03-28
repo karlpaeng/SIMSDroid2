@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBl">
+    android:background="@color/mintish">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/lightBl"
+        android:background="@color/mintish"
         tools:context=".SpecifyAmount">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +30,7 @@
                 android:text="Done"
                 android:textAllCaps="false"
                 android:textSize="28sp"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:theme="@style/btn3theme"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
@@ -41,11 +42,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/btn_small_round_orange"
-                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/btn_small_round_white"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:padding="10dp"
                 android:text="TextView"
-                android:textColor="@color/white"
+                android:textColor="@color/darkblue"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
                 tools:layout_editor_absoluteX="37dp" />
@@ -56,9 +57,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:text="Product Name:"
-                android:textColor="@color/navy"
+                android:textColor="@color/darkblue"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -83,6 +84,7 @@
                     android:inputType="number"
                     android:padding="15dp"
                     android:text="1"
+                    android:fontFamily="@font/monsterrat_semibold"
                     android:textColor="@color/black"
                     android:textColorHint="@color/lightGr"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -93,9 +95,9 @@
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/monsterrat_semibold"
                     android:text="Specify Amount:"
-                    android:textColor="@color/navy"
+                    android:textColor="@color/darkblue"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

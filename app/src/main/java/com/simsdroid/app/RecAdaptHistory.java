@@ -52,7 +52,7 @@ public class RecAdaptHistory extends RecyclerView.Adapter<RecAdaptHistory.MyView
     public void onBindViewHolder(@NonNull RecAdaptHistory.MyViewHolder holder, int position) {
 
         holder.id.setText("" + ordersList.get(position).orderNumber);
-        holder.dateTime.setText(ordersList.get(position).date + " ; " + ordersList.get(position).time);
+        holder.dateTime.setText(ordersList.get(position).date + ", " + ordersList.get(position).time);
         holder.total.setText(""+ordersList.get(position).total);
 
     }

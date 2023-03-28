@@ -2,23 +2,23 @@
     <!-- Base application theme. -->
     <style name="Theme.SIMSDroid2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryVariant">@color/navy</item>
+        <item name="colorPrimary">@color/darkblue</item>
+        <item name="colorPrimaryVariant">@color/green</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/navy</item>
+        <item name="colorSecondary">@color/green</item>
         <item name="colorSecondaryVariant">@color/lightGr</item>
-        <item name="colorOnSecondary">@color/navy</item>
+        <item name="colorOnSecondary">@color/green</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/navy</item>
+        <item name="android:statusBarColor">@color/lightGr</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="btn1theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/lightBl</item>
-        <item name="colorPrimaryVariant">@color/lightGr</item>
-        <item name="colorOnPrimary">@color/navy</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/darkblue</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/lightGr</item>
         <item name="colorSecondaryVariant">@color/lightBl</item>
@@ -29,28 +29,28 @@
     </style>
     <style name="btn2theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryVariant">@color/navy</item>
+        <item name="colorPrimary">@color/darkblue</item>
+        <item name="colorPrimaryVariant">@color/green</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange</item>
-        <item name="colorSecondaryVariant">@color/orange</item>
-        <item name="colorOnSecondary">@color/lightBl</item>
+        <item name="colorSecondary">@color/green</item>
+        <item name="colorSecondaryVariant">@color/darkblue</item>
+        <item name="colorOnSecondary">@color/mintish</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/navy</item>
+        <item name="android:statusBarColor">@color/lightGr</item>
         <!-- Customize your theme here. -->
     </style>
     <style name="btn3theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/navy</item>
-        <item name="colorPrimaryVariant">@color/orange</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/darkblue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/navy</item>
-        <item name="colorSecondaryVariant">@color/orange</item>
-        <item name="colorOnSecondary">@color/lightBl</item>
+        <item name="colorSecondary">@color/darkblue</item>
+        <item name="colorSecondaryVariant">@color/green</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/navy</item>
+        <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

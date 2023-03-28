@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightBl">
+    android:background="@color/mintish">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/lightBl"
+        android:background="@color/mintish"
         tools:context=".DebtInfo">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +27,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/btn_small_round_white"
                 android:drawableRight="@drawable/ic_baseline_remove_red_eye_24"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:text="Order ID: "
+                android:textAllCaps="true"
                 android:textSize="16sp"
                 android:theme="@style/btn2theme"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Date checked out: "
-                android:textColor="@color/navy"
+                android:textColor="@color/green"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnViewOrderDebtInfo" />
@@ -51,7 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mark as paid"
-                android:textColor="@color/navy"
+                android:textColor="@color/darkblue"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/swMarkPaidDebtInfo"
                 app:layout_constraintStart_toEndOf="@+id/swMarkPaidDebtInfo"
@@ -62,7 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textColor="@color/navy"
+                android:textColor="@color/darkblue"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/textView31"
                 app:layout_constraintTop_toTopOf="@+id/textView31" />
@@ -79,6 +83,7 @@
                 android:inputType="phone"
                 android:padding="15dp"
                 android:textColorHint="@color/lightGr"
+                android:fontFamily="@font/monsterrat_semibold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etNameDebtInfo" />
 
@@ -87,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textColor="@color/navy"
+                android:textColor="@color/darkblue"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/textView28"
                 app:layout_constraintTop_toTopOf="@+id/textView28" />
@@ -99,7 +105,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Total payment: "
-                android:textColor="@color/navy"
+                android:textColor="@color/green"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -116,6 +123,7 @@
                 android:inputType="textPersonName"
                 android:padding="15dp"
                 android:textColorHint="@color/lightGr"
+                android:fontFamily="@font/monsterrat_semibold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
@@ -132,6 +140,7 @@
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:theme="@style/btn3theme"
+                android:fontFamily="@font/monsterrat_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView33"
                 tools:layout_editor_absoluteX="72dp" />
@@ -142,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
-                android:theme="@style/btn2theme"
+                android:theme="@style/btn3theme"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
@@ -153,7 +162,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Date paid: "
-                android:textColor="@color/navy"
+                android:textColor="@color/green"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etContactDebtInfo" />
@@ -164,7 +174,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Not yet paid! "
-                android:textColor="@color/navy"
+                android:textColor="@color/darkblue"
+                android:fontFamily="@font/monsterrat_semibold"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView34"
                 app:layout_constraintStart_toEndOf="@+id/textView34"

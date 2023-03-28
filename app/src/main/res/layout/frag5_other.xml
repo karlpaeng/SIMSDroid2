@@ -18,167 +18,116 @@
             android:layout_height="wrap_content"
             android:background="@color/lightGr"
             android:theme="@style/btn1theme">
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="General Settings" />
-
-            <Button
-                android:id="@+id/btnChangeStoreName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Change Store Name"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView6" />
-
-            <Button
-                android:id="@+id/butnChangeStoreAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Change Store Address"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/btnChangeStoreName"
-                tools:layout_editor_absoluteX="219dp" />
-
-            <Button
-                android:id="@+id/btnChangePIN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Change PIN"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/butnChangeStoreAddress" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/textView35"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Inventory Settings"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/monsterrat_bold"
+                android:text="Settings"
+                android:textColor="@color/darkblue"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnChangePIN"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btnExportInvInfo"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Export Inventory Information"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:theme="@style/btn2theme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView8" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="27dp"
+                android:background="@drawable/btn_big_round_white"
+                app:layout_constraintTop_toBottomOf="@+id/textView35"
+                tools:layout_editor_absoluteX="1dp">
 
-            <Button
-                android:id="@+id/btnImportInvInfo"
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/monsterrat_bold"
+                    android:text="General Settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/genSettRecView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6"
+                    tools:layout_editor_absoluteX="107dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Import Inventory Information"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:theme="@style/btn2theme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnExportInvInfo" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="27dp"
+                android:background="@drawable/btn_big_round_white"
+                android:backgroundTint="@color/mintish"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
+                tools:layout_editor_absoluteX="16dp">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Orders and Debt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnImportInvInfo" />
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/monsterrat_bold"
+                    android:text="Inventory Settings"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btnExportOrderHist"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/invSettRecView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8"
+                    tools:layout_editor_absoluteX="112dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Export Order History"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:theme="@style/btn3theme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView9" />
-
-            <Button
-                android:id="@+id/btnExportDebtRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_small_round_white"
-                android:gravity="center|left"
-                android:paddingVertical="10dp"
-                android:paddingLeft="15dp"
-                android:text="Export Debt Records"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:theme="@style/btn3theme"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="110dp"
+                android:paddingBottom="27dp"
+                android:background="@drawable/btn_big_round_white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnExportOrderHist" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
+                tools:layout_editor_absoluteX="137dp">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/monsterrat_bold"
+                    android:text="Orders and Debt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/orderDebtRecView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    tools:layout_editor_absoluteX="140dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </FrameLayout>
 </ScrollView>

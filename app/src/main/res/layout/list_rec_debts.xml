@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/ripple_orange">
+    android:background="@drawable/ripple_navy">
 
     <TextView
         android:id="@+id/textView20"
@@ -15,8 +15,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="By: "
-        android:textColor="@color/navy"
+        android:textColor="@color/green"
         android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +28,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/darkblue"
+        android:fontFamily="@font/monsterrat_semibold"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/textView20"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +41,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/darkblue"
+        android:fontFamily="@font/monsterrat_semibold"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +54,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="ID:"
-        android:textColor="@color/navy"
+        android:textColor="@color/green"
+        android:fontFamily="@font/monsterrat_semibold"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/idOnDebtRec"
         app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +67,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
         android:text="Checked out on: "
-        android:textColor="@color/navy"
+        android:textColor="@color/green"
+        android:fontFamily="@font/monsterrat_semibold"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +81,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/darkblue"
+        android:fontFamily="@font/monsterrat_semibold"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView30"
@@ -85,8 +91,8 @@
     <View
         android:id="@+id/divider8"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/navy"
+        android:layout_height="3dp"
+        android:background="@color/lightGr"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,7 @@ public class AddProductInventory extends AppCompatActivity {
     Calendar calendar;
     SimpleDateFormat simpleDate;
 
-    DBHelper dbHalp;
+    DBHelper dbHalp = new DBHelper(AddProductInventory.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,6 @@ public class AddProductInventory extends AppCompatActivity {
         warningBarcode = findViewById(R.id.tvWarningForBarcode);
 
         barcodeStr = "";
-        dbHalp = new DBHelper(AddProductInventory.this);
         addBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,8 +146,15 @@ public class AddProductInventory extends AppCompatActivity {
             //result.getContents();
             Toast.makeText(AddProductInventory.this, "" + result.getContents(), Toast.LENGTH_SHORT).show();
             barcodeStr = result.getContents();
-            warningBarcode.setText("The item will have a Barcode");
-            addBarcode.setText("Rescan Barcode");
+            if (dbHalp.barcodeExists(barcodeStr)){
+                alertDia("Product already exists",
+                        "This barcode or item is already registered. You may edit its details in the products list."
+                );
+                barcodeStr = "";
+            }else {
+                warningBarcode.setText("The item will have a Barcode");
+                addBarcode.setText("Rescan Barcode");
+            }
 
         }else{
             alertDia("Error", "Scan failed. Try again.");

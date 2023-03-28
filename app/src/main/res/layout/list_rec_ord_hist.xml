@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/ripple_orange">
+    android:background="@drawable/ripple_navy">
 
     <TextView
         android:id="@+id/tvOrdIdHist"
@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/darkblue"
         android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,8 +27,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/darkblue"
         android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrdIdHist" />
@@ -38,8 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Total: "
-        android:textColor="@color/navy"
+        android:textColor="@color/green"
         android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvTotalHist" />
 
@@ -47,10 +50,11 @@
         android:id="@+id/tvTotalHist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/monsterrat_semibold"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/darkblue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -62,16 +66,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="ID: "
-        android:textColor="@color/navy"
+        android:textColor="@color/green"
         android:textSize="16sp"
+        android:fontFamily="@font/monsterrat_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/divider5"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/navy"
+        android:layout_height="3dp"
+        android:background="@color/lightGr"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.simsdroid.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 
 public class DebtInfo extends AppCompatActivity {
     Button orderId, update;
-    TextView date, total, paidDate;
+    TextView date, total, paidDate, tv33;
     EditText name, contact;
     Switch paid;
 
@@ -43,6 +44,8 @@ public class DebtInfo extends AppCompatActivity {
         name = findViewById(R.id.etNameDebtInfo);
         contact = findViewById(R.id.etContactDebtInfo);
         paid = findViewById(R.id.swMarkPaidDebtInfo);
+
+        tv33 = findViewById(R.id.textView33);
 
         debtId = getIntent().getLongExtra("debt_id", 0);
 
@@ -72,6 +75,7 @@ public class DebtInfo extends AppCompatActivity {
             paidDate.setText(modelDebts.datePaid);
             paid.setChecked(true);
             paid.setClickable(false);
+            tv33.setTextColor(ContextCompat.getColor(DebtInfo.this, R.color.green));
         }
 
         orderId.setText(orderId.getText().toString() + debtId);
