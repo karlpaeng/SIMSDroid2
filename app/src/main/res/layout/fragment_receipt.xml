@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
-                android:text="TextView"
+                android:text="-"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="TextView"
+                android:text="-"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="TextView"
+                android:text="-"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:text="TextView"
+                android:text="-"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -108,12 +108,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="TextView"
+                android:text="-"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rec_view_receipt" />
+
+            <TextView
+                android:id="@+id/tvOtherDeets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/tvTotalPayReceipt"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/textView26"
@@ -129,7 +144,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTotalPayReceipt" />
+                app:layout_constraintTop_toBottomOf="@id/tvOtherDeets" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

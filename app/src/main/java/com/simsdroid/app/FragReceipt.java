@@ -30,7 +30,7 @@ import java.util.Calendar;
 public class FragReceipt extends Fragment {
     View v;
 
-    TextView storeName, storeAddress, dateTime, ordId, total;
+    TextView storeName, storeAddress, dateTime, ordId, total, otherDeets;
     RecyclerView recviewReceipt;
 
 
@@ -84,15 +84,21 @@ public class FragReceipt extends Fragment {
         dateTime = v.findViewById(R.id.tvDateTimeReceipt);
         ordId = v.findViewById(R.id.tvOrderIdReceipt);
         total = v.findViewById(R.id.tvTotalPayReceipt);
+        otherDeets = v.findViewById(R.id.tvOtherDeets);
+
         recviewReceipt = v.findViewById(R.id.rec_view_receipt);
-
-
 
         //((OrderReceipt) getActivity()).
         dateTime.setText(((OrderReceipt) getActivity()).orderDeets.date + ", " + ((OrderReceipt) getActivity()).orderDeets.time);
         ordId.setText(((OrderReceipt) getActivity()).orderDeets.orderNumber+"");
         total.setText(String.valueOf(((OrderReceipt) getActivity()).orderDeets.total));
 
+        //store
+        /*
+        storeName.setText(((OrderReceipt) getActivity()).dbHalp.getStoreName());
+        storeAddress.setText(((OrderReceipt) getActivity()).dbHalp.getStoreAddress());
+        otherDeets.setText(((OrderReceipt) getActivity()).dbHalp.getdeets());
+        */
 
         RecAdaptReceipt adapter = new RecAdaptReceipt(((OrderReceipt) getActivity()).orders);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

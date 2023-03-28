@@ -3,6 +3,8 @@ package com.simsdroid.app;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +34,8 @@ public class Frag1POS extends Fragment implements RecViewInterface{
     Button bcScan, noBCscan, checkOut;
     Switch debtSW;
     TextView total;
+    //
+    //ConstraintLayout cl;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,9 +93,13 @@ public class Frag1POS extends Fragment implements RecViewInterface{
 
         total = v.findViewById(R.id.tvTotalPOS);
 
+        //
+        //cl = v.findViewById(R.id.constraintLayouta3);
+
         updateRecView();
         total.setText(String.valueOf(((MainActivity) getActivity()).totalForPOS));
-
+        //total.setVisibility(View.INVISIBLE);
+        //cl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkblue));
         bcScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

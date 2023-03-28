@@ -1,5 +1,6 @@
 package com.simsdroid.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -153,7 +154,20 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     @Override
     public void onClickItem(int position) {
 
-        Toast.makeText(getContext(), "position:" + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "position:" + position, Toast.LENGTH_SHORT).show();
+        switch (position){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                Intent intent = new Intent(getContext(), PIN.class);
+                intent.putExtra("pin_act_tag", "reset");
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override

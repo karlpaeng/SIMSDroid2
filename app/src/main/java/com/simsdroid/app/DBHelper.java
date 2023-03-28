@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(@Nullable Context context) {
-        super(context, "SariSari.db", null, 1);
+        super(context, "SariSari.db", null, 2);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -47,6 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY, " +
                 "store_name TEXT, " +
                 "store_addr TEXT, " +
+                "store_deets TEXT, " +
                 "pin INTEGER)"
         );
         sqLiteDatabase.execSQL("CREATE TABLE order_numbers (" +
@@ -69,12 +70,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 //-------------------------------     USER INFO TABLE
-    public void createUserInfo(String storeName, String storeAddr, int PIN){
+    public void createUserInfo(String storeName, String storeAddr, String deets, int PIN){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("id", 1);
         cv.put("store_name", storeName);
         cv.put("store_addr", storeAddr);
+        cv.put("store_deets", deets);
         cv.put("pin", PIN);
 
         long i = db.insert("user_info", null, cv);
@@ -133,6 +135,22 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT store_addr FROM user_info WHERE id = 1;", null);
         String ret = "";
         if (cursor.moveToFirst()) {
+            ret = cursor.getString(0);
+        }
+        cursor.close();
+        db.close();
+        return ret;
+    }
+    public void updateDeets(String deets){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE user_info SET store_deets = " + deets + " WHERE id = 1;", null);
+        db.close();
+    }
+    public String getdeets(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT deets FROM user_info WHERE id = 1;", null);
+        String ret = "";
+        if(cursor.moveToFirst()) {
             ret = cursor.getString(0);
         }
         cursor.close();

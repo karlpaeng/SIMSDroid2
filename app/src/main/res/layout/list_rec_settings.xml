@@ -25,7 +25,7 @@
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:drawableRight="@drawable/right"
         android:drawableTint="@color/white"
         android:fontFamily="sans-serif-condensed-light"
