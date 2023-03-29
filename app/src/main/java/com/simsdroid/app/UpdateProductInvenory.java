@@ -34,6 +34,9 @@ public class UpdateProductInvenory extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(UpdateProductInvenory.this, R.color.mintish));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(UpdateProductInvenory.this, R.color.mintish));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_product_invenory);
         name = findViewById(R.id.etUpdateProdName);

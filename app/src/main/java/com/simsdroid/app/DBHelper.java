@@ -91,12 +91,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void updateStoreName(String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE user_info SET store_name = '" + name + "' WHERE id = 1;", null);
+        db.execSQL("UPDATE user_info SET store_name = '" + name + "' WHERE id = 1;");
         db.close();
     }
     public void updatePIN(String pin){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE user_info SET pin = '" + pin + "' WHERE id = 1;", null);
+        db.execSQL("UPDATE user_info SET pin = '" + pin + "' WHERE id = 1;");
         db.close();
     }
     public String getPIN(){

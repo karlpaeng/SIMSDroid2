@@ -1,6 +1,7 @@
 package com.simsdroid.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,9 @@ public class SpecifyAmount extends AppCompatActivity {
     ModelProducts product = new ModelProducts();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(SpecifyAmount.this, R.color.mintish));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(SpecifyAmount.this, R.color.mintish));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specify_amount);
         done = findViewById(R.id.btnSpecAmtDone);

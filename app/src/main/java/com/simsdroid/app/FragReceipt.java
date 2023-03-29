@@ -94,11 +94,11 @@ public class FragReceipt extends Fragment {
         total.setText(String.valueOf(((OrderReceipt) getActivity()).orderDeets.total));
 
         //store
-        /*
+
         storeName.setText(((OrderReceipt) getActivity()).dbHalp.getStoreName());
-        storeAddress.setText(((OrderReceipt) getActivity()).dbHalp.getStoreAddress());
-        otherDeets.setText(((OrderReceipt) getActivity()).dbHalp.getdeets());
-        */
+        storeAddress.setText(((OrderReceipt) getActivity()).ReadFromFile("simsdroid-file-01"));
+        otherDeets.setText(((OrderReceipt) getActivity()).ReadFromFile("simsdroid-file-02"));
+
 
         RecAdaptReceipt adapter = new RecAdaptReceipt(((OrderReceipt) getActivity()).orders);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

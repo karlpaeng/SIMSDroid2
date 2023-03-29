@@ -33,6 +33,9 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(SearchProductForPOS.this, R.color.mintish));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(SearchProductForPOS.this, R.color.mintish));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_product_for_pos);
         searchBar = findViewById(R.id.etSearchProdPOS);

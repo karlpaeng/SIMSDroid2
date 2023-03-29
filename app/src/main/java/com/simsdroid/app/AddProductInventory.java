@@ -3,6 +3,7 @@ package com.simsdroid.app;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +41,9 @@ public class AddProductInventory extends AppCompatActivity {
     DBHelper dbHalp = new DBHelper(AddProductInventory.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(AddProductInventory.this, R.color.mintish));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(AddProductInventory.this, R.color.mintish));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product_inventory);
         addBarcode = findViewById(R.id.btnAddBarcode);

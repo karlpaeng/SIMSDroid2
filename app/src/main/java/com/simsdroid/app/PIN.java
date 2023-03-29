@@ -217,10 +217,11 @@ public class PIN extends AppCompatActivity {
                 dot4.setTextColor(ContextCompat.getColor(PIN.this, R.color.darkblue));
                 //
                 if (actTag.equals("login")){
-                    if (pinStr.equals("3141")) {//dbHalp.getPIN()
-                        Toast.makeText(PIN.this, "login success", Toast.LENGTH_SHORT).show();
+                    if (pinStr.equals(dbHalp.getPIN())) {//dbHalp.getPIN()
                         Intent intent = new Intent(PIN.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        Toast.makeText(PIN.this, "login success", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(PIN.this, "PIN incorrect, try again", Toast.LENGTH_SHORT).show();
                         dot1.setTextColor(ContextCompat.getColor(PIN.this, R.color.mintish));
@@ -243,6 +244,7 @@ public class PIN extends AppCompatActivity {
                             Toast.makeText(PIN.this, "PIN is set up", Toast.LENGTH_SHORT).show();
                             //
                             Intent intent = new Intent(PIN.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             //goto next act
 
@@ -272,6 +274,7 @@ public class PIN extends AppCompatActivity {
                     if (phase2nd){
                         if (pinStr.equals(pinStr2nd)){
                             //set on the db
+                            dbHalp.updatePIN(pinStr);
                             Toast.makeText(PIN.this, "New PIN is set up", Toast.LENGTH_SHORT).show();
                             onBackPressed();
 

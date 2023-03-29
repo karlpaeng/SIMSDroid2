@@ -1,8 +1,10 @@
 package com.simsdroid.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -68,40 +70,11 @@ public class AboutStore extends AppCompatActivity {
                     }
                     Toast.makeText(AboutStore.this, toastStr, Toast.LENGTH_LONG).show();
                 }
-
-
-
+                
             }
         });
     }
 
-
-    public String ReadFromFile(String fileName){
-        String line,line1 = "";
-        File filePath = new File(AboutStore.this.getExternalFilesDir(null) + "/" + fileName);
-        try{
-            if(filePath.exists()) filePath.createNewFile();
-            else filePath = new File(AboutStore.this.getExternalFilesDir(null) + "/" + fileName);
-
-            InputStream instream = new FileInputStream(filePath);
-            if (instream != null) {
-                InputStreamReader inputreader = new InputStreamReader(instream);
-                BufferedReader buffreader = new BufferedReader(inputreader);
-                try {
-                    while ((line = buffreader.readLine()) != null)
-                        line1= line1 + line + "\n";
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            instream.close();
-            //Log.e("TAG", "Update to file: "+fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return line1;
-    }
     public boolean checkIfStrValid(String str){
         if(str.equals("")) return false;
         Pattern ps = Pattern.compile("[a-zA-Z0-9\\s]+");

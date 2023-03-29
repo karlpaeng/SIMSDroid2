@@ -33,6 +33,9 @@ public class DebtInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(DebtInfo.this, R.color.mintish));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(DebtInfo.this, R.color.mintish));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_info);
 

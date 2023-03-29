@@ -27,9 +27,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -140,5 +144,31 @@ public class OrderReceipt extends AppCompatActivity{
         Toast.makeText(OrderReceipt.this, "Saved to Pictures", Toast.LENGTH_SHORT).show();
         onBackPressed();
 
+    }
+    public String ReadFromFile(String fileName){
+        String line,line1 = "";
+        File filePath = new File(OrderReceipt.this.getExternalFilesDir(null) + "/" + fileName);
+        try{
+            if(filePath.exists()) filePath.createNewFile();
+            else filePath = new File(OrderReceipt.this.getExternalFilesDir(null) + "/" + fileName);
+
+            InputStream instream = new FileInputStream(filePath);
+            if (instream != null) {
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                try {
+                    while ((line = buffreader.readLine()) != null)
+                        line1= line1 + line + "\n";
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            instream.close();
+            //Log.e("TAG", "Update to file: "+fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return line1;
     }
 }
