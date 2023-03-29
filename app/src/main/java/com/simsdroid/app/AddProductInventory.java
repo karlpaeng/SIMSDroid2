@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -166,13 +167,26 @@ public class AddProductInventory extends AppCompatActivity {
     });
     private void alertDia(String buildTitle, String buildMessage){
         AlertDialog.Builder builder = new AlertDialog.Builder(AddProductInventory.this);
-        builder.setTitle(buildTitle);
-        builder.setMessage(buildMessage);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        View v = getLayoutInflater().inflate(R.layout.dialog_generic, null);
+
+        TextView top = v.findViewById(R.id.tvTopDiaCancel);
+        TextView content = v.findViewById(R.id.tvContentDiaCancel);
+        Button okBtn = v.findViewById(R.id.btnOkDiaCancel);
+
+        top.setText(buildTitle);
+        content.setText(buildMessage);
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onClick(View view) {
+                alertDialog.dismiss();
+
             }
-        }).show();
+        });
     }
 }

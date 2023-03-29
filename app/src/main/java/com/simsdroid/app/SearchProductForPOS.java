@@ -147,16 +147,14 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
                     Toast.makeText(SearchProductForPOS.this, "Enter a valid amount", Toast.LENGTH_LONG).show();
                 }else{
                     Intent intent = new Intent(SearchProductForPOS.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("id_from_spec_amt", ""+returnProd.id);
                     intent.putExtra("amount_from_spec_amount", content.getText().toString());
                     intent.putExtra("frag", "pos");
                     //
+                    alertDialog.dismiss();
                     startActivity(intent);
                 }
-
-                alertDialog.dismiss();
-
             }
         });
         cancBtn.setOnClickListener(new View.OnClickListener() {

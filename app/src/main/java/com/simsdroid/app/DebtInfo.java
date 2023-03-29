@@ -111,6 +111,7 @@ public class DebtInfo extends AppCompatActivity {
                     );
                     Intent intent = new Intent(DebtInfo.this, MainActivity.class);
                     intent.putExtra("frag", "debt");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
                 }else{
