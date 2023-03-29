@@ -9,10 +9,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class PIN extends AppCompatActivity {
     TextView topText, dot1, dot2, dot3, dot4, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, clear;
 
     String pinStr, pinStr2nd, actTag;
+
+    String name, addr, other;
     //act tag: setup, login, reset
     int numCtr;
     boolean phase2nd;
@@ -43,12 +49,18 @@ public class PIN extends AppCompatActivity {
         clear = findViewById(R.id.tvbtnClr);
 
         actTag = getIntent().getStringExtra("pin_act_tag");
+
+        if(actTag.equals("setup")) {
+            name = getIntent().getStringExtra("name");
+            addr = getIntent().getStringExtra("addr");
+            other = getIntent().getStringExtra("other");
+        }
         //
         //actTag = "setup";
         //actTag = "login";
         //actTag = "setup";
         if(actTag.equals("setup")){
-            topText.setText("Let's setup your PIN first");
+            topText.setText("Next, let's set up your PIN");
         }else if (actTag.equals("login")){
             topText.setText("Enter your PIN to log in");
         }else if (actTag.equals("reset")){
@@ -205,6 +217,8 @@ public class PIN extends AppCompatActivity {
                 if (actTag.equals("login")){
                     if (pinStr.equals("3141")) {//dbHalp.getPIN()
                         Toast.makeText(PIN.this, "login success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PIN.this, MainActivity.class);
+                        startActivity(intent);
                     }else{
                         Toast.makeText(PIN.this, "PIN incorrect, try again", Toast.LENGTH_SHORT).show();
                         dot1.setTextColor(ContextCompat.getColor(PIN.this, R.color.mintish));
@@ -219,7 +233,15 @@ public class PIN extends AppCompatActivity {
                     if (phase2nd){
                         if (pinStr.equals(pinStr2nd)){
                             //set on the db
+                            dbHalp.createUserInfo(name, pinStr);
+                            //set on file
+                            WriteToFile("simsdroid-file-01", addr);
+                            WriteToFile("simsdroid-file-02", other);
+                            //toast
                             Toast.makeText(PIN.this, "PIN is set up", Toast.LENGTH_SHORT).show();
+                            //
+                            Intent intent = new Intent(PIN.this, MainActivity.class);
+                            startActivity(intent);
                             //goto next act
 
                         }else{
@@ -279,5 +301,20 @@ public class PIN extends AppCompatActivity {
         }
 
 
+    }
+    public void WriteToFile(String fileName, String content){
+        File filePath = new File(PIN.this.getExternalFilesDir(null) + "/" + fileName);
+        try{
+            if(filePath.exists()) filePath.createNewFile();
+            else filePath = new File(PIN.this.getExternalFilesDir(null) + "/" + fileName);
+
+            FileOutputStream writer = new FileOutputStream(filePath);
+            writer.write(content.getBytes());
+            writer.flush();
+            writer.close();
+            //Log.e("TAG", "Wrote to file: "+fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

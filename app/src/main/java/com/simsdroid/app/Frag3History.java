@@ -104,6 +104,7 @@ public class Frag3History extends Fragment implements RecViewInterface, DatePick
                             Long.parseLong(searchBar.getText().toString())
                     );
                     updateRecView();
+                    Toast.makeText(getContext(), "Found " + orderViews.size() + " result(s)", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -166,6 +167,7 @@ public class Frag3History extends Fragment implements RecViewInterface, DatePick
         String dateSelected = i + "-" + monthNames[i1] + "-" + zerostr + i2;
         orderViews = ((MainActivity) getActivity()).dbHalp.searchOrderNumByDate(dateSelected);
         updateRecView();
+        Toast.makeText(getContext(), "Found " + orderViews.size() + " result(s)", Toast.LENGTH_SHORT).show();
 
     }
 }

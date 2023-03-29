@@ -65,6 +65,17 @@ public class MainActivity extends AppCompatActivity {
                 android.Manifest.permission.CAMERA,
 
         }, PackageManager.PERMISSION_GRANTED);
+        //move this later
+
+        if(dbHalp.checkExistingUserInfo()){
+            Intent intent = new Intent(MainActivity.this, PIN.class);
+            intent.putExtra("pin_act_tag", "login");
+            startActivity(intent);
+
+        }else{
+            Intent intent = new Intent(MainActivity.this, AboutStore.class);
+            startActivity(intent);
+        }
 
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         actionBar = findViewById(R.id.actionBar);

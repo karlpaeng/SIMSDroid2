@@ -46,9 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE user_info (" +
                 "id INTEGER PRIMARY KEY, " +
                 "store_name TEXT, " +
-                "store_addr TEXT, " +
-                "store_deets TEXT, " +
-                "pin INTEGER)"
+                "pin TEXT)"
         );
         sqLiteDatabase.execSQL("CREATE TABLE order_numbers (" +
                 "order_number INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -70,13 +68,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 //-------------------------------     USER INFO TABLE
-    public void createUserInfo(String storeName, String storeAddr, String deets, int PIN){
+    public void createUserInfo(String storeName, String PIN){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("id", 1);
         cv.put("store_name", storeName);
-        cv.put("store_addr", storeAddr);
-        cv.put("store_deets", deets);
         cv.put("pin", PIN);
 
         long i = db.insert("user_info", null, cv);
@@ -98,22 +94,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE user_info SET store_name = '" + name + "' WHERE id = 1;", null);
         db.close();
     }
-    public void updateStoreAddress(String addr){
+    public void updatePIN(String pin){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE user_info SET store_addr = '" + addr + "' WHERE id = 1;", null);
+        db.execSQL("UPDATE user_info SET pin = '" + pin + "' WHERE id = 1;", null);
         db.close();
     }
-    public void updatePIN(int pin){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE user_info SET pin = " + pin + " WHERE id = 1;", null);
-        db.close();
-    }
-    public int getPIN(){
+    public String getPIN(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT pin FROM user_info WHERE id = 1;", null);
-        int ret=0;
+        String ret = "";
         if(cursor.moveToFirst()) {
-            ret = cursor.getInt(0);
+            ret = cursor.getString(0);
         }
         cursor.close();
         db.close();
@@ -130,33 +121,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return ret;
     }
-    public String getStoreAddress(){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT store_addr FROM user_info WHERE id = 1;", null);
-        String ret = "";
-        if (cursor.moveToFirst()) {
-            ret = cursor.getString(0);
-        }
-        cursor.close();
-        db.close();
-        return ret;
-    }
-    public void updateDeets(String deets){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE user_info SET store_deets = " + deets + " WHERE id = 1;", null);
-        db.close();
-    }
-    public String getdeets(){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT deets FROM user_info WHERE id = 1;", null);
-        String ret = "";
-        if(cursor.moveToFirst()) {
-            ret = cursor.getString(0);
-        }
-        cursor.close();
-        db.close();
-        return ret;
-    }
+
     //--------------------------------     PRODUCTS TABLE
 
     public long addProduct(ModelProducts product){

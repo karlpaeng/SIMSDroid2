@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutStore">
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/monsterrat_medium"
+        android:text="First, tell us about \nyour store"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:text="Store Name"
+        android:textColor="@color/darkblue"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:text="Store Address"
+        android:textColor="@color/darkblue"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/etStoreName" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:text="Other Details (optional)"
+        android:textColor="@color/darkblue"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/etStoreAddress" />
+
+    <EditText
+        android:id="@+id/etStoreName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_outlined_round"
+        android:ems="14"
+        android:fontFamily="@font/monsterrat_medium"
+        android:hint="Store Name"
+        android:inputType="textPersonName"
+        android:padding="16dp"
+        android:textColor="@color/darkblue"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+    <EditText
+        android:id="@+id/etStoreAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_outlined_round"
+        android:ems="14"
+        android:fontFamily="@font/monsterrat_medium"
+        android:hint="Store Address"
+        android:inputType="textPostalAddress"
+        android:padding="16dp"
+        android:textColor="@color/darkblue"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView41" />
+
+    <EditText
+        android:id="@+id/etOtherInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_outlined_round"
+        android:ems="16"
+        android:fontFamily="@font/monsterrat_medium"
+        android:textSize="16sp"
+        android:hint="Info here will appear at the bottom of the generated receipt"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:padding="16dp"
+        android:textColor="@color/darkblue"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+    <Button
+        android:id="@+id/btnNextAboutStoreAct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_small_round_white"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:paddingHorizontal="40dp"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:theme="@style/btn3theme"
+        app:layout_constraintEnd_toEndOf="@+id/etOtherInfo"
+        app:layout_constraintTop_toBottomOf="@+id/etOtherInfo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
