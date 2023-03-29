@@ -1,19 +1,28 @@
 package com.simsdroid.app;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +60,8 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             }
 
     };
+    //data
+    String name, address, info;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -157,10 +168,16 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         //Toast.makeText(getContext(), "position:" + position, Toast.LENGTH_SHORT).show();
         switch (position){
             case 0:
+                name = ((MainActivity) getActivity()).dbHalp.getStoreName();
+                alertDiaText("Update store name", name, "name");
                 break;
             case 1:
+                address = ((MainActivity) getActivity()).ReadFromFile("simsdroid-file-01");
+                alertDiaText("Update store address", address, "addr");
                 break;
             case 2:
+                info = ((MainActivity) getActivity()).ReadFromFile("simsdroid-file-02");
+                alertDiaTextMulti("Update store info", info);
                 break;
             case 3:
                 Intent intent = new Intent(getContext(), PIN.class);
@@ -169,6 +186,8 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 break;
         }
     }
+
+
 
     @Override
     public void onClickItem2(int position) {
@@ -183,5 +202,105 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     @Override
     public void onClickItem4(int position) {
         Toast.makeText(getContext(), "position4:" + position, Toast.LENGTH_SHORT).show();
+    }
+    public boolean checkIfStrValid(String str){
+        if(str.equals("")) return false;
+        Pattern ps = Pattern.compile("[a-zA-Z0-9\\s]+");
+        Matcher ms = ps.matcher(str);
+        boolean out = ms.matches();
+        return out;
+    }
+
+    private void alertDiaText(String title, String field, String tag){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_text, null);
+//        ViewGroup viewGroup = findViewById(R.id.content)
+//        View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_generic, );
+        TextView top = v.findViewById(R.id.tvTopDiaText);
+        EditText content = v.findViewById(R.id.etFieldDiaText);
+        Button okBtn = v.findViewById(R.id.btnOkDiaText);
+        Button cancBtn = v.findViewById(R.id.btnCancelDiaText);
+
+        if (tag.equals("name")){
+            content.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        }else if(tag.equals("addr")){
+            content.setInputType(InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS);
+        }
+
+        top.setText(title);
+        content.setText(field);
+
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+
+                if (tag.equals("name")){
+                    name = content.getText().toString();
+                    if(checkIfStrValid(name)){
+                        ((MainActivity) getActivity()).dbHalp.updateStoreName(name);
+                    }else{
+                        Toast.makeText(getContext(), "Sorry, this is not accepted", Toast.LENGTH_SHORT).show();
+                    }
+                }else if(tag.equals("addr")){
+                    address = content.getText().toString();
+                    if(address.equals("")){
+                        Toast.makeText(getContext(), "Sorry, you cannot leave this blank", Toast.LENGTH_SHORT).show();
+                    }else{
+                        ((MainActivity) getActivity()).WriteToFile("simsdroid-file-01", address);
+                    }
+                }
+                alertDialog.dismiss();
+
+            }
+        });
+        cancBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+    private void alertDiaTextMulti(String title, String field) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_text_multi, null);
+//        ViewGroup viewGroup = findViewById(R.id.content)
+//        View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_generic, );
+        TextView top = v.findViewById(R.id.tvTopDiaTextMulti);
+        EditText content = v.findViewById(R.id.etFieldDiaTextMulti);
+        Button okBtn = v.findViewById(R.id.btnOkDiaTextMulti);
+        Button cancBtn = v.findViewById(R.id.btnCancelDiaTextMulti);
+
+        top.setText(title);
+        content.setText(field);
+
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                info = content.getText().toString();
+                ((MainActivity) getActivity()).WriteToFile("simsdroid-file-02", info);
+                alertDialog.dismiss();
+
+            }
+        });
+        cancBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

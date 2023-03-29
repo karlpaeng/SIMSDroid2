@@ -24,6 +24,13 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -224,8 +231,7 @@ public class MainActivity extends AppCompatActivity {
     private void alertDia(String buildTitle, String buildMessage){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View v = getLayoutInflater().inflate(R.layout.dialog_generic, null);
-//        ViewGroup viewGroup = findViewById(R.id.content)
-//        View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_generic, );
+
         TextView top = v.findViewById(R.id.tvTopDiaCancel);
         TextView content = v.findViewById(R.id.tvContentDiaCancel);
         Button okBtn = v.findViewById(R.id.btnOkDiaCancel);
@@ -246,14 +252,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        builder.setTitle(buildTitle);
-//        builder.setMessage(buildMessage);
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.dismiss();
-//            }
-//        }).show();
     }
     public void removeFromPosList(int position){
         Toast.makeText(MainActivity.this, "Removed: " + orderListForPOS.get(position).productName , Toast.LENGTH_SHORT).show();
@@ -276,6 +274,47 @@ public class MainActivity extends AppCompatActivity {
         //goto receipt
         Toast.makeText(MainActivity.this, "Checked out " , Toast.LENGTH_SHORT).show();
 
+    }
+    public String ReadFromFile(String fileName){
+        String line,line1 = "";
+        File filePath = new File(MainActivity.this.getExternalFilesDir(null) + "/" + fileName);
+        try{
+            if(filePath.exists()) filePath.createNewFile();
+            else filePath = new File(MainActivity.this.getExternalFilesDir(null) + "/" + fileName);
+
+            InputStream instream = new FileInputStream(filePath);
+            if (instream != null) {
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                try {
+                    while ((line = buffreader.readLine()) != null)
+                        line1= line1 + line + "\n";
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            instream.close();
+            //Log.e("TAG", "Update to file: "+fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return line1;
+    }
+    public void WriteToFile(String fileName, String content){
+        File filePath = new File(MainActivity.this.getExternalFilesDir(null) + "/" + fileName);
+        try{
+            if(filePath.exists()) filePath.createNewFile();
+            else filePath = new File(MainActivity.this.getExternalFilesDir(null) + "/" + fileName);
+
+            FileOutputStream writer = new FileOutputStream(filePath);
+            writer.write(content.getBytes());
+            writer.flush();
+            writer.close();
+            //Log.e("TAG", "Wrote to file: "+fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
