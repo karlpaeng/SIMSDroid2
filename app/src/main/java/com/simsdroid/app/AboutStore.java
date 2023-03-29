@@ -70,7 +70,7 @@ public class AboutStore extends AppCompatActivity {
                     }
                     Toast.makeText(AboutStore.this, toastStr, Toast.LENGTH_LONG).show();
                 }
-                
+
             }
         });
     }

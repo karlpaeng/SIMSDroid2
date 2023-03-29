@@ -3,25 +3,20 @@ package com.simsdroid.app;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.WindowManager;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -228,14 +223,37 @@ public class MainActivity extends AppCompatActivity {
     });
     private void alertDia(String buildTitle, String buildMessage){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(buildTitle);
-        builder.setMessage(buildMessage);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        View v = getLayoutInflater().inflate(R.layout.dialog_generic, null);
+//        ViewGroup viewGroup = findViewById(R.id.content)
+//        View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_generic, );
+        TextView top = v.findViewById(R.id.tvTopDiaCancel);
+        TextView content = v.findViewById(R.id.tvContentDiaCancel);
+        Button okBtn = v.findViewById(R.id.btnOkDiaCancel);
+
+        top.setText(buildTitle);
+        content.setText(buildMessage);
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onClick(View view) {
+                alertDialog.dismiss();
+
             }
-        }).show();
+        });
+
+//        builder.setTitle(buildTitle);
+//        builder.setMessage(buildMessage);
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        }).show();
     }
     public void removeFromPosList(int position){
         Toast.makeText(MainActivity.this, "Removed: " + orderListForPOS.get(position).productName , Toast.LENGTH_SHORT).show();
