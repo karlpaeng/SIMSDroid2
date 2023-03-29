@@ -148,7 +148,7 @@ public class Frag1POS extends Fragment implements RecViewInterface{
 
         return v;
     }
-    private void updateRecView(){
+    public void updateRecView(){
         orderList = ((MainActivity) getActivity()).orderListForPOS;
 
         RecAdaptPOS adapter = new RecAdaptPOS(orderList, this);

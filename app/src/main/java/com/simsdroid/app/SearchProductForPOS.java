@@ -1,13 +1,19 @@
 package com.simsdroid.app;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -15,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +34,7 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
     RecyclerView recView;
     ArrayList<ModelProducts> prodList = new ArrayList<>();
 
+    ModelProducts returnProd;
     String searchTerm;
 
     DBHelper dbHalp = new DBHelper(SearchProductForPOS.this);
@@ -67,10 +75,9 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
             @Override
             public void onClick(View view) {
                 //
-                if(prodId != null) {
-                    Intent intent = new Intent(SearchProductForPOS.this, SpecifyAmount.class);
-                    intent.putExtra("prod_id", "" + prodId);
-                    startActivity(intent);
+                if (prodId != null) {
+                    returnProd = dbHalp.searchProductsById(prodId);
+                    alertDiaText();
                 }else{
                     Toast.makeText(SearchProductForPOS.this, "No selected Product", Toast.LENGTH_SHORT).show();
                 }
@@ -108,5 +115,55 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
         prodId = prodList.get(position).id;
         tvProdName.setText(prodList.get(position).name);
         tvProdName.setTextColor(ContextCompat.getColor(SearchProductForPOS.this, R.color.darkblue));
+    }
+
+    private void alertDiaText(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(SearchProductForPOS.this);
+        View v = getLayoutInflater().inflate(R.layout.dialog_text, null);
+
+        TextView top = v.findViewById(R.id.tvTopDiaText);
+        EditText content = v.findViewById(R.id.etFieldDiaText);
+        Button okBtn = v.findViewById(R.id.btnOkDiaText);
+        Button cancBtn = v.findViewById(R.id.btnCancelDiaText);
+
+        content.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        top.setText("Specify amount");
+        content.setText("1");
+
+        builder.setView(v);
+        builder.setCancelable(false);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                if(content.getText().toString().equals("")) {
+                    //
+                    Toast.makeText(SearchProductForPOS.this, "Enter a valid amount", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent = new Intent(SearchProductForPOS.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("id_from_spec_amt", ""+returnProd.id);
+                    intent.putExtra("amount_from_spec_amount", content.getText().toString());
+                    intent.putExtra("frag", "pos");
+                    //
+                    startActivity(intent);
+                }
+
+                alertDialog.dismiss();
+
+            }
+        });
+        cancBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

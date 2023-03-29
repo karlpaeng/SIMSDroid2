@@ -14,9 +14,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -214,10 +216,8 @@ public class MainActivity extends AppCompatActivity {
             //
             if(dbHalp.barcodeExists(barcodeStr)){
                 //
-                Intent intent = new Intent(MainActivity.this, SpecifyAmount.class);
                 prodForSpecAmt = dbHalp.searchProductByBarcode(barcodeStr);
-                intent.putExtra("prod_id", ""+prodForSpecAmt.id);
-                startActivity(intent);
+                alertDiaText("Specify amount");
 
             }else{
                 alertDia("UNKNOWN PRODUCT", "Scanned Barcode is not recognized");
@@ -315,6 +315,68 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void alertDiaText(String title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View v = getLayoutInflater().inflate(R.layout.dialog_text, null);
+
+        TextView top = v.findViewById(R.id.tvTopDiaText);
+        EditText content = v.findViewById(R.id.etFieldDiaText);
+        Button okBtn = v.findViewById(R.id.btnOkDiaText);
+        Button cancBtn = v.findViewById(R.id.btnCancelDiaText);
+
+        content.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        top.setText(title);
+        content.setText("1");
+
+        builder.setView(v);
+        builder.setCancelable(false);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                totalForPOS = dbHalp.getTotalTempOrder();
+//                ModelProducts productForPOS = dbHalp.searchProductsById(Long.parseLong(getIntent().getStringExtra("id_from_spec_amt")));
+                int amtForPOS = Integer.parseInt(content.getText().toString());
+                BigDecimal amtXprice = prodForSpecAmt.retailPrice.multiply(BigDecimal.valueOf(amtForPOS));
+                totalForPOS = totalForPOS.add(amtXprice);
+
+                ModelOrders oneOrder = new ModelOrders(
+                        1L,
+                        prodForSpecAmt.name,
+                        prodForSpecAmt.id,
+                        prodForSpecAmt.retailPrice,
+                        amtForPOS,
+                        amtXprice
+                );
+                dbHalp.addToTempOrder(oneOrder);
+                orderListForPOS = dbHalp.getAllTempOrder();
+
+                Frag1POS testFragment = new Frag1POS();
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentLayout, testFragment).commitNow();
+
+                testFragment.updateRecView();
+                testFragment.total.setText(String.valueOf(totalForPOS));
+
+                alertDialog.dismiss();
+
+            }
+        });
+        cancBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
 
