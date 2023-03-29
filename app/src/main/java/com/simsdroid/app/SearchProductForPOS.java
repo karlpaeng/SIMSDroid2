@@ -130,6 +130,7 @@ public class SearchProductForPOS extends AppCompatActivity implements RecViewInt
 
         top.setText("Specify amount");
         content.setText("1");
+        content.setHint(returnProd.name);
 
         builder.setView(v);
         builder.setCancelable(false);

@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             if(dbHalp.barcodeExists(barcodeStr)){
                 //
                 prodForSpecAmt = dbHalp.searchProductByBarcode(barcodeStr);
-                alertDiaText("Specify amount");
+                alertDiaText("Specify amount", prodForSpecAmt.name);
 
             }else{
                 alertDia("UNKNOWN PRODUCT", "Scanned Barcode is not recognized");
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void alertDiaText(String title){
+    private void alertDiaText(String title, String name){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View v = getLayoutInflater().inflate(R.layout.dialog_text, null);
 
@@ -329,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
         top.setText(title);
         content.setText("1");
+        content.setHint(name);
 
         builder.setView(v);
         builder.setCancelable(false);

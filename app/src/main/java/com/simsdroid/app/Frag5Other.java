@@ -225,6 +225,7 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             content.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         }else if(tag.equals("addr")){
             content.setInputType(InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS);
+            content.setHint("Address");
         }
 
         top.setText(title);
