@@ -27,6 +27,8 @@ public class PIN extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(PIN.this, R.color.white));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(PIN.this, R.color.white));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
 

@@ -51,6 +51,7 @@ public class OrderReceipt extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(ContextCompat.getColor(OrderReceipt.this, R.color.white));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_receipt);
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -53,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);// no dark mode
 
+        getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.lightGr));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);// no dark mode
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -67,15 +69,6 @@ public class MainActivity extends AppCompatActivity {
         }, PackageManager.PERMISSION_GRANTED);
         //move this later
 
-        if(dbHalp.checkExistingUserInfo()){
-            Intent intent = new Intent(MainActivity.this, PIN.class);
-            intent.putExtra("pin_act_tag", "login");
-            startActivity(intent);
-
-        }else{
-            Intent intent = new Intent(MainActivity.this, AboutStore.class);
-            startActivity(intent);
-        }
 
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         actionBar = findViewById(R.id.actionBar);

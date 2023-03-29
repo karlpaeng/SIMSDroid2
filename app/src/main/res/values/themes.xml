@@ -53,4 +53,8 @@
         <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/logo3</item>
+        <item name="android:statusBarColor">@color/green</item>
+    </style>
 </resources>
