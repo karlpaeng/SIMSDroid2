@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView43"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/malvie"
         android:includeFontPadding="false"
         android:text=" sari "
@@ -51,7 +52,7 @@
         android:fontFamily="@font/monsterrat_semibold"
         android:padding="16dp"
         android:text="Mobile point of sale (POS) and inventory management application for small to medium-sized businesses and Sari-sari stores."
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/tvVersion"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -60,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-10dp"
-        android:text="Version 2.3"
+        android:text="Version 6.9"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:fontFamily="@font/monsterrat_bold"
@@ -91,6 +92,18 @@
         app:layout_constraintLeft_toLeftOf="@+id/textView43"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/monsterrat_bold"
+        android:text="Other Contributors"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView43"
+        app:layout_constraintTop_toBottomOf="@+id/tvLinkTree" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
@@ -103,7 +116,7 @@
         tools:layout_editor_absoluteX="24dp">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/ivContri"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="16dp"
@@ -116,7 +129,7 @@
 
 
         <TextView
-            android:id="@+id/textView50"
+            android:id="@+id/tvDescriContri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-16dp"
@@ -125,11 +138,11 @@
             android:padding="8dp"
             android:text="Programmer, Mobile \nDeveloper"
             android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="@+id/textView49"
-            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+            app:layout_constraintLeft_toLeftOf="@+id/tvNameContri"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameContri" />
 
         <TextView
-            android:id="@+id/textView49"
+            android:id="@+id/tvNameContri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/monsterrat_semibold"
@@ -138,8 +151,8 @@
             android:text="Karl Raphael Briñas"
             android:textColor="@color/darkblue"
             android:textSize="20sp"
-            app:layout_constraintLeft_toRightOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintLeft_toRightOf="@+id/ivContri"
+            app:layout_constraintTop_toTopOf="@+id/ivContri" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -148,7 +161,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/monsterrat_semibold"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
         android:text="Github"
         android:textSize="18sp"
         android:background="@drawable/ripple_for_white"
@@ -166,7 +180,8 @@
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/monsterrat_semibold"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
         android:text="Email"
         android:textSize="18sp"
         app:layout_constraintLeft_toRightOf="@+id/tvGitHub"
@@ -181,7 +196,8 @@
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/monsterrat_semibold"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
         android:text="LinkedIn"
         android:textSize="18sp"
         app:layout_constraintLeft_toRightOf="@+id/tvEmail"
@@ -196,10 +212,40 @@
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/monsterrat_semibold"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
         android:text="LinkTree"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@id/tvGitHub"
         app:layout_constraintTop_toBottomOf="@+id/tvGitHub" />
+
+    <ImageView
+        android:id="@+id/icTwirly"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:tintMode="multiply"
+        android:background="@drawable/ripple_img_twirl"
+        android:clickable="true"
+        android:focusable="true"
+
+        app:layout_constraintLeft_toRightOf="@+id/icDario"
+        app:layout_constraintTop_toTopOf="@+id/icDario"
+        app:tint="@color/white"/>
+
+    <ImageView
+        android:id="@+id/icDario"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:tintMode="multiply"
+        android:background="@drawable/ripple_img_dario"
+        android:clickable="true"
+        android:focusable="true"
+
+        app:layout_constraintLeft_toLeftOf="@+id/tv3"
+        app:layout_constraintTop_toBottomOf="@+id/tv3"
+        app:tint="@color/white"></ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

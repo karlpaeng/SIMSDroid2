@@ -3,9 +3,11 @@ package com.simsdroid.app;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,11 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -204,7 +208,7 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
 
     @Override
     public void onClickItem4(int position) {
-        Toast.makeText(getContext(), "position4:" + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "position4:" + position, Toast.LENGTH_SHORT).show();
         switch (position){
             case 0:
                 //
@@ -316,6 +320,35 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 alertDialog.dismiss();
             }
         });
+
+    }
+    private void alertDiaContri(String str){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_contri, null);
+
+        ImageView img = v.findViewById(R.id.ivContri);
+        TextView name = v.findViewById(R.id.tvNameContri);
+        TextView desc = v.findViewById(R.id.tvDescriContri);
+
+        if (str.equals("dars")){
+            img.setImageResource(R.drawable.dario);
+            name.setText("John Dherie Tuyay");
+            desc.setText("Digital Artist, Programmer, bleeds coffee when stabbed(probably not true)");
+        }else if(str.equals("twirl")){
+            img.setImageResource(R.drawable.twirly);
+            name.setText("Twirly Joy Paballa");
+            desc.setText("Graphic Designer, \nCat Mommie, Hot GF");
+        }
+        builder.setView(v);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                alertDiaAbout();
+            }
+        });
     }
     private void alertDiaAbout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -326,12 +359,16 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         TextView link = v.findViewById(R.id.tvLinkedIn);
         TextView tree = v.findViewById(R.id.tvLinkTree);
 
+        ImageView dario = v.findViewById(R.id.icDario);
+        ImageView twirl = v.findViewById(R.id.icTwirly);
+
         version.setText("   Version: " + BuildConfig.VERSION_NAME);
 
         builder.setView(v);
 
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setGravity(Gravity.TOP);
         alertDialog.show();
         git.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,6 +392,20 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).copyToClip("linktr.ee/karlpaeng");
+            }
+        });
+        dario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                alertDiaContri("dars");
+            }
+        });
+        twirl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                alertDiaContri("twirl");
             }
         });
     }
