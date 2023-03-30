@@ -268,6 +268,7 @@ public class PIN extends AppCompatActivity {
                         dot3.setTextColor(ContextCompat.getColor(PIN.this, R.color.mintish));
                         dot4.setTextColor(ContextCompat.getColor(PIN.this, R.color.mintish));
                         phase2nd = true;
+                        pinStr2nd = "";
                         numCtr = 0;
                     }
                 }else if (actTag.equals("reset")){
