@@ -1,5 +1,8 @@
 package com.simsdroid.app;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -202,7 +205,17 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     @Override
     public void onClickItem4(int position) {
         Toast.makeText(getContext(), "position4:" + position, Toast.LENGTH_SHORT).show();
+        switch (position){
+            case 0:
+                //
+                break;
+            case 1:
+                //
+                alertDiaAbout();
+                break;
+        }
     }
+    //
     public boolean checkIfStrValid(String str){
         if(str.equals("")) return false;
         Pattern ps = Pattern.compile("[a-zA-Z0-9\\s]+");
@@ -304,4 +317,48 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             }
         });
     }
+    private void alertDiaAbout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_about, null);
+        TextView version = v. findViewById(R.id.tvVersion);
+        TextView git = v.findViewById(R.id.tvGitHub);
+        TextView mail = v.findViewById(R.id.tvEmail);
+        TextView link = v.findViewById(R.id.tvLinkedIn);
+        TextView tree = v.findViewById(R.id.tvLinkTree);
+
+        version.setText("   Version: " + BuildConfig.VERSION_NAME);
+
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        git.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).copyToClip("github.com/karlpaeng");
+            }
+        });
+        mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).copyToClip("karlraphaelbrinas@gmail.com");
+            }
+        });
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).copyToClip("linkedin.com/in/karl-raphael-brinas/");
+            }
+        });
+        tree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).copyToClip("linktr.ee/karlpaeng");
+            }
+        });
+    }
+
+
+
 }

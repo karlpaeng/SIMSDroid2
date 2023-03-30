@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/malvie"
+        android:includeFontPadding="false"
+        android:text=" sari "
+        android:textColor="@color/green"
+        android:textSize="50sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-24dp"
+        android:fontFamily="@font/malvie"
+        android:includeFontPadding="false"
+        android:text=" sari "
+        android:textSize="50sp"
+        android:textColor="@color/darkblue"
+        app:layout_constraintBottom_toBottomOf="@+id/textView43"
+        app:layout_constraintLeft_toRightOf="@+id/textView43" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/monsterrat_bold"
+        android:text="pos"
+        android:textSize="50sp"
+        android:textColor="@color/mintish"
+        app:layout_constraintBottom_toBottomOf="@+id/textView43"
+        app:layout_constraintLeft_toRightOf="@+id/textView44" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_big_round_white"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:padding="16dp"
+        android:text="Mobile point of sale (POS) and inventory management application for small to medium-sized businesses and Sari-sari stores."
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvVersion"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/tvVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:text="Version 2.3"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/monsterrat_bold"
+        app:layout_constraintLeft_toLeftOf="@+id/textView43"
+        app:layout_constraintTop_toBottomOf="@+id/textView43" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/monsterrat_bold"
+        android:text="Creator"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView43"
+        app:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/monsterrat_bold"
+        android:text="Links"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView43"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="8dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/btn_big_round_white"
+        app:layout_constraintTop_toBottomOf="@+id/tv2"
+        tools:layout_editor_absoluteX="24dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/my_face" />
+
+
+        <TextView
+            android:id="@+id/textView50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-16dp"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:includeFontPadding="false"
+            android:padding="8dp"
+            android:text="Programmer, Mobile \nDeveloper"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/textView49"
+            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+
+        <TextView
+            android:id="@+id/textView49"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:includeFontPadding="false"
+            android:padding="8dp"
+            android:text="Karl Raphael Briñas"
+            android:textColor="@color/darkblue"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvGitHub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:padding="16dp"
+        android:text="Github"
+        android:textSize="18sp"
+        android:background="@drawable/ripple_for_white"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="@+id/tv"
+        app:layout_constraintTop_toBottomOf="@+id/tv" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ripple_for_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:padding="16dp"
+        android:text="Email"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@+id/tvGitHub"
+        app:layout_constraintTop_toTopOf="@+id/tvGitHub" />
+
+    <TextView
+        android:id="@+id/tvLinkedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ripple_for_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:padding="16dp"
+        android:text="LinkedIn"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@+id/tvEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvGitHub" />
+
+    <TextView
+        android:id="@+id/tvLinkTree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ripple_for_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:padding="16dp"
+        android:text="LinkTree"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@id/tvGitHub"
+        app:layout_constraintTop_toBottomOf="@+id/tvGitHub" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

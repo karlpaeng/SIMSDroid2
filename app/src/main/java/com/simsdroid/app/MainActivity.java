@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -378,6 +381,13 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
+    }
+    public void copyToClip(String text){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("link", text);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(MainActivity.this, "Link copied to clipboard" , Toast.LENGTH_SHORT).show();
+
     }
 
 
