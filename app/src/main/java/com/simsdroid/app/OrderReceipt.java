@@ -55,15 +55,14 @@ public class OrderReceipt extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setStatusBarColor(ContextCompat.getColor(OrderReceipt.this, R.color.white));
+        hideSystemUI();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_receipt);
-
-//        getWindow().setStatusBarColor(ContextCompat.getColor(OrderReceipt.this, R.color.darkblue));
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//
-//        getWindow().setStatusBarColor(ContextCompat.getColor(OrderReceipt.this, R.color.darkblue));
-
 
         scroll = findViewById(R.id.scrollOrder);
         genImage = findViewById(R.id.btnGenImgReceipt);
@@ -73,8 +72,6 @@ public class OrderReceipt extends AppCompatActivity{
 //        storeName.setText(dbHalp.getStoreName());
 //        storeAddress.setText(dbHalp.getStoreAddress());
         orderDeets = dbHalp.getSimpleOrderInfo(id);
-
-
         orders = dbHalp.getOrderInfo(id);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -112,11 +109,6 @@ public class OrderReceipt extends AppCompatActivity{
                 }
             }
         });
-
-
-
-
-
     }
     public void saveImageToStorage(Bitmap bitmapObject) throws IOException {
 
@@ -132,6 +124,7 @@ public class OrderReceipt extends AppCompatActivity{
             imageOutStream = getContentResolver().openOutputStream(uri);
         } else {
             String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+            Toast.makeText(OrderReceipt.this, "Saved to "+imagePath, Toast.LENGTH_SHORT).show();
             File image = new File(imagePath, "order"+id+"on"+date+".jpg");
             imageOutStream = new FileOutputStream(image);
         }
@@ -170,5 +163,14 @@ public class OrderReceipt extends AppCompatActivity{
         }
 
         return line1;
+    }
+    public void hideSystemUI() {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 }
