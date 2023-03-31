@@ -27,7 +27,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +75,8 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     };
     //data
     String name, address, info;
+
+    ExcelHelper xcHalp = new ExcelHelper();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -198,12 +206,65 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
 
     @Override
     public void onClickItem2(int position) {
-        Toast.makeText(getContext(), "position2:" + position, Toast.LENGTH_SHORT).show();
+        switch (position){
+            case 0:
+                ((MainActivity) getActivity()).updateProductListOfInventory(0);
+                ArrayList<ModelProducts> prods = ((MainActivity) getActivity()).productListOfInventory;
+                ((MainActivity) getActivity()).updateProductListOfInventory(40);
+
+                XSSFWorkbook xwb = xcHalp.saveToInvWorkbook(prods);
+                String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
+                String fileName = "SariSari Inventory Information exported on" + dateNow + ".xlsx";
+                String path;
+                try {
+                    path = xcHalp.saveToFile(xwb, fileName, getContext());
+                    Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                break;
+        }
     }
 
     @Override
     public void onClickItem3(int position) {
-        Toast.makeText(getContext(), "position3:" + position, Toast.LENGTH_SHORT).show();
+        String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
+        XSSFWorkbook xwb;
+        String fileName;
+        String path;
+        switch (position){
+            case 0:
+                ArrayList<ModelOrders> orders = ((MainActivity) getActivity()).dbHalp.getAllOrdersForExcel();
+                xwb = xcHalp.saveToOrdersWorkbook(orders);
+
+                fileName = "SariSari Order History exported on" + dateNow + ".xlsx";
+                try {
+                    path = xcHalp.saveToFile(xwb, fileName, getContext());
+                    Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                break;
+            case 2:
+                ArrayList<ModelDebts> debts = ((MainActivity) getActivity()).dbHalp.getDebtList("all");
+                xwb = xcHalp.saveToDebtsWorkbook(debts);
+
+                fileName = "SariSari Customer Debts exported on" + dateNow + ".xlsx";
+                try {
+                    path = xcHalp.saveToFile(xwb, fileName, getContext());
+                    Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 
     @Override

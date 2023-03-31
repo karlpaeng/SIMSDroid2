@@ -140,6 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return i;
     }
+
     public void updateProduct(long id, ModelProducts product){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE products " +
@@ -153,11 +154,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
 
     }
+    public void clearAllProducts(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM products;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='products';");//reset primary key to 1
+        db.close();
+    }
     //products list, list search by name, by barcode, barcode exists
-    public ArrayList<ModelProducts> allProductsInventory(){
+    public ArrayList<ModelProducts> allProductsInventory(int limit){
+        String lim = (limit > 0 ? "LIMIT "+limit+";" : ";");
         ArrayList<ModelProducts> products = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM products ORDER BY prod_name ASC LIMIT 40;", null);
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM products ORDER BY prod_name ASC " + lim, null);
         if (cursor.moveToFirst()){
             do{
                 int id = cursor.getInt(0);
@@ -387,10 +395,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return orderView;
     }
-    public ArrayList<ModelOrderView> getOrderHistory(){
+    public ArrayList<ModelOrderView> getOrderHistory(int limit){
+        String lim = (limit > 0 ? "LIMIT "+limit+";" : ";");
         ArrayList<ModelOrderView> orderViews = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE NOT total = '' ORDER BY order_number DESC LIMIT 30;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM order_numbers WHERE NOT total = '' ORDER BY order_number DESC " +lim, null);
         if (cursor.moveToFirst()){
             do{
                 int num = cursor.getInt(0);
@@ -450,6 +459,30 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return orderViews;
+    }
+    //for excel
+
+    public ArrayList<ModelOrders> getAllOrdersForExcel(){
+        ArrayList<ModelOrders> orders = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM orders ORDER BY order_number DESC;", null);
+        if (cursor.moveToFirst()){
+            do{
+                //
+
+                long orderNumber = cursor.getLong(1);
+                String productName = cursor.getString(2);
+                BigDecimal retailPrice = new BigDecimal(String.valueOf(cursor.getString(4)));
+                int amount = cursor.getInt(5);
+                BigDecimal amountXprice = new BigDecimal(String.valueOf(cursor.getString(6)));
+
+                ModelOrders order = new ModelOrders(orderNumber,productName,-1,retailPrice,amount,amountXprice);
+                orders.add(order);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orders;
     }
     //debts
     public void addDebt(ModelDebts debt){

@@ -187,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
         retval = dbHalp.computeRetailValue();
         potProf = retval.subtract(invVal);
     }
-    public void updateProductListOfInventory(){
-        productListOfInventory = dbHalp.allProductsInventory();
+    public void updateProductListOfInventory(int limit){
+        productListOfInventory = dbHalp.allProductsInventory(limit);
     }
     public void searchProdsByName(String name){
         productListOfInventory = dbHalp.searchProductByName(name);

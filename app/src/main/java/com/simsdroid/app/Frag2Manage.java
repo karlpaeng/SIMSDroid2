@@ -101,7 +101,7 @@ public class Frag2Manage extends Fragment implements RecViewInterface{
         retVal.setText(((MainActivity) getActivity()).retval + "");
         potProf.setText(((MainActivity) getActivity()).potProf + "");
 
-        ((MainActivity) getActivity()).updateProductListOfInventory();;
+        ((MainActivity) getActivity()).updateProductListOfInventory(40);;
         prodList = ((MainActivity) getActivity()).productListOfInventory;
 
         updateRecView();
@@ -137,7 +137,7 @@ public class Frag2Manage extends Fragment implements RecViewInterface{
                 Toast.makeText(getContext(), "Cleared search term", Toast.LENGTH_SHORT).show();
                 searchField.setText("");
                 ((MainActivity) getActivity()).hideKB();
-                ((MainActivity) getActivity()).updateProductListOfInventory();
+                ((MainActivity) getActivity()).updateProductListOfInventory(40);
                 prodList = ((MainActivity) getActivity()).productListOfInventory;
                 updateRecView();
             }

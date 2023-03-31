@@ -88,7 +88,7 @@ public class Frag3History extends Fragment implements RecViewInterface, DatePick
         clear = v.findViewById(R.id.btnClearOnHist);
         openDatePicker = v.findViewById(R.id.btnSearchDateHist);
 
-        orderViews = ((MainActivity) getActivity()).dbHalp.getOrderHistory();
+        orderViews = ((MainActivity) getActivity()).dbHalp.getOrderHistory(30);
         updateRecView();
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +114,7 @@ public class Frag3History extends Fragment implements RecViewInterface, DatePick
             public void onClick(View view) {
                 ((MainActivity) getActivity()).hideKB();
                 searchBar.setText("");
-                orderViews = ((MainActivity) getActivity()).dbHalp.getOrderHistory();
+                orderViews = ((MainActivity) getActivity()).dbHalp.getOrderHistory(30);
                 updateRecView();
                 Toast.makeText(getContext(), "Cleared search", Toast.LENGTH_SHORT).show();
             }
