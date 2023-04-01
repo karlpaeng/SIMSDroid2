@@ -118,12 +118,12 @@ public class OrderReceipt extends AppCompatActivity{
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DISPLAY_NAME, "order"+id+"on"+date+".jpg");
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/SariSari POS/");
             Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
             imageOutStream = getContentResolver().openOutputStream(uri);
         } else {
-            String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+            String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/SariSari POS/";
             Toast.makeText(OrderReceipt.this, "Saved to "+imagePath, Toast.LENGTH_SHORT).show();
             File image = new File(imagePath, "order"+id+"on"+date+".jpg");
             imageOutStream = new FileOutputStream(image);

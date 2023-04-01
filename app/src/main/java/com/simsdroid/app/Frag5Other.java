@@ -8,8 +8,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -208,61 +213,52 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     public void onClickItem2(int position) {
         switch (position){
             case 0:
-                ((MainActivity) getActivity()).updateProductListOfInventory(0);
-                ArrayList<ModelProducts> prods = ((MainActivity) getActivity()).productListOfInventory;
-                ((MainActivity) getActivity()).updateProductListOfInventory(40);
-
-                XSSFWorkbook xwb = xcHalp.saveToInvWorkbook(prods);
-                String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
-                String fileName = "SariSari Inventory Information exported on" + dateNow + ".xlsx";
-                String path;
-                try {
-                    path = xcHalp.saveToFile(xwb, fileName, getContext());
-                    Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+                alertDiaOkCancel(
+                        "Saving inventory list to file",
+                        "This will create an XLSX file containing all current inventory data, " +
+                                "the file will be saved to \nDocuments/SariSari POS. Proceed?",
+                        "exp_inv"
+                );
                 break;
             case 1:
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//                intent.setType("document/xlsx");
+
+                String[] mimetypes =
+                        { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" // .xlsx
+                        };
+
+                intent = new Intent(Intent.ACTION_GET_CONTENT); // or use ACTION_OPEN_DOCUMENT
+                intent.setType("*/*");
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                resultLauncher.launch(intent);
                 break;
         }
     }
 
     @Override
     public void onClickItem3(int position) {
-        String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
-        XSSFWorkbook xwb;
-        String fileName;
-        String path;
+
         switch (position){
             case 0:
-                ArrayList<ModelOrders> orders = ((MainActivity) getActivity()).dbHalp.getAllOrdersForExcel();
-                xwb = xcHalp.saveToOrdersWorkbook(orders);
-
-                fileName = "SariSari Order History exported on" + dateNow + ".xlsx";
-                try {
-                    path = xcHalp.saveToFile(xwb, fileName, getContext());
-                    Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+                alertDiaOkCancel(
+                        "Saving orders history to file",
+                        "This will create an XLSX file containing all records of product orders, " +
+                                "the file will be saved to \nDocuments/SariSari POS. Proceed?",
+                        "exp_ord"
+                );
                 break;
             case 1:
+
                 break;
             case 2:
-                ArrayList<ModelDebts> debts = ((MainActivity) getActivity()).dbHalp.getDebtList("all");
-                xwb = xcHalp.saveToDebtsWorkbook(debts);
-
-                fileName = "SariSari Customer Debts exported on" + dateNow + ".xlsx";
-                try {
-                    path = xcHalp.saveToFile(xwb, fileName, getContext());
-                    Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+                alertDiaOkCancel(
+                        "Saving debt records to file",
+                        "This will create an XLSX file containing all debt records, " +
+                                "the file will be saved to \nDocuments/SariSari POS. Proceed?",
+                        "exp_debt"
+                );
                 break;
         }
     }
@@ -470,7 +466,96 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             }
         });
     }
+    ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Intent intent = result.getData();
+                    if(intent != null){
+                        Uri uri = intent.getData();
+                        Toast.makeText(getContext(), uri.getPath() , Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    private void alertDiaOkCancel(String buildTitle, String buildMessage, String action){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_ok_cancel, null);
 
+        TextView top = v.findViewById(R.id.tvTopDiaCancel);
+        TextView content = v.findViewById(R.id.tvContentDiaCancel);
+        Button canc = v.findViewById(R.id.btnCancelDiaCancel);
+        Button okBtn = v.findViewById(R.id.btnOkDiaCancel);
+
+        top.setText(buildTitle);
+        content.setText(buildMessage);
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        canc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
+            XSSFWorkbook xwb;
+            String fileName;
+            String path;
+            @Override
+            public void onClick(View view) {
+                if (action.equals("exp_inv")){
+                    ((MainActivity) getActivity()).updateProductListOfInventory(0);
+                    ArrayList<ModelProducts> prods = ((MainActivity) getActivity()).productListOfInventory;
+                    ((MainActivity) getActivity()).updateProductListOfInventory(40);
+
+                    xwb = xcHalp.saveToInvWorkbook(prods);
+                    String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
+                    fileName = "SariSari Inventory Information exported on " + dateNow + ".xlsx";
+
+                    try {
+                        path = xcHalp.saveToFile(xwb, fileName, getContext());
+                        Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }else if(action.equals("exp_ord")){
+                    ArrayList<ModelOrders> orders = ((MainActivity) getActivity()).dbHalp.getAllOrdersForExcel();
+                    xwb = xcHalp.saveToOrdersWorkbook(orders);
+
+                    fileName = "SariSari Order History exported on " + dateNow + ".xlsx";
+                    try {
+                        path = xcHalp.saveToFile(xwb, fileName, getContext());
+                        Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }else if(action.equals("exp_debt")){
+                    ArrayList<ModelDebts> debts = ((MainActivity) getActivity()).dbHalp.getDebtList("all");
+                    xwb = xcHalp.saveToDebtsWorkbook(debts);
+
+                    fileName = "SariSari Customer Debts exported on " + dateNow + ".xlsx";
+                    try {
+                        path = xcHalp.saveToFile(xwb, fileName, getContext());
+                        Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+                alertDialog.dismiss();
+            }
+        });
+    }
+/*
+
+*/
 
 
 }

@@ -44,7 +44,7 @@ public class ExcelHelper {
             retStr = Environment.DIRECTORY_DOCUMENTS + "/" + fileName;
 
         }else{
-            String docsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
+            String docsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() + "/SariSari POS/";
             File file = new File(docsDir, fileName);
             fileOutputStream = new FileOutputStream(file);
 

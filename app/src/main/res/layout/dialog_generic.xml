@@ -7,7 +7,7 @@
     android:background="@drawable/btn_big_round_white">
 
     <TextView
-        android:id="@+id/tvTopDiaCancel"
+        android:id="@+id/tvTopDiaGen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvContentDiaCancel"
+        android:id="@+id/tvContentDiaGen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -32,10 +32,10 @@
         android:textColor="@color/darkblue"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTopDiaCancel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTopDiaGen" />
 
     <Button
-        android:id="@+id/btnOkDiaCancel"
+        android:id="@+id/btnOkDiaGen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -43,12 +43,12 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/btn_small_round_white"
         android:fontFamily="@font/monsterrat_semibold"
-        android:paddingHorizontal="40dp"
+        android:paddingHorizontal="30dp"
         android:text="Okay"
         android:textAllCaps="false"
         android:textSize="20sp"
         android:theme="@style/btn3theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvContentDiaCancel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvContentDiaGen" />
 </androidx.constraintlayout.widget.ConstraintLayout>

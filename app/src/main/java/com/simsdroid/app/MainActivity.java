@@ -1,6 +1,9 @@
 package com.simsdroid.app;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -16,6 +19,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -29,6 +33,8 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import com.simsdroid.app.databinding.ActivityMainBinding;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +46,8 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     BigDecimal invVal, retval, potProf;
 
     DBHelper dbHalp = new DBHelper(MainActivity.this);
+    ExcelHelper xcHalp = new ExcelHelper();
 
     ArrayList<ModelOrders> orderListForPOS = new ArrayList<>();
     String barcodeStr;
@@ -231,13 +240,13 @@ public class MainActivity extends AppCompatActivity {
             alertDia("Error", "Scan failed. Try again.");
         }
     });
-    private void alertDia(String buildTitle, String buildMessage){
+    public void alertDia(String buildTitle, String buildMessage){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View v = getLayoutInflater().inflate(R.layout.dialog_generic, null);
 
-        TextView top = v.findViewById(R.id.tvTopDiaCancel);
-        TextView content = v.findViewById(R.id.tvContentDiaCancel);
-        Button okBtn = v.findViewById(R.id.btnOkDiaCancel);
+        TextView top = v.findViewById(R.id.tvTopDiaGen);
+        TextView content = v.findViewById(R.id.tvContentDiaGen);
+        Button okBtn = v.findViewById(R.id.btnOkDiaGen);
 
         top.setText(buildTitle);
         content.setText(buildMessage);
@@ -250,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 alertDialog.dismiss();
 
             }
@@ -389,6 +399,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Link copied to clipboard" , Toast.LENGTH_SHORT).show();
 
     }
+
 
 
 }
