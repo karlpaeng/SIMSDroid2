@@ -435,7 +435,6 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         TextView version = v. findViewById(R.id.tvVersion);
         TextView git = v.findViewById(R.id.tvGitHub);
         TextView mail = v.findViewById(R.id.tvEmail);
-        TextView link = v.findViewById(R.id.tvLinkedIn);
         TextView tree = v.findViewById(R.id.tvLinkTree);
 
         ImageView dario = v.findViewById(R.id.icDario);
@@ -459,12 +458,6 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).copyToClip("karlraphaelbrinas@gmail.com");
-            }
-        });
-        link.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).copyToClip("linkedin.com/in/karl-raphael-brinas/");
             }
         });
         tree.setOnClickListener(new View.OnClickListener() {
