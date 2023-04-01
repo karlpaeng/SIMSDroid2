@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.poi.ss.usermodel.Sheet;
@@ -78,11 +79,28 @@ public class ExcelHelper {
         xsheet.setColumnWidth(3, 10 * 256);
         xsheet.setColumnWidth(4, 10 * 256);
         xsheet.setColumnWidth(5, 15 * 256);
+        XSSFRow xRow = xsheet.createRow(0);
+        short height = 500;
+        xRow.setHeight(height);
+
+        XSSFCell xCell = xRow.createCell(0);
+        xCell.setCellValue("Product \nName");
+        xCell = xRow.createCell(1);
+        xCell.setCellValue("Barcode");
+        xCell = xRow.createCell(2);
+        xCell.setCellValue("Cost");
+        xCell = xRow.createCell(3);
+        xCell.setCellValue("Retail \nPrice");
+        xCell = xRow.createCell(4);
+        xCell.setCellValue("Amount\nin Stock");
+        xCell = xRow.createCell(5);
+        xCell.setCellValue("Last \nupdated");
+
         int listSize = prodList.size();
         for (int q = 0 ; q < listSize ; q++){
-            XSSFRow xRow = xsheet.createRow(q);
+            xRow = xsheet.createRow(q+1);
 
-            XSSFCell xCell = xRow.createCell(0);
+            xCell = xRow.createCell(0);
             xCell.setCellValue(prodList.get(q).name);
 
             xCell = xRow.createCell(1);
@@ -148,9 +166,9 @@ public class ExcelHelper {
         }
         return xwb;
     }
-    public XSSFWorkbook saveToOrdersWorkbook(ArrayList<ModelOrders> orders){
+    public XSSFWorkbook saveToOrdersWorkbook(ArrayList<ModelOrders> orders, String date){
         XSSFWorkbook xwb = new XSSFWorkbook();
-        XSSFSheet xsheet = xwb.createSheet("SariSari all Orders");
+        XSSFSheet xsheet = xwb.createSheet("SariSari " + date + " Orders");
         xsheet.setColumnWidth(0, 15 * 256);
         xsheet.setColumnWidth(1, 20 * 256);
         xsheet.setColumnWidth(2, 15 * 256);
@@ -205,6 +223,7 @@ public class ExcelHelper {
         int rowNum = sh.getLastRowNum();
 
         dbHalp.clearAllProducts();
+        Log.d("rows:", ""+rowNum);
         for (int q = 1 ; q <= rowNum ; q++){
             ModelProducts product = new ModelProducts(
                     1,

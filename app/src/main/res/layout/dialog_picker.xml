@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/btn_big_round_white">
+
+    <Button
+        android:id="@+id/btnOkDiaPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_small_round_white"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:paddingHorizontal="30dp"
+        android:text="Okay"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:theme="@style/btn3theme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBtnDiaPicker" />
+
+    <Button
+        android:id="@+id/btnCancelDiaPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_small_round_white"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:paddingHorizontal="30dp"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:theme="@style/btn2theme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btnOkDiaPicker"
+        app:layout_constraintTop_toBottomOf="@+id/tvBtnDiaPicker" />
+
+    <TextView
+        android:id="@+id/tvContentDiaPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/monsterrat_semibold"
+        android:text="TextView"
+        android:textColor="@color/darkblue"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTopDiaPicker" />
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tvBtnDiaPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:padding="16dp"
+        android:fontFamily="@font/monsterrat_italic_bold"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:background="@drawable/ripple_for_mint"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvContentDiaPicker" />
+
+    <TextView
+        android:id="@+id/tvTopDiaPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/monsterrat_bold"
+        android:text="TextView"
+        android:textColor="@color/darkblue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

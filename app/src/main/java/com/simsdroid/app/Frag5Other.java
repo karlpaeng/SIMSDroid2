@@ -1,5 +1,6 @@
 package com.simsdroid.app;
 
+import android.app.DatePickerDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -22,11 +23,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +40,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -47,7 +51,7 @@ import java.util.regex.Pattern;
  * Use the {@link Frag5Other#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag5Other extends Fragment implements RecViewInterface, RecViewInterface2, RecViewInterface3, RecViewInterface4{
+public class Frag5Other extends Fragment implements RecViewInterface, RecViewInterface2, RecViewInterface3, RecViewInterface4, DatePickerDialog.OnDateSetListener {
     View v;
 
     RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
@@ -56,6 +60,11 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
     ArrayList<ModelItemSettings> ordDebt = new ArrayList<>();
     ArrayList<ModelItemSettings> others = new ArrayList<>();
 
+    String[] monthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+    Uri uri;
+    String dateSelected, fileSelected;
+    boolean proceedable;
     String[][] texts = {
             {
                 "Change Store Name",
@@ -177,7 +186,9 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         recyclerView4.setItemAnimator(new DefaultItemAnimator());
         recyclerView4.setAdapter(adapter4);
 
-
+        dateSelected = "Select a date";
+        fileSelected = "Select a file";
+        proceedable = false;
 
         return v;
     }
@@ -216,23 +227,28 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 alertDiaOkCancel(
                         "Saving inventory list to file",
                         "This will create an XLSX file containing all current inventory data, " +
-                                "the file will be saved to \nDocuments/SariSari POS. Proceed?",
+                                "the file will be saved to \"Documents/SariSari POS\". Proceed?",
                         "exp_inv"
                 );
                 break;
             case 1:
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//                intent.setType("document/xlsx");
-
-                String[] mimetypes =
-                        { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" // .xlsx
-                        };
-
-                intent = new Intent(Intent.ACTION_GET_CONTENT); // or use ACTION_OPEN_DOCUMENT
-                intent.setType("*/*");
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                resultLauncher.launch(intent);
+                alertDiaPick(
+                        "Updating Inventory information",
+                        "This will replace all currently saved inventory items " +
+                                "with the data in the file to be selected. " +
+                                "\nNote: this feature is not stable, file should be strictly formatted.\n" +
+                                "Tap on \"Select a file\" then tap \"Okay\" to continue. Proceed with caution.",
+                        "file"
+                );
+//                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//
+//                String[] mimetypes =
+//                        { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" // .xlsx
+//                        };
+//                intent.setType("*/*");
+//                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+//                intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                resultLauncher.launch(intent);
                 break;
         }
     }
@@ -245,18 +261,24 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 alertDiaOkCancel(
                         "Saving orders history to file",
                         "This will create an XLSX file containing all records of product orders, " +
-                                "the file will be saved to \nDocuments/SariSari POS. Proceed?",
+                                "the file will be saved to \"Documents/SariSari POS\". Proceed?",
                         "exp_ord"
                 );
                 break;
             case 1:
-
+                alertDiaPick(
+                        "Saving orders history to file",
+                        "This will create an XLSX file containing product orders " +
+                                "on a specified date, the file will be saved to \"Documents/SariSari POS\". " +
+                                "Tap on \"Select a date\" then tap \"Okay\" to proceed.",
+                        "date"
+                );
                 break;
             case 2:
                 alertDiaOkCancel(
                         "Saving debt records to file",
                         "This will create an XLSX file containing all debt records, " +
-                                "the file will be saved to \nDocuments/SariSari POS. Proceed?",
+                                "the file will be saved to \"Documents/SariSari POS\". Proceed?",
                         "exp_debt"
                 );
                 break;
@@ -473,11 +495,123 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 public void onActivityResult(ActivityResult result) {
                     Intent intent = result.getData();
                     if(intent != null){
-                        Uri uri = intent.getData();
-                        Toast.makeText(getContext(), uri.getPath() , Toast.LENGTH_SHORT).show();
+                        uri = intent.getData();
+                        proceedable = true;
+                        fileSelected = uri.getPath();
+                        //Toast.makeText(getContext(), uri.getPath() , Toast.LENGTH_SHORT).show();
+
                     }
+                    alertDiaPick(
+                            "Updating Inventory information",
+                            "This will replace all currently saved inventory items " +
+                                    "with the data in the file to be selected. " +
+                                    "Tap on \"Select a file\" then tap \"Okay\" to continue. Proceed with caution.",
+                            "file"
+                    );
                 }
+
             });
+    private void alertDiaPick(String buildTitle, String buildMessage, String action){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_picker, null);
+
+        TextView top = v.findViewById(R.id.tvTopDiaPicker);
+        TextView content = v.findViewById(R.id.tvContentDiaPicker);
+        TextView pick = v.findViewById(R.id.tvBtnDiaPicker);
+        Button canc = v.findViewById(R.id.btnCancelDiaPicker);
+        Button okBtn = v.findViewById(R.id.btnOkDiaPicker);
+
+        top.setText(buildTitle);
+        content.setText(buildMessage);
+
+        if(action.equals("date")){
+            //
+            pick.setText(dateSelected);
+        }else if(action.equals("file")){
+            //
+            pick.setText(fileSelected);
+        }
+
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(action.equals("date")){
+                    //
+                    alertDialog.dismiss();
+                    showDatePicker();
+                }else if(action.equals("file")){
+                    alertDialog.dismiss();
+                    //
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+                    String[] mimetypes =
+                            { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" // .xlsx
+                            };
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    resultLauncher.launch(intent);
+                }
+            }
+        });
+        canc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dateSelected = "Select a date";
+                fileSelected = "Select a file";
+                proceedable = false;
+                alertDialog.dismiss();
+            }
+        });
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            String dateNow = new SimpleDateFormat("yyyyMMMdd-hhmmssa", Locale.getDefault()).format(new Date());
+            XSSFWorkbook xwb;
+            String fileName;
+            String path;
+            @Override
+            public void onClick(View view) {
+                if(action.equals("date") && proceedable){
+                    //
+                    ArrayList<ModelOrders> orders = ((MainActivity) getActivity()).dbHalp.getAllOrdersForExcel(dateSelected);
+                    xwb = xcHalp.saveToOrdersWorkbook(orders, dateSelected);
+
+                    fileName = "SariSari Order History during " + dateSelected + " exported on " + dateNow + ".xlsx";
+                    try {
+                        path = xcHalp.saveToFile(xwb, fileName, getContext());
+                        Toast.makeText(getContext(), "File was created:" + path, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Toast.makeText(getContext(), "File failed to create", Toast.LENGTH_SHORT).show();
+                        Log.d("debugTag:", e.toString());
+                        e.printStackTrace();
+                    }
+                    alertDialog.dismiss();
+                }else if(action.equals("file") && proceedable){
+                    //
+                    try {
+                        xcHalp.insertToDB(getContext(), uri);
+                        Toast.makeText(getContext(), "Data successfully imported", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), "File failed to import", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                    alertDialog.dismiss();
+                }else{
+                    Toast.makeText(getContext(), "Select a " + action + " first" , Toast.LENGTH_SHORT).show();
+                }
+                fileSelected = "Select a file";
+                dateSelected = "Select a date";
+                proceedable = false;
+
+            }
+        });
+
+    }
     private void alertDiaOkCancel(String buildTitle, String buildMessage, String action){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View v = getLayoutInflater().inflate(R.layout.dialog_ok_cancel, null);
@@ -525,8 +659,8 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                         e.printStackTrace();
                     }
                 }else if(action.equals("exp_ord")){
-                    ArrayList<ModelOrders> orders = ((MainActivity) getActivity()).dbHalp.getAllOrdersForExcel();
-                    xwb = xcHalp.saveToOrdersWorkbook(orders);
+                    ArrayList<ModelOrders> orders = ((MainActivity) getActivity()).dbHalp.getAllOrdersForExcel("all");
+                    xwb = xcHalp.saveToOrdersWorkbook(orders, "all");
 
                     fileName = "SariSari Order History exported on " + dateNow + ".xlsx";
                     try {
@@ -552,6 +686,43 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                 alertDialog.dismiss();
             }
         });
+    }
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        String zerostr = "";
+        if(i2 < 10) zerostr = "0";
+        dateSelected = i + "-" + monthNames[i1] + "-" + zerostr + i2;
+        proceedable = true;
+        alertDiaPick(
+                "Saving orders history to file",
+                "This will create an XLSX file containing product orders " +
+                        "on a specified date, the file will be saved to \"Documents/SariSari POS\". " +
+                        "Tap on \"Select a date\" then tap \"Okay\" to proceed.",
+                "date"
+        );
+
+    }
+    private void showDatePicker(){
+        DatePickerDialog datePickDia = new DatePickerDialog(
+                getContext(),
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickDia.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                alertDiaPick(
+                        "Saving orders history to file",
+                        "This will create an XLSX file containing product orders " +
+                                "on a specified date, the file will be saved to \"Documents/SariSari POS\". " +
+                                "Tap on \"Select a date\" then tap \"Okay\" to proceed.",
+                        "date"
+                );
+            }
+        });
+        datePickDia.show();
     }
 /*
 

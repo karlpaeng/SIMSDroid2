@@ -462,10 +462,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //for excel
 
-    public ArrayList<ModelOrders> getAllOrdersForExcel(){
+    public ArrayList<ModelOrders> getAllOrdersForExcel(String date){
+        String whereClause = (date.equals("all") ? "" : " WHERE order_number IN (SELECT order_number FROM order_numbers WHERE date = '" + date + "')");
         ArrayList<ModelOrders> orders = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM orders ORDER BY order_number DESC;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM orders" + whereClause + " ORDER BY order_number DESC;", null);
         if (cursor.moveToFirst()){
             do{
                 //

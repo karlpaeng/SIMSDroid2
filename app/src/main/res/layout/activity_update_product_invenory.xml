@@ -13,73 +13,93 @@
         tools:context=".UpdateProductInvenory">
 
 
+        <TextView
+            android:id="@+id/textView48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:text="Amount in stock"
+            app:layout_constraintStart_toStartOf="@+id/etUpdateAmtStock"
+            app:layout_constraintTop_toBottomOf="@+id/etUpdateCost" />
+
+        <TextView
+            android:id="@+id/textView47"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:text="Retail Price"
+            app:layout_constraintStart_toStartOf="@+id/etUpdatePrice"
+            app:layout_constraintTop_toBottomOf="@+id/etUpdateProdName" />
+
         <EditText
             android:id="@+id/etUpdateProdName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_small_round_white"
             android:ems="15"
+            android:fontFamily="@font/monsterrat_semibold"
             android:hint="Product Name"
             android:inputType="textPersonName"
             android:padding="15dp"
             android:text=""
-            android:fontFamily="@font/monsterrat_semibold"
             android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <EditText
             android:id="@+id/etUpdateCost"
-            android:inputType="numberDecimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="15dp"
-            android:padding="15dp"
-            android:ems="7"
-            android:hint="Cost"
-            android:text=""
-            android:fontFamily="@font/monsterrat_semibold"
-            android:textColorHighlight="@color/lightGr"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_small_round_white"
+            android:ems="7"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:hint="Cost"
+            android:inputType="numberDecimal"
+            android:padding="15dp"
+            android:text=""
+            android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etUpdateProdName" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <EditText
             android:id="@+id/etUpdatePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_small_round_white"
             android:ems="7"
+            android:fontFamily="@font/monsterrat_semibold"
             android:hint="Retail Price"
             android:inputType="numberDecimal"
             android:padding="15dp"
             android:text=""
-            android:fontFamily="@font/monsterrat_semibold"
             android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toEndOf="@+id/etUpdateCost"
-            app:layout_constraintTop_toBottomOf="@id/etUpdateProdName" />
+            app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
         <EditText
             android:id="@+id/etUpdateAmtStock"
-            android:inputType="number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="15dp"
-            android:padding="15dp"
-            android:ems="9"
-            android:hint="Amount in Stock"
-            android:text=""
-            android:fontFamily="@font/monsterrat_semibold"
-            android:textColorHighlight="@color/lightGr"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_small_round_white"
+            android:ems="9"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:hint="Amount in Stock"
+            android:inputType="number"
+            android:padding="15dp"
+            android:text=""
+            android:textColorHighlight="@color/lightGr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etUpdateCost" />
+            app:layout_constraintTop_toBottomOf="@+id/textView48" />
 
         <TextView
             android:id="@+id/textView4"
@@ -138,5 +158,25 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etUpdateAmtStock" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:text="Product Name"
+            app:layout_constraintStart_toStartOf="@+id/etUpdateProdName"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/monsterrat_semibold"
+            android:text="Cost"
+            app:layout_constraintStart_toStartOf="@+id/etUpdateCost"
+            app:layout_constraintTop_toBottomOf="@+id/etUpdateProdName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
