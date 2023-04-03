@@ -236,7 +236,7 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
                         "Updating Inventory information",
                         "This will replace all currently saved inventory items " +
                                 "with the data in the file to be selected. " +
-                                "\nNote: this feature is not stable, file should be strictly formatted.\n" +
+                                "\nNote: cells in the XLSX file should strictly be \"Text formatted\" cells.\n" +
                                 "Tap on \"Select a file\" then tap \"Okay\" to continue. Proceed with caution.",
                         "file"
                 );

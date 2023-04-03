@@ -9,6 +9,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 
 public class ExcelHelper {
     public ExcelHelper(){}
+
 
     public String saveToFile(XSSFWorkbook xwb, String fileName, Context context)throws IOException {
         OutputStream fileOutputStream;
@@ -83,39 +86,56 @@ public class ExcelHelper {
         short height = 500;
         xRow.setHeight(height);
 
+        DataFormat fmt = xwb.createDataFormat();
+        CellStyle cellStyle = xwb.createCellStyle();
+        cellStyle.setDataFormat(fmt.getFormat("@"));
+
         XSSFCell xCell = xRow.createCell(0);
+        xCell.setCellStyle(cellStyle);
         xCell.setCellValue("Product \nName");
         xCell = xRow.createCell(1);
+        xCell.setCellStyle(cellStyle);
         xCell.setCellValue("Barcode");
         xCell = xRow.createCell(2);
+        xCell.setCellStyle(cellStyle);
         xCell.setCellValue("Cost");
         xCell = xRow.createCell(3);
+        xCell.setCellStyle(cellStyle);
         xCell.setCellValue("Retail \nPrice");
         xCell = xRow.createCell(4);
+        xCell.setCellStyle(cellStyle);
         xCell.setCellValue("Amount\nin Stock");
         xCell = xRow.createCell(5);
+        xCell.setCellStyle(cellStyle);
         xCell.setCellValue("Last \nupdated");
 
         int listSize = prodList.size();
+
         for (int q = 0 ; q < listSize ; q++){
             xRow = xsheet.createRow(q+1);
 
             xCell = xRow.createCell(0);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(prodList.get(q).name);
 
             xCell = xRow.createCell(1);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(prodList.get(q).barcode);
 
             xCell = xRow.createCell(2);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(String.valueOf(prodList.get(q).cost)+"");
 
             xCell = xRow.createCell(3);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(String.valueOf(prodList.get(q).retailPrice)+"");
 
             xCell = xRow.createCell(4);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(prodList.get(q).amountStock + "");
 
             xCell = xRow.createCell(5);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(prodList.get(q).lastUpdate);
 
         }
@@ -145,22 +165,32 @@ public class ExcelHelper {
         xCell.setCellValue("Date \nChecked out");
         xCell = xRow.createCell(4);
         xCell.setCellValue("Date paid");
+
+        DataFormat fmt = xwb.createDataFormat();
+        CellStyle cellStyle = xwb.createCellStyle();
+        cellStyle.setDataFormat(fmt.getFormat("@"));
+
         for (int q = 1 ; q <= listSize ; q++){
             xRow = xsheet.createRow(q);
 
             xCell = xRow.createCell(0);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(debtList.get(q-1).orderNumber + "");
 
             xCell = xRow.createCell(1);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(debtList.get(q-1).customerName);
 
             xCell = xRow.createCell(2);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(debtList.get(q-1).customerContact);
 
             xCell = xRow.createCell(3);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(debtList.get(q-1).dateCheckout);
 
             xCell = xRow.createCell(4);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(debtList.get(q-1).datePaid);
 
         }
@@ -190,23 +220,33 @@ public class ExcelHelper {
         xCell.setCellValue("Amount");
         xCell = xRow.createCell(4);
         xCell.setCellValue("Amount \nx Price");
+
+        DataFormat fmt = xwb.createDataFormat();
+        CellStyle cellStyle = xwb.createCellStyle();
+        cellStyle.setDataFormat(fmt.getFormat("@"));
+
         for (int q = 1 ; q < listSize ; q++){
             xRow = xsheet.createRow(q);
 
             xCell = xRow.createCell(0);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(orders.get(q).orderNumber+"");
 
             xCell = xRow.createCell(1);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(orders.get(q).productName);
 
             xCell = xRow.createCell(2);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(String.valueOf(orders.get(q).retailPrice+""));
 
 
             xCell = xRow.createCell(3);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(orders.get(q).amount + "");
 
             xCell = xRow.createCell(4);
+            xCell.setCellStyle(cellStyle);
             xCell.setCellValue(String.valueOf(orders.get(q).amountXprice)+"");
 
         }
@@ -224,20 +264,26 @@ public class ExcelHelper {
 
         dbHalp.clearAllProducts();
         Log.d("rows:", ""+rowNum);
-        for (int q = 1 ; q <= rowNum ; q++){
-            ModelProducts product = new ModelProducts(
-                    1,
-                    sh.getRow(q).getCell(0).toString(),
-                    sh.getRow(q).getCell(1).toString(),
-                    new BigDecimal(sh.getRow(q).getCell(2).toString()),
-                    new BigDecimal(sh.getRow(q).getCell(3).toString()),
-                    Integer.parseInt(sh.getRow(q).getCell(4).toString()),
-                    sh.getRow(q).getCell(5).toString()
-            );
 
-            long lInput = dbHalp.addProduct(product);
+        int count = 0;
+        for (int q = 1 ; q <= rowNum ; q++){
+            Log.d("row#:", q+"");
+            if(sh.getRow(q) != null){
+                ModelProducts product = new ModelProducts(
+                        1,
+                        sh.getRow(q).getCell(0).toString(),
+                        sh.getRow(q).getCell(1).toString(),
+                        new BigDecimal(sh.getRow(q).getCell(2).toString()),
+                        new BigDecimal(sh.getRow(q).getCell(3).toString()),
+                        Integer.parseInt(sh.getRow(q).getCell(4).toString()),
+                        sh.getRow(q).getCell(5).toString()
+                );
+
+                long lInput = dbHalp.addProduct(product);
+                count++;
+            }else { break; }
 
         }
-        Toast.makeText(context, "File imported with " + rowNum + " rows of data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "File imported with " + count + " rows of data", Toast.LENGTH_SHORT).show();
     }
 }
