@@ -464,6 +464,7 @@ public class MainActivity extends AppCompatActivity {
                     indx++;
                     imgs.setImageResource(imgID[indx]);
                     descri.setText(descStr[indx]);
+                    skip.setText("Close");
 
                 }
             }
