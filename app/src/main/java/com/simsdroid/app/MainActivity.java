@@ -459,12 +459,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(indx<5){
-                    if (indx==4) forw.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.lightGr));
+                    if (indx==4) {
+                        forw.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.lightGr));
+                        skip.setText("Close");
+                    }
                     back.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.darkblue));
                     indx++;
                     imgs.setImageResource(imgID[indx]);
                     descri.setText(descStr[indx]);
-                    skip.setText("Close");
+
 
                 }
             }
