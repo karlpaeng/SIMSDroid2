@@ -22,10 +22,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     ModelProducts prodForSpecAmt;
 
+    int indx;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         }, PackageManager.PERMISSION_GRANTED);
         //move this later
 
-
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         actionBar = findViewById(R.id.actionBar);
         orderListForPOS = dbHalp.getAllTempOrder();
@@ -92,11 +95,13 @@ public class MainActivity extends AppCompatActivity {
         String extraStr="";
         if (getIntent().getStringExtra("frag") == null) {
 
-
-
             replaceFragment(new Frag1POS());
             binding.bottomNavigationView.setSelectedItemId(R.id.pos);
             actionBar.setText("POS (Point of Sale)");
+
+            if(getIntent().getStringExtra("new_user") != null && getIntent().getStringExtra("new_user").equals("true")){
+                alertDiaTut("Skip");
+            }
             //Toast.makeText(MainActivity.this, "null", Toast.LENGTH_LONG).show();
         }else {
             extraStr = getIntent().getStringExtra("frag");
@@ -398,6 +403,78 @@ public class MainActivity extends AppCompatActivity {
         clipboard.setPrimaryClip(clip);
         Toast.makeText(MainActivity.this, "Link copied to clipboard" , Toast.LENGTH_SHORT).show();
 
+    }
+    public void alertDiaTut(String tag){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View v = getLayoutInflater().inflate(R.layout.dialog_tutorial, null);
+        TextView back = v.findViewById(R.id.tvBack);
+        TextView forw = v.findViewById(R.id.tvForw);
+        TextView skip = v.findViewById(R.id.tvSkip);
+        ImageView imgs = v.findViewById(R.id.ivSlideImgTut);
+        TextView descri = v.findViewById(R.id.tvDescriTutorial);
+
+        skip.setText(tag);
+
+        int[] imgID = {R.drawable.tut1, R.drawable.tut2, R.drawable.tut3, R.drawable.tut4, R.drawable.tut5, R.drawable.tut6};
+        String[] descStr = {
+                "Adding and updating product data",
+                "Managing items in POS",
+                "Adding itens by scanning or searching",
+                "Options for checking out order",
+                "Viewing and searching order records and receipt",
+                "Managing and updating customer debt info"
+        };
+        indx = 0;
+
+        descri.setText(descStr[indx]);
+
+        back.setText("<<<");
+        forw.setText(">>>");
+
+        back.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.lightGr));
+        forw.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.darkblue));
+
+
+        imgs.setImageResource(imgID[indx]);
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.show();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (indx > 0){
+                    if (indx==1) back.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.lightGr));
+                    forw.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.darkblue));
+                    indx--;
+                    imgs.setImageResource(imgID[indx]);
+                    descri.setText(descStr[indx]);
+                }
+            }
+        });
+        forw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(indx<5){
+                    if (indx==4) forw.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.lightGr));
+                    back.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.darkblue));
+                    indx++;
+                    imgs.setImageResource(imgID[indx]);
+                    descri.setText(descStr[indx]);
+
+                }
+            }
+        });
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
 

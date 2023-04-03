@@ -245,6 +245,7 @@ public class PIN extends AppCompatActivity {
                             //
                             Intent intent = new Intent(PIN.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra("new_user", "true");
                             startActivity(intent);
                             //goto next act
 

@@ -67,6 +67,22 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+    public void xxxResetDB(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM products;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='products';");//reset primary key to 1
+        db.execSQL("DELETE FROM orders;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='orders';");//reset primary key to 1
+        db.execSQL("DELETE FROM debts;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='debts';");//reset primary key to 1
+        db.execSQL("DELETE FROM user_info;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='user_info';");//reset primary key to 1
+        db.execSQL("DELETE FROM order_numbers;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='order_numbers';");//reset primary key to 1
+        db.execSQL("DELETE FROM temp_orders;");
+        db.execSQL("UPDATE sqlite_sequence SET seq=0 WHERE NAME='temp_orders';");//reset primary key to 1
+        db.close();
+    }
 //-------------------------------     USER INFO TABLE
     public void createUserInfo(String storeName, String PIN){
         SQLiteDatabase db = this.getWritableDatabase();

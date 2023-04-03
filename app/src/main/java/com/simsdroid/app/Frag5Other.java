@@ -1,6 +1,7 @@
 package com.simsdroid.app;
 
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -291,6 +292,7 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         switch (position){
             case 0:
                 //
+                alertDiaHelp();
                 break;
             case 1:
                 //
@@ -451,19 +453,36 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
         git.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).copyToClip("github.com/karlpaeng");
+                //((MainActivity) getActivity()).copyToClip("github.com/karlpaeng");
+                Uri uri = Uri.parse("https://github.com/karlpaeng");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).copyToClip("karlraphaelbrinas@gmail.com");
+//                ((MainActivity) getActivity()).copyToClip("karlraphaelbrinas@gmail.com");
+                String mailto = "mailto:karlraphaelbrinas@gmail.com" +
+                        "?cc=" +
+                        "&subject=" + Uri.encode(((MainActivity) getActivity()).dbHalp.getStoreName() + ", SariSari POS user") ;
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse(mailto));
+
+                try {
+                    startActivity(emailIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "Error, could not find email app", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         tree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).copyToClip("linktr.ee/karlpaeng");
+                //((MainActivity) getActivity()).copyToClip("linktr.ee/karlpaeng");
+                Uri uri = Uri.parse("https://linktr.ee/karlpaeng");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         dario.setOnClickListener(new View.OnClickListener() {
@@ -716,6 +735,53 @@ public class Frag5Other extends Fragment implements RecViewInterface, RecViewInt
             }
         });
         datePickDia.show();
+    }
+    private void alertDiaHelp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View v = getLayoutInflater().inflate(R.layout.dialog_help, null);
+
+        TextView appGuide = v.findViewById(R.id.tvViewAppGuide);
+        TextView devContact = v.findViewById(R.id.tvContactDev);
+        TextView close = v.findViewById(R.id.tvCloseDiaHelp);
+
+        builder.setView(v);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        appGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+
+                //
+                ((MainActivity) getActivity()).alertDiaTut("Close");
+            }
+        });
+        devContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mailto = "mailto:karlraphaelbrinas@gmail.com" +
+                        "?cc=" +
+                        "&subject=" + Uri.encode("SariSari POS Bug Report: " + ((MainActivity) getActivity()).dbHalp.getStoreName()) +
+                        "&body=" + Uri.encode("<Please fill in details, with screenshots if possible, thanks>");
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse(mailto));
+
+                try {
+                    startActivity(emailIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "Error, could not find email app", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 /*
 
