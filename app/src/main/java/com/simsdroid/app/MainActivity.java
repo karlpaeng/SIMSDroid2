@@ -419,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
         String[] descStr = {
                 "Adding and updating product data",
                 "Managing items in POS",
-                "Adding itens by scanning or searching",
+                "Adding items by scanning or searching",
                 "Options for checking out order",
                 "Viewing and searching order records and receipt",
                 "Managing and updating customer debt info"
